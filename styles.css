@@ -18,3 +18,9 @@ body{
     text-decoration: none;
     font-size: 25px;
 }
+
+#player{
+    margin: 5px;
+    border: 1px solid black;
+    height: 90vh;
+}
