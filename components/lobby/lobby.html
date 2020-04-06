@@ -6,14 +6,18 @@
 		<link rel="stylesheet" href="/styles.css"/>
 		<script src="/libraryRoot.js"></script>
 		<script src="/components/lobby/videoBrowserControl.js"></script>
+		<script src="/components/lobby/onload.js"></script>
 		
 	</head>
 	<body>
+		<input type="hidden" id="currentDirectory" value="/"></input>
 		<div id="topNav">
 			<a href="index.html" id="home">GhostSync</a>
 		</div>
 		<div id="player">
-			
+			<video id="video" controls autoplay>
+				<source id="videoSource">
+			</video>
 		</div>
 		<div id="videoBrowser">
 		

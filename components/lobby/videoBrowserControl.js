@@ -25,4 +25,58 @@ function parseMetadata(file)
 		document.getElementById("videoBrowser").appendChild(item);
 	}
 }
-fetchMetadata();
+
+function getDirectoryInfo()
+{
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST","getDirectoryInfo.php",true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			updateVideoBrowser(this);
+		}
+	}
+	xhttp.send("rootDir=" + rootDir() + "&subDir=" + document.getElementById("currentDirectory").value);
+}
+
+function updateVideoBrowser(file)
+{
+	var contents = file.responseText.split("|");
+	var videoBrowser = document.getElementById("videoBrowser");
+	videoBrowser.innerHTML = "";
+	for (var i = 0; i < contents.length; i++)
+	{
+		if (contents[i].includes("."))
+		{
+			var newVideo = document.createElement("a");
+			newVideo.innerHTML = contents[i];
+			newVideo.href = "javascript:videoBrowserVideoClick('" + contents[i] + "');";
+			videoBrowser.appendChild(newVideo);
+		}
+		else
+		{
+			var newDir = document.createElement("a");
+			newDir.innerHTML = contents[i];
+			newDir.href = "javascript:videoBrowserDirClick('" + contents[i] + "');";
+			videoBrowser.appendChild(newDir);
+		}
+		videoBrowser.appendChild(document.createElement("br"));
+	}
+}
+
+function videoBrowserDirClick(inputDir)
+{
+	document.getElementById("currentDirectory").value += inputDir + "/";
+	getDirectoryInfo();
+}
+
+function videoBrowserVideoClick(inputVideo)
+{
+	var fileLocation = "http://localhost" + rootDir() + document.getElementById("currentDirectory").value + inputVideo;
+	fileLocation = fileLocation.replace(/\ /g, "%20");
+	document.getElementById("videoSource").src = fileLocation;
+	var temp = inputVideo.split(".");
+	document.getElementById("videoSource").type = "video/" + temp[1];
+}
