@@ -74,9 +74,24 @@ function videoBrowserDirClick(inputDir)
 
 function videoBrowserVideoClick(inputVideo)
 {
-	var fileLocation = "http://localhost" + rootDir() + document.getElementById("currentDirectory").value + inputVideo;
+	var fileLocation = "http://192.168.1.29" + rootDir() + document.getElementById("currentDirectory").value + inputVideo;
 	fileLocation = fileLocation.replace(/\ /g, "%20");
 	document.getElementById("videoSource").src = fileLocation;
 	var temp = inputVideo.split(".");
 	document.getElementById("videoSource").type = "video/" + temp[1];
+	document.getElementById("video").load();
+}
+
+function goBack()
+{
+	var currDir = document.getElementById("currentDirectory").value;
+	var newDir = "/";
+	var temp = currDir.split("/");
+	for (var i = 1; i < temp.length-2; i++)
+	{
+		newDir += temp[i];
+		newDir += "/";
+	}
+	document.getElementById("currentDirectory").value = newDir;
+	getDirectoryInfo();
 }

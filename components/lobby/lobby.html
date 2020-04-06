@@ -7,10 +7,13 @@
 		<script src="/libraryRoot.js"></script>
 		<script src="/components/lobby/videoBrowserControl.js"></script>
 		<script src="/components/lobby/onload.js"></script>
+		<script src="/components/lobby/videoSyncControl.js"></script>
 		
 	</head>
 	<body>
 		<input type="hidden" id="currentDirectory" value="/"></input>
+		<input type="hidden" id="lobbyName" value="TestLobby"></input>
+		<input type="hidden" id="serverTime" value=""></input>
 		<div id="topNav">
 			<a href="index.html" id="home">GhostSync</a>
 		</div>
@@ -19,6 +22,9 @@
 				<source id="videoSource">
 			</video>
 		</div>
+		<button onclick="updateServerTimeStamp();">Update</button>
+		<button onclick="syncVideo();">Sync</button>
+		<button onclick="goBack()">Up</button>
 		<div id="videoBrowser">
 		
 		</div>
