@@ -1,6 +1,6 @@
 <?php
 
-$command = "ls -1 '/var/www/html/" . $_POST["rootDir"] . $_POST["subDir"] . "' | tr '\n' '|'";
+$command = "whoami";
 //$command = "ls -1 " . $_POST["rootDir"] . " | tr '\n' '|'";
 
 $data = shell_exec($command);

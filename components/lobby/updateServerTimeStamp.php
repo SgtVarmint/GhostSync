@@ -2,7 +2,10 @@
 
 $lobbyName = $_POST["lobbyName"];
 $timeStamp = $_POST["timeStamp"];
-$serverTime = $_POST["serverTime"];
+
+$command = "date +%s%3N";
+
+$serverTime = shell_exec($command);
 $playState = $_POST["playState"];
 $filePath = $_POST["filePath"];
 

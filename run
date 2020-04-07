@@ -1,0 +1,6 @@
+rm -r /var/www/html
+cp -r ../GhostSync /var/www/html
+ln -s /home/jon/mount/VideoDrive/Videos /var/www/html/Videos
+chown -Rf www-data /var/www/html/lobbies
+chown -Rf www-data /var/www/html/Videos
+chown -Rf www-data /home/jon/mount/VideoDrive/Videos

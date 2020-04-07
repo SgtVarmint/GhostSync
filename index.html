@@ -2,17 +2,25 @@
 	<head>
 		<meta charset="utf-8">
 		<title>GhostSync: Synchronize Video Watching</title>
-		<link rel="stylesheet" href="styles.css"/>
+		<!--Dependencies-->
+		<link rel="stylesheet" href="/styles.css"/>
+		<script src="/libraryRoot.js"></script>
+		<script src="/home/onload.js"></script>
+		<script src="/home/homeControl.js"></script>
 	</head>
 	<body>
 		<div id="topNav">
 			<a href="index.html" id="home">GhostSync</a>
 		</div>
-		<div id="serverList">
-		
+		<div id="joinArea">
+			<div id="joinBox">
+				<h3>Lobby</h3>
+				<input type="text" id="lobbyInput">
+				<button id="lobbyButton">Create/Join</button>
+			</div>
 		</div>
 		<div id="player">
-			Player window
+			
 		</div>
 	</body>
 </html>

@@ -8,27 +8,29 @@
 		<script src="/components/lobby/videoBrowserControl.js"></script>
 		<script src="/components/lobby/onload.js"></script>
 		<script src="/components/lobby/videoSyncControl.js"></script>
+		<!--<script src="/components/lobby/whoami.js"></script>-->
 		
 	</head>
 	<body>
 		<input type="hidden" id="currentDirectory" value="/"></input>
-		<input type="hidden" id="lobbyName" value="TestLobby"></input>
+		<input type="hidden" id="lobbyName" value="DefaultLobby"></input>
 		<input type="hidden" id="serverTime" value=""></input>
 		<input type="hidden" id="playState" value=""></input>
 		<input type="hidden" id="filePath" value=""></input>
 		<div id="topNav">
-			<a href="index.html" id="home">GhostSync</a>
+			<a href="/index.html" id="home">GhostSync</a>
 		</div>
 		<div id="player">
-			<video id="video" controls autoplay>
+			<video id="video" controls>
 				<source id="videoSource">
 			</video>
 		</div>
-		<button onclick="updateServerTimeStamp();">Update</button>
-		<button onclick="syncVideo();">Sync</button>
-		<button onclick="goBack()">Up</button>
-		<div id="videoBrowser">
-		
+		<div id="browser">
+			<button onclick="goBack()">Up</button>
+			<div id="videoBrowser">
+			
+			</div>
 		</div>
+		<div id="debug" style="display:none"></div>
 	</body>
 </html>
