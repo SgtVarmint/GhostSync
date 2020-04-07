@@ -1,14 +1,18 @@
-//This function should only be used by host
+function syncPull()
+{
+	//This function relays a call to syncVideo(), but can have code added in the future specific to the update timer
+	syncVideo();
+}
+
 function updateServerTimeStamp()
 {
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","updateServerTimeStamp.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	getServerTime();
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + document.getElementById("video").currentTime + "&serverTime=" + document.getElementById("serverTime").value);
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + document.getElementById("video").currentTime + "&serverTime=" + document.getElementById("serverTime").value + "&playState=" + document.getElementById("playState").value + "&filePath=" + document.getElementById("filePath").value);
 }
 
-//This function should only be used by guests
 function syncVideo()
 {
 	var xhttp = new XMLHttpRequest();
@@ -26,16 +30,35 @@ function syncVideo()
 
 function syncVideoAction(file)
 {
-	var times = file.responseText.split("^");
+	var info = file.responseText.split("^");
 	//Index 0 is the video timestamp
-	//Index 1 is the server time when host updated timestamp
+	//Index 1 is the server time when it was last updated timestamp
+	//Index 2 is the play state: either 'playing' or 'paused'
+	//Index 3 is the complete file path URL for the video
+	
+	if (info[3] != document.getElementById("filePath").value)
+	{
+		document.getElementById("filePath").value = info[3];
+		document.getElementById("videoSource").src = info[3];
+		document.getElementById("video").load();
+	}
+	
 	getServerTime();
 	
-	var timeOffset = document.getElementById("serverTime").value - times[1];
-	var newTimeStamp = parseFloat(times[0]) + parseFloat(timeOffset);
-	
-	document.getElementById("video").currentTime = newTimeStamp;
-	document.getElementById("video").play();
+	var timeOffset = document.getElementById("serverTime").value - info[1];
+	var newTimeStamp = parseFloat(info[0]) + parseFloat(timeOffset);
+	if (timeOffset > 0.3)
+	{
+		document.getElementById("video").currentTime = newTimeStamp;
+	}
+	if (info[2] == "playing")
+	{
+		document.getElementById("video").play();
+	}
+	else
+	{
+		document.getElementById("video").pause();
+	}
 }
 
 function getServerTime()
