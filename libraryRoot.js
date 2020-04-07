@@ -4,6 +4,6 @@
 function rootDir()
 {
 	//var rootDirectory = "/home/jon/mount/VideoDrive/Videos";
-	var rootDirectory = "/mnt/d/Development/GhostSync/Videos";
+	var rootDirectory = "/Videos";
 	return rootDirectory;
 }
