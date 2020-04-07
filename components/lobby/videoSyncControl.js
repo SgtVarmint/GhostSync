@@ -9,12 +9,12 @@ function updateServerTimeStamp()
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","updateServerTimeStamp.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	getServerTime();
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + document.getElementById("video").currentTime + "&serverTime=" + document.getElementById("serverTime").value + "&playState=" + document.getElementById("playState").value + "&filePath=" + document.getElementById("filePath").value);
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + document.getElementById("video").currentTime + "&playState=" + document.getElementById("playState").value + "&filePath=" + document.getElementById("filePath").value);
 }
 
 function syncVideo()
 {
+	getServerTime();
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","getServerTimeStamp.php",false);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -43,23 +43,18 @@ function syncVideoAction(file)
 		document.getElementById("video").load();
 	}
 	
-	getServerTime();
-	
-	var timeOffset = document.getElementById("serverTime").value - info[1];
+	var storedServerTime = info[1].slice(0, info[1].length - 4) + "." + info[1].slice(info[1].length - 4, info[1].length - 1)
+var timeOffset = parseFloat(document.getElementById("serverTime").value) - parseFloat(storedServerTime) - parseFloat(info[0]);
 	var newTimeStamp = parseFloat(info[0]) + parseFloat(timeOffset);
-	if (timeOffset > 0.3)
+	newTimeStamp = info[0];
+	document.getElementById("debug").innerHTML = timeOffset + "  -  " + newTimeStamp;
+	if (timeOffset > 1 && info[2] == "playing")
 	{
 		document.getElementById("video").currentTime = newTimeStamp;
 	}
-	if (info[2] == "playing")
-	{
-		document.getElementById("video").play();
-	}
-	else
-	{
-		document.getElementById("video").pause();
-	}
+
 }
+
 
 function getServerTime()
 {

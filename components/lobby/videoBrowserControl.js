@@ -77,11 +77,11 @@ function videoBrowserVideoClick(inputVideo)
 	///////////////////////////////////////////
 	//This URL needs changed to the host's IP//
 	///////////////////////////////////////////
-	var fileLocation = "http://192.168.1.29" + rootDir() + document.getElementById("currentDirectory").value + inputVideo;
+	var fileLocation = "http://192.168.1.2" + rootDir() + document.getElementById("currentDirectory").value + inputVideo;
 	fileLocation = fileLocation.replace(/\ /g, "%20");
 	
 	document.getElementById("filePath").value = fileLocation;
-	document.getElementById("playState").value = "playing";
+	document.getElementById("playState").value = "paused";
 	
 	updateServerTimeStamp();
 	

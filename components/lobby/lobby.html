@@ -8,6 +8,7 @@
 		<script src="/components/lobby/videoBrowserControl.js"></script>
 		<script src="/components/lobby/onload.js"></script>
 		<script src="/components/lobby/videoSyncControl.js"></script>
+		<!--<script src="/components/lobby/whoami.js"></script>-->
 		
 	</head>
 	<body>
@@ -20,15 +21,18 @@
 			<a href="index.html" id="home">GhostSync</a>
 		</div>
 		<div id="player">
-			<video id="video" controls autoplay>
+			<video id="video" controls>
 				<source id="videoSource">
 			</video>
 		</div>
 		<button onclick="updateServerTimeStamp();">Update</button>
 		<button onclick="syncVideo();">Sync</button>
 		<button onclick="goBack()">Up</button>
+		<button onclick="document.getElementById('video').load()">Load</button>
 		<div id="videoBrowser">
 		
 		</div>
+		
+		<div id="debug"></div>
 	</body>
 </html>
