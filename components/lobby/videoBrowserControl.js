@@ -26,6 +26,16 @@ function parseMetadata(file)
 	}
 }
 
+function videoBrowserButton()
+{
+	if (document.getElementById("browser").style.display == "block")
+	{
+		document.getElementById("browser").style.display = "none";
+	}
+	else
+		document.getElementById("browser").style.display = "block";
+}
+
 function getDirectoryInfo()
 {
 	var xhttp = new XMLHttpRequest();
@@ -52,14 +62,14 @@ function updateVideoBrowser(file)
 		{
 			var newVideo = document.createElement("a");
 			newVideo.innerHTML = contents[i];
-			newVideo.href = "javascript:videoBrowserVideoClick('" + contents[i] + "');";
+			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
 			videoBrowser.appendChild(newVideo);
 		}
 		else
 		{
 			var newDir = document.createElement("a");
 			newDir.innerHTML = contents[i];
-			newDir.href = "javascript:videoBrowserDirClick('" + contents[i] + "');";
+			newDir.href = 'javascript:videoBrowserDirClick("' + contents[i] + '");';
 			videoBrowser.appendChild(newDir);
 		}
 		videoBrowser.appendChild(document.createElement("br"));
@@ -76,7 +86,6 @@ function videoBrowserVideoClick(inputVideo)
 {
 	var fileLocation = rootDir() + document.getElementById("currentDirectory").value + inputVideo;
 	fileLocation = fileLocation.replace(/\ /g, "%20");
-	
 	document.getElementById("filePath").value = fileLocation;
 	document.getElementById("playState").value = "paused";
 	
@@ -86,6 +95,7 @@ function videoBrowserVideoClick(inputVideo)
 	var temp = inputVideo.split(".");
 	document.getElementById("videoSource").type = "video/" + temp[1];
 	document.getElementById("video").load();
+	document.getElementById("browser").style.display = "none";
 }
 
 function goBack()

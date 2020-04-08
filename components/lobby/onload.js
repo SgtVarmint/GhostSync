@@ -1,5 +1,3 @@
-var TIMER_INTERVAL = 1;
-
 window.onload = function(){
 	
 	document.getElementById("video").onpause = function(){ document.getElementById("playState").value = "paused"; updateServerTimeStamp(); };
@@ -8,8 +6,8 @@ window.onload = function(){
 	
 	document.getElementById("lobbyName").value = localStorage.getItem("lobbyName");
 	
-	setInterval(syncPull, TIMER_INTERVAL * 1000);
-	//setInterval(userUpdate, 5000);
+	setInterval(syncPull, SYNC_INTERVAL * 1000);
+	setInterval(userUpdate, USER_UPDATE_INTERVAL * 1000);
 	getDirectoryInfo();
 	
 }

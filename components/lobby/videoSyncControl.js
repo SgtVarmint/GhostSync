@@ -1,24 +1,6 @@
 function syncPull()
 {
-	
 	syncVideo();
-}
-
-//NOT IMPLEMENTED
-function userUpdate()
-{
-	var lobby = document.getElementById("lobbyName").value;
-	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","userUpdate.php",false);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = function()
-	{
-		if(this.readyState == 4 && this.status == 200)
-		{
-			syncVideoAction(this);
-		}
-	}
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&userName=" + localStorage.getItem("userName"));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,65 +41,67 @@ function syncVideo()
 
 function syncVideoAction(file)
 {
-	////////////////////////
-	//Sync Tolerance Value//
-	////////////////////////
-	var TOLERANCE = .15;
-	
 	var info = file.responseText.split("^");
 	//Index 0 is the video timestamp
 	//Index 1 is the server time when it was last updated timestamp
 	//Index 2 is the play state: either 'playing' or 'paused'
 	//Index 3 is the complete file path URL for the video
 	
-	
-	var storedServerTime = info[1].slice(0, info[1].length - 4) + "." + info[1].slice(info[1].length - 4, info[1].length - 1);
-	getServerTime();
-	var timeOffset = parseFloat(document.getElementById("serverTime").value) - parseFloat(storedServerTime);
-	var newTimeStamp = parseFloat(info[0]) + timeOffset;
-	
-	if (document.getElementById("filePath").value != info[3])
+	var storedServerTime;
+	if (info[1] != undefined)
 	{
-		document.getElementById("filePath").value = info[3];
-		document.getElementById("videoSource").src = info[3];
-		document.getElementById("playState").value = "paused";
-		document.getElementById("video").load();
+		//var nowPlaying = info[3];
+		var fullPath = info[3].split("/");
+		var nowPlaying = fullPath[fullPath.length-1];
+		document.getElementById("nowPlaying").innerHTML = nowPlaying;
+		
+		storedServerTime = info[1].slice(0, info[1].length - 4) + "." + info[1].slice(info[1].length - 4, info[1].length - 1);
+		getServerTime();
+		var timeOffset = parseFloat(document.getElementById("serverTime").value) - parseFloat(storedServerTime);
+		var newTimeStamp = parseFloat(info[0]) + timeOffset;
+		
+		if (document.getElementById("filePath").value != info[3])
+		{
+			document.getElementById("filePath").value = info[3];
+			document.getElementById("videoSource").src = info[3];
+			document.getElementById("playState").value = "paused";
+			document.getElementById("video").load();
+		}
+		
+		if (document.getElementById("video").currentTime > newTimeStamp + TOLERANCE || document.getElementById("video").currentTime < newTimeStamp - TOLERANCE)
+		{
+			if (info[2] == "playing")
+			{
+				document.getElementById("video").currentTime = newTimeStamp;
+				//document.getElementById("playState").value = "playing";
+				suppressUpdate = true;
+				document.getElementById("video").play();
+				suppressUpdate = false;
+			}
+			else if (info[2] == "paused")
+			{
+				//document.getElementById("playState").value = "paused";
+				suppressUpdate = true;
+				document.getElementById("video").pause();
+				suppressUpdate = false;
+			}
+		}
+		else
+		{
+			if (info[2] == "playing")
+			{
+				suppressUpdate = true;
+				document.getElementById("video").play();
+				suppressUpdate = false;
+			}
+			else if (info[2] == "paused")
+			{
+				suppressUpdate = true;
+				document.getElementById("video").pause();
+				suppressUpdate = false;
+			}
+		}
 	}
-	
-	if (document.getElementById("video").currentTime > newTimeStamp + TOLERANCE || document.getElementById("video").currentTime < newTimeStamp - TOLERANCE)
-	{
-		if (info[2] == "playing")
-		{
-			document.getElementById("video").currentTime = newTimeStamp;
-			//document.getElementById("playState").value = "playing";
-			suppressUpdate = true;
-			document.getElementById("video").play();
-			suppressUpdate = false;
-		}
-		else if (info[2] == "paused")
-		{
-			//document.getElementById("playState").value = "paused";
-			suppressUpdate = true;
-			document.getElementById("video").pause();
-			suppressUpdate = false;
-		}
-	}
-	else
-	{
-		if (info[2] == "playing")
-		{
-			suppressUpdate = true;
-			document.getElementById("video").play();
-			suppressUpdate = false;
-		}
-		else if (info[2] == "paused")
-		{
-			suppressUpdate = true;
-			document.getElementById("video").pause();
-			suppressUpdate = false;
-		}
-	}
-	
 	
 }
 
