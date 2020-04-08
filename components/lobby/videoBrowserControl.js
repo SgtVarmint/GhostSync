@@ -74,9 +74,6 @@ function videoBrowserDirClick(inputDir)
 
 function videoBrowserVideoClick(inputVideo)
 {
-	///////////////////////////////////////////
-	//This URL needs changed to the host's IP//
-	///////////////////////////////////////////
 	var fileLocation = rootDir() + document.getElementById("currentDirectory").value + inputVideo;
 	fileLocation = fileLocation.replace(/\ /g, "%20");
 	
