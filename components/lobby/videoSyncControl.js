@@ -1,7 +1,24 @@
 function syncPull()
 {
-	//This function relays a call to syncVideo(), but can have code added in the future specific to the update timer
+	
 	syncVideo();
+}
+
+//NOT IMPLEMENTED
+function userUpdate()
+{
+	var lobby = document.getElementById("lobbyName").value;
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST","userUpdate.php",false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			syncVideoAction(this);
+		}
+	}
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&userName=" + localStorage.getItem("userName"));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
