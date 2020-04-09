@@ -32,8 +32,16 @@ function userUpdateAction(file)
 			}
 		}
 	}
-	else
+	else if (userInfo.length -1 > currentUsers.length)
+	{
 		userListNeedsUpdated = true;
+		playSound("TA.mp3");
+	}
+	else
+	{
+		userListNeedsUpdated = true;
+		playSound("BB.mp3");
+	}
 	
 	if (userListNeedsUpdated)
 	{
@@ -42,9 +50,16 @@ function userUpdateAction(file)
 		{
 			var info = userInfo[i].split("^");
 			var li = document.createElement("li");
+			li.className = "user";
 			li.innerHTML = info[0];
 			document.getElementById("userList").appendChild(li);
 		}
 	}
 	closeLoader();
+}
+
+function playSound(fileName)
+{
+	var soundFile = new Audio("/sounds/" + fileName)
+	soundFile.play();
 }
