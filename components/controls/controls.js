@@ -31,6 +31,8 @@ function fullscreenButtonClicked()
 		document.getElementById("fullscreenButton").style.top = "0%";
 		document.getElementById("fullscreenButton").style.left = "0%";
 		document.getElementById("fullscreenButton").style.display = "block";
+				
+		document.getElementById("video").className = "";
 	}
 	else
 	{
@@ -45,6 +47,15 @@ function fullscreenButtonClicked()
 		document.getElementById("fullscreenButton").style.top = "92%";
 		document.getElementById("fullscreenButton").style.left = "50%";
 		document.getElementById("fullscreenButton").style.display = "none";
+		
+		//Detect if video is widescreen
+		var videoPlayer = document.getElementById("video");
+		var aspectRatio = parseFloat(videoPlayer.videoWidth) / parseFloat(videoPlayer.videoHeight);
+		
+		if (aspectRatio > 2.0)
+		{
+			document.getElementById("video").className = "widescreenVideo";
+		}
 	}
 		
 }
