@@ -1,0 +1,14 @@
+video::-webkit-media-controls-play-button
+{
+	display: none;
+}
+
+.controls
+{
+	height: 5%;
+	background: rgb(0, 0, 0, 0);
+	color: white;
+	border: none;
+	outline: none;
+	font-size: 1.5em;
+}

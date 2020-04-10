@@ -5,6 +5,7 @@
 		<!--Dependencies-->
 		<link rel="stylesheet" href="/styles.css"/>
 		<link rel="stylesheet" href="/components/loader/loader.css"/>
+		<link rel="stylesheet" href="/components/controls/controls.css"/>
 		<script src="/config.js"></script>
 		<script src="/libraryRoot.js"></script>
 		<script src="/components/lobby/videoBrowserControl.js"></script>
@@ -13,6 +14,7 @@
 		<script src="/components/lobby/userControl.js"></script>
 		<script src="/components/loader/loader.js"></script>
 		<script src="/components/toast/toast.js"></script>
+		<script src="/components/controls/controls.js"></script>
 		<!--<script src="/components/lobby/whoami.js"></script>-->
 		
 	</head>
@@ -22,16 +24,20 @@
 		<input type="hidden" id="serverTime" value=""></input>
 		<input type="hidden" id="playState" value=""></input>
 		<input type="hidden" id="filePath" value=""></input>
+		<input type="hidden" id="pushUpdate" value="0"></input>
 		<div id="topNav">
 			<a href="/index.html" id="home">GhostSync</a>
 			<a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
 			<a href="javascript:videoBrowserButton();">Video Browser</a>
 		</div>
+		<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
 		<div id="player">
-			<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
+			
 			<video id="video" controls>
 				<source id="videoSource">
 			</video>
+			<button id="playButton" class="controls">&#x25b6;</button>
+			<button id="fullscreenButton" class="controls">&#x26F6;</button>
 		</div>
 		<div id="users">
 			<h3>Users In Lobby</h3>
@@ -41,7 +47,7 @@
 			</ul>
 		</div>
 		<div id="browser">
-			<button onclick="goBack()">Up</button>
+			<button class="defaultButton" onclick="goBack()">Up</button>
 			<div id="videoBrowser">
 			
 			</div>
