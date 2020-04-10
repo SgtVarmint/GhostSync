@@ -61,5 +61,6 @@ function userUpdateAction(file)
 function playSound(fileName)
 {
 	var soundFile = new Audio("/sounds/" + fileName)
+	soundFile.volume = .25;
 	soundFile.play();
 }

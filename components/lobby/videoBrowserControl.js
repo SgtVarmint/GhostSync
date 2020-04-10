@@ -33,7 +33,10 @@ function videoBrowserButton()
 		document.getElementById("browser").style.display = "none";
 	}
 	else
+	{
 		document.getElementById("browser").style.display = "block";
+		document.getElementById("settings").style.display = "none";
+	}
 }
 
 function getDirectoryInfo()

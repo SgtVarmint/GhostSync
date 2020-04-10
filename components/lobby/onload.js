@@ -1,14 +1,39 @@
 window.onload = function(){
 	
-	//document.getElementById("video").onpause = function(){ document.getElementById("playState").value = "paused"; updateServerTimeStamp(); };
-	//document.getElementById("video").onplay = function(){ document.getElementById("playState").value = "playing"; updateServerTimeStamp(); };
+	TOLERANCE = localStorage.getItem("tolerance");
+	if (TOLERANCE == null)
+	{
+		TOLERANCE = .3;
+		localStorage.setItem("tolerance", TOLERANCE);
+	}
+
+	document.getElementById("userNameInput").value = localStorage.getItem("userName");
+	document.getElementById("toleranceSlider").value = TOLERANCE * 100;
+	document.getElementById("toleranceValue").innerHTML = TOLERANCE;
+
+	document.getElementById("changeUsernameButton").onclick = function(){
+		localStorage.setItem("userName", document.getElementById("userNameInput").value);
+		toast("Username Changed");
+		};
+	document.getElementById("toleranceSlider").oninput = function(){ 
+		TOLERANCE = parseFloat(document.getElementById("toleranceSlider").value) / 100.0;
+		localStorage.setItem("tolerance", TOLERANCE);
+		document.getElementById("toleranceValue").innerHTML = TOLERANCE;
+		};
+	
+	document.getElementById("userNameInput").addEventListener("keyup", function(event)
+	{
+		if (event.keyCode === 13)
+		{
+			event.preventDefault();
+			document.getElementById("changeUsernameButton").click();
+		}
+	});
+	
 	document.getElementById("video").onseeked = updateServerTimeStamp;
 	document.getElementById("playButton").onclick = playButtonClicked;
 	document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;
 	document.getElementById("video").onmousemove = mouseHovered;
-	//document.getElementById("video").onpause = function(){ document.getElementById("playState").value = "paused"; document.getElementById("pushUpdate").value = parseInt(document.getElementById("pushUpdate").value) + 1; };
-	//document.getElementById("video").onplay = function(){ document.getElementById("playState").value = "playing"; document.getElementById("pushUpdate").value = parseInt(document.getElementById("pushUpdate").value) + 1; };
-	//document.getElementById("video").onseeked = function(){ document.getElementById("pushUpdate").value = parseInt(document.getElementById("pushUpdate").value) + 1; };
 	
 	document.getElementById("lobbyName").value = localStorage.getItem("lobbyName");
 	

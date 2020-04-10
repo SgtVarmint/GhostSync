@@ -3,6 +3,11 @@ video::-webkit-media-controls-play-button
 	display: none;
 }
 
+video::-webkit-media-controls-fullscreen-button
+{
+    display: none;
+}
+
 .controls
 {
 	height: 5%;

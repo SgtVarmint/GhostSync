@@ -16,7 +16,6 @@ function playButtonClicked()
 	}
 }
 
-var fullscreenEnabled = false;
 function fullscreenButtonClicked()
 {
 	if (fullscreenEnabled)
@@ -49,14 +48,15 @@ function fullscreenButtonClicked()
 	}
 		
 }
-
+var controlsTimeout;
 function mouseHovered()
 {
 	if (fullscreenEnabled)
 	{
+		window.clearTimeout(controlsTimeout);
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
-		setTimeout(hideControls, FULLSCREEN_CONTROLS_TIMEOUT * 1000);
+		controlsTimeout = setTimeout(hideControls, FULLSCREEN_CONTROLS_TIMEOUT * 1000);
 	}
 	else
 	{

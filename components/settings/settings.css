@@ -1,0 +1,36 @@
+#settings
+{
+	display: none;
+	position: fixed;
+	background: rgba(79, 79, 79, 0.7);
+	border-radius: 5px;
+	border: 1px solid white;
+	padding: 5px;
+	text-align: center;
+	width: 80%;
+	margin-left:10%;
+	margin-right:10%;
+	overflow: auto;
+	height: auto;
+	margin-top: 0px;
+}
+
+#settings a
+{
+	text-decoration: none;
+	color: white;
+	font-size: 1.5em;
+	padding: 5px;
+}
+
+#settings button
+{
+	padding: 5px;
+	font-size: 1.25em;
+	margin-bottom: 10px;
+}
+
+#toleranceSlider
+{
+	width: 50%;
+}

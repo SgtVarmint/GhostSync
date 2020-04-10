@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="/styles.css"/>
 		<link rel="stylesheet" href="/components/loader/loader.css"/>
 		<link rel="stylesheet" href="/components/controls/controls.css"/>
+		<link rel="stylesheet" href="/components/settings/settings.css"/>
 		<script src="/config.js"></script>
 		<script src="/libraryRoot.js"></script>
 		<script src="/components/lobby/videoBrowserControl.js"></script>
@@ -15,6 +16,7 @@
 		<script src="/components/loader/loader.js"></script>
 		<script src="/components/toast/toast.js"></script>
 		<script src="/components/controls/controls.js"></script>
+		<script src="/components/settings/settings.js"></script>
 		<!--<script src="/components/lobby/whoami.js"></script>-->
 		
 	</head>
@@ -29,6 +31,8 @@
 			<a href="/index.html" id="home">GhostSync</a>
 			<a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
 			<a href="javascript:videoBrowserButton();">Video Browser</a>
+			<a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+			<a href="javascript:settingsButton();">Settings</a>
 		</div>
 		<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
 		<div id="player">
@@ -51,6 +55,17 @@
 			<div id="videoBrowser">
 			
 			</div>
+		</div>
+		<div id="settings">
+			<h3>Username</h3>
+			<input type="text" id="userNameInput"></input><button id="changeUsernameButton" class="defaultButton">Change Username</button>
+			<br>
+			<hr>
+			<br>
+			<h3>Sync Tolerance</h3>
+			<span id="toleranceValue"></span><span> second(s)</span>
+			<br>
+			<input type="range" id="toleranceSlider"></input>
 		</div>
 		<div id="debug" style="display:none"></div>
 	</body>

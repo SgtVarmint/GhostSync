@@ -1,31 +1,21 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-//This value is to control whether this function should act as if called manually, or from clicking on UI//
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-var suppressUpdate = false;
-
+//This method is unnecessary, but was put in incase some mediary code is needed when calling before syncing
 function syncPull()
 {
 	syncVideo();
 }
 
+//Goes into the lobby file and updates current video timestamp, system time, current playstate, video file being played, and the user who submitted the update
 function updateServerTimeStamp()
 {
-	//alert("hit");
-	//if (suppressUpdate == true)
-	//{
-	//	document.getElementById("debug").innerHTML = "suppressed";
-	//	suppressUpdate = false;
-	//}
-	//else
-	//{
-		document.getElementById("debug").innerHTML = "allowed";
-		var xhttp = new XMLHttpRequest();
-		xhttp.open("POST","updateServerTimeStamp.php",true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + document.getElementById("video").currentTime + "&playState=" + document.getElementById("playState").value + "&filePath=" + document.getElementById("filePath").value + "&userUpdated=" + localStorage.getItem("userName"));
-	//}
+
+	document.getElementById("debug").innerHTML = "allowed";
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST","updateServerTimeStamp.php",true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + document.getElementById("video").currentTime + "&playState=" + document.getElementById("playState").value + "&filePath=" + document.getElementById("filePath").value + "&userUpdated=" + localStorage.getItem("userName"));
 }
 
+//Ajax portion of sync function
 function syncVideo()
 {
 	var xhttp = new XMLHttpRequest();
@@ -41,6 +31,7 @@ function syncVideo()
 	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value);
 }
 
+//Method stemming from sync video
 function syncVideoAction(file)
 {
 	var info = file.responseText.split("^");
@@ -53,7 +44,6 @@ function syncVideoAction(file)
 	var storedServerTime;
 	if (info[1] != undefined)
 	{
-		//var nowPlaying = info[3];
 		var fullPath = info[3].split("/");
 		var nowPlaying = fullPath[fullPath.length-1];
 		document.getElementById("nowPlaying").innerHTML = nowPlaying;
@@ -63,6 +53,7 @@ function syncVideoAction(file)
 		var timeOffset = parseFloat(document.getElementById("serverTime").value) - parseFloat(storedServerTime);
 		var newTimeStamp = parseFloat(info[0]) + timeOffset;
 		
+		//Checks if a new video was chosen for play, and changes to it if true
 		if (document.getElementById("filePath").value != info[3])
 		{
 			document.getElementById("filePath").value = info[3];
@@ -71,27 +62,32 @@ function syncVideoAction(file)
 			document.getElementById("video").load();
 			toast(info[4] + " Chose A New Video");
 		}
-		
+		//This is the driving force behind the sync function
+		//If the video on client is out of sync by greater than or less than the TOLERANCE value (set in config.js file), then video will be synced update
+		//This method will also handle pausing and playing;
 		if (document.getElementById("video").currentTime > newTimeStamp + TOLERANCE || document.getElementById("video").currentTime < newTimeStamp - TOLERANCE)
 		{
 			if (info[2] == "playing" && document.getElementById("video").paused)
 			{
 				document.getElementById("video").currentTime = newTimeStamp;
 				document.getElementById("playState").value = "playing";
-				//suppressUpdate = true;
 				document.getElementById("video").play();
-				//suppressUpdate = false;
 				document.getElementById("playButton").innerHTML = "&#x23f8;";
-				toast(info[4] + " Played The Video..");
+				if (fullscreenEnabled)
+					toast(info[4] + " Played The Video..", 3, "#player", "0", "0", "0", "-175px");
+				else
+					toast(info[4] + " Played The Video..");
 			}
 			else if (info[2] == "paused" && !document.getElementById("video").paused)
 			{
 				document.getElementById("playState").value = "paused";
-				//suppressUpdate = true;
 				document.getElementById("video").pause();
-				//suppressUpdate = false;
 				document.getElementById("playButton").innerHTML = "&#x25b6;";
-				toast(info[4] + " Paused The Video..");
+				if (fullscreenEnabled)
+					toast(info[4] + " Played The Video..", 3, "#player", "0", "0", "0", "-175px");
+				else
+					toast(info[4] + " Paused The Video..");
+				
 			}
 		}
 		else
@@ -102,7 +98,10 @@ function syncVideoAction(file)
 				document.getElementById("video").play();
 				//suppressUpdate = false;
 				document.getElementById("playButton").innerHTML = "&#x23f8;";
-				toast(info[4] + " Played The Video..");
+				if (fullscreenEnabled)
+					toast(info[4] + " Played The Video..", 3, "#player", "0", "0", "0", "-175px");
+				else
+					toast(info[4] + " Played The Video..");
 			}
 			else if (info[2] == "paused" && !document.getElementById("video").paused)
 			{
@@ -110,7 +109,10 @@ function syncVideoAction(file)
 				document.getElementById("video").pause();
 				//suppressUpdate = false;
 				document.getElementById("playButton").innerHTML = "&#x25b6;";
-				toast(info[4] + " Paused The Video..");
+				if (fullscreenEnabled)
+					toast(info[4] + " Paused The Video..", 3, "#player", "0", "0", "0", "-175px");
+				else
+					toast(info[4] + " Paused The Video..");
 			}
 		}
 	}
