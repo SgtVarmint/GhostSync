@@ -30,7 +30,25 @@ window.onload = function(){
 		}
 	});
 	
-	document.getElementById("video").onseeked = updateServerTimeStamp;
+	LOBBY_SOUND_SETTING = localStorage.getItem("lobbySounds");
+	if (LOBBY_SOUND_SETTING == null)
+	{
+		LOBBY_SOUND_SETTING = "on";
+		localStorage.setItem("lobbySounds", LOBBY_SOUND_SETTING);
+	}
+	else
+	{
+		LOBBY_SOUND_SETTING = localStorage.getItem("lobbySounds");
+	}
+	
+	//document.getElementById("lobbySoundsLabel").innerHTML = LOBBY_SOUND_SETTING;
+	document.getElementById("lobbySoundsToggle").checked = LOBBY_SOUND_SETTING == "on";
+	document.getElementById("lobbySoundsToggle").oninput = function(){
+		LOBBY_SOUND_SETTING = document.getElementById("lobbySoundsToggle").checked ? "on" : "off";
+		localStorage.setItem("lobbySounds", LOBBY_SOUND_SETTING);
+	};
+	
+	document.getElementById("video").onseeked = function(){ document.getElementById("video").play(); updateServerTimeStamp(); };
 	document.getElementById("playButton").onclick = playButtonClicked;
 	document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;
 	document.getElementById("video").onmousemove = mouseHovered;

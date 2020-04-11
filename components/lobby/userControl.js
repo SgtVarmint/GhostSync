@@ -60,7 +60,10 @@ function userUpdateAction(file)
 
 function playSound(fileName)
 {
-	var soundFile = new Audio("/sounds/" + fileName)
-	soundFile.volume = .25;
-	soundFile.play();
+	if (LOBBY_SOUND_SETTING == "on")
+	{
+		var soundFile = new Audio("/sounds/" + fileName)
+		soundFile.volume = .25;
+		soundFile.play();
+	}
 }

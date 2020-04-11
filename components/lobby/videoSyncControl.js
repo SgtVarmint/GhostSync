@@ -7,8 +7,7 @@ function syncPull()
 //Goes into the lobby file and updates current video timestamp, system time, current playstate, video file being played, and the user who submitted the update
 function updateServerTimeStamp()
 {
-
-	document.getElementById("debug").innerHTML = "allowed";
+	document.getElementById("debug").innerHTML = "UPDATE SENT";
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","updateServerTimeStamp.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -18,6 +17,7 @@ function updateServerTimeStamp()
 //Ajax portion of sync function
 function syncVideo()
 {
+	//getServerTime();
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","getServerTimeStamp.php",false);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -40,6 +40,7 @@ function syncVideoAction(file)
 	//Index 2 is the play state: either 'playing' or 'paused'
 	//Index 3 is the complete file path URL for the video
 	//Index 4 is the username of who posted the update
+	//Index 5 is the current system time when request was fetched
 	
 	var storedServerTime;
 	if (info[1] != undefined)
@@ -49,11 +50,11 @@ function syncVideoAction(file)
 		document.getElementById("nowPlaying").innerHTML = nowPlaying;
 		
 		storedServerTime = info[1].slice(0, info[1].length - 4) + "." + info[1].slice(info[1].length - 4, info[1].length - 1);
-		getServerTime();
-		var timeOffset = parseFloat(document.getElementById("serverTime").value) - parseFloat(storedServerTime);
+		currentServerTime = info[5].slice(0, info[5].length - 4) + "." + info[5].slice(info[5].length - 4, info[5].length - 1);
+		var timeOffset = parseFloat(currentServerTime) - parseFloat(storedServerTime);
 		var newTimeStamp = parseFloat(info[0]) + timeOffset;
 		
-		//Checks if a new video was chosen for play, and changes to it if true
+		//Checks if a new video was chosen for play, and changes it if true
 		if (document.getElementById("filePath").value != info[3])
 		{
 			document.getElementById("filePath").value = info[3];
@@ -69,7 +70,6 @@ function syncVideoAction(file)
 		{
 			if (info[2] == "playing" && document.getElementById("video").paused)
 			{
-				document.getElementById("video").currentTime = newTimeStamp;
 				document.getElementById("playState").value = "playing";
 				document.getElementById("video").play();
 				document.getElementById("playButton").innerHTML = "&#x23f8;";
@@ -88,6 +88,21 @@ function syncVideoAction(file)
 				else
 					toast(info[4] + " Paused The Video..");
 				
+			}
+			else if (info[2] == "playing" && !document.getElementById("video").paused)
+			{
+				document.getElementById("video").currentTime = newTimeStamp;
+				if (fullscreenEnabled)
+					toast("Syncing..", 3, "#player", "0", "0", "0", "-175px");
+				else
+					toast("Syncing..");
+			}
+			else if (info[2] == "paused" && document.getElementById("video").paused)
+			{
+				if (fullscreenEnabled)
+					toast(info[4] + " Changed The Timestamp..", 3, "#player", "0", "0", "0", "-175px");
+				else
+					toast(info[4] + " Changed The Timestamp..");
 			}
 		}
 		else
