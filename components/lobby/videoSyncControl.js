@@ -84,7 +84,7 @@ function syncVideoAction(file)
 				document.getElementById("video").pause();
 				document.getElementById("playButton").innerHTML = "&#x25b6;";
 				if (fullscreenEnabled)
-					toast(info[4] + " Played The Video..", 3, "#player", "0", "0", "0", "-175px");
+					toast(info[4] + " Paused The Video..", 3, "#player", "0", "0", "0", "-175px");
 				else
 					toast(info[4] + " Paused The Video..");
 				
@@ -97,6 +97,8 @@ function syncVideoAction(file)
 				else
 					toast("Syncing..");
 			}
+			
+			/*
 			else if (info[2] == "paused" && document.getElementById("video").paused)
 			{
 				if (fullscreenEnabled)
@@ -104,6 +106,7 @@ function syncVideoAction(file)
 				else
 					toast(info[4] + " Changed The Timestamp..");
 			}
+			*/
 		}
 		else
 		{

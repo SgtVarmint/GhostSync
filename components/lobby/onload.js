@@ -51,7 +51,7 @@ window.onload = function(){
 	document.getElementById("video").onseeked = function(){ document.getElementById("video").play(); updateServerTimeStamp(); };
 	document.getElementById("playButton").onclick = playButtonClicked;
 	document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;
-	document.getElementById("video").onmousemove = mouseHovered;
+	document.getElementById("player").onmousemove = mouseHovered;
 	
 	document.getElementById("lobbyName").value = localStorage.getItem("lobbyName");
 	
