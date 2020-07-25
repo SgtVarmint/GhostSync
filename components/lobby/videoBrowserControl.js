@@ -28,6 +28,7 @@ function parseMetadata(file)
 
 function videoBrowserButton()
 {
+	updateTracking();
 	if (document.getElementById("browser").style.display == "block")
 	{
 		document.getElementById("browser").style.display = "none";
@@ -36,6 +37,8 @@ function videoBrowserButton()
 	{
 		document.getElementById("browser").style.display = "block";
 		document.getElementById("settings").style.display = "none";
+		document.getElementById("youtubeMenu").style.display = "none";
+		getDirectoryInfo();
 	}
 }
 
@@ -59,23 +62,79 @@ function updateVideoBrowser(file)
 	var contents = file.responseText.split("|");
 	var videoBrowser = document.getElementById("videoBrowser");
 	videoBrowser.innerHTML = "";
+	
+	var progressColor0 = "#a09fbd";
+	var progressColor1 = "#a09fbd";
+	var progressColor2 = "#a09fbd";
+	var progressColor3 = "#a09fbd";
+	var progressColor4 = "#b8b8b8";	
+	
 	for (var i = 0; i < contents.length; i++)
 	{
+		var newSection = document.createElement("div");
 		if (contents[i].includes("."))
-		{
+		{	
 			var newVideo = document.createElement("a");
 			newVideo.innerHTML = contents[i];
 			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
-			videoBrowser.appendChild(newVideo);
+			newVideo.className = "videoBrowserVideo";
+			
+			var addToQueue = document.createElement("a");
+			addToQueue.innerHTML = "+";
+			var tempFileLocation = rootDir() + document.getElementById("currentDirectory").value + contents[i];
+			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
+			addToQueue.className = "addToQueue";
+			
+			//This section handles updating the tracking info for each video
+			var fullPath = rootDir() + document.getElementById("currentDirectory").value + contents[i];
+			fullPath = fullPath.replace(/\ /g, "%20");
+			for (var j = 0; j < trackingInfo.length; j++)
+			{
+				var temp = trackingInfo[j][0].replace(/\ /g, "%20");
+				if (fullPath.trim() == temp)
+				{
+					if (trackingInfo[j][2] == "0")
+					{
+						newVideo.style.color = progressColor0;
+						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+					}
+					else if (trackingInfo[j][2] == "1")
+					{
+						newVideo.style.color = progressColor1;
+						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+					}
+					else if (trackingInfo[j][2] == "2")
+					{
+						newVideo.style.color = progressColor2;
+						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+					}
+					else if (trackingInfo[j][2] == "3")
+					{
+						newVideo.style.color = progressColor3;
+						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+					}
+					else if (trackingInfo[j][2] == "4")
+					{
+						newVideo.style.color = progressColor4;
+					}
+					
+					newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+				}
+			}
+			
+			newSection.appendChild(addToQueue);
+			newSection.appendChild(newVideo);
 		}
 		else
 		{
 			var newDir = document.createElement("a");
 			newDir.innerHTML = contents[i];
 			newDir.href = 'javascript:videoBrowserDirClick("' + contents[i] + '");';
-			videoBrowser.appendChild(newDir);
+			newDir.className = "videoBrowserDir";
+			newSection.appendChild(newDir);
 		}
-		videoBrowser.appendChild(document.createElement("br"));
+		videoBrowser.appendChild(newSection);
+		//videoBrowser.appendChild(document.createElement("br"));
 	}
 }
 
@@ -85,20 +144,52 @@ function videoBrowserDirClick(inputDir)
 	getDirectoryInfo();
 }
 
-function videoBrowserVideoClick(inputVideo)
+function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationLogic = false)
 {
-	var fileLocation = rootDir() + document.getElementById("currentDirectory").value + inputVideo;
-	fileLocation = fileLocation.replace(/\ /g, "%20");
+	var fileLocation = "";
+	if (!overrideFileLocationLogic)
+		fileLocation = rootDir() + document.getElementById("currentDirectory").value + inputVideo;
+	else
+		fileLocation = inputVideo;
+	//fileLocation = fileLocation.replace(/\ /g, "%20");
 	document.getElementById("filePath").value = fileLocation;
 	document.getElementById("playState").value = "paused";
 	
-	updateServerTimeStamp();
+	//updateServerTimeStamp();
 	
 	document.getElementById("videoSource").src = fileLocation;
 	var temp = inputVideo.split(".");
 	document.getElementById("videoSource").type = "video/" + temp[1];
 	document.getElementById("video").load();
 	document.getElementById("browser").style.display = "none";
+	document.getElementById("video").style.display = "block";
+	document.getElementById("youtubePlayer").style.display = "none";
+	document.getElementById("seekSlider").style.display = "none";
+	
+	if (timestamp != 0)
+	{
+		document.getElementById("video").currentTime = timestamp;
+	}
+	
+	document.getElementById("playButton").innerHTML = "&#x25b6;";
+	videoEnded = true;
+	updateServerTimeStamp();
+	
+	//Detect if video is widescreen
+	var videoPlayer = document.getElementById("video");
+	var aspectRatio = parseFloat(videoPlayer.videoWidth) / parseFloat(videoPlayer.videoHeight);
+	if (aspectRatio > 2.0)
+	{
+		document.getElementById("video").className = fullscreenEnabled ? "widescreenVideo" : "widescreenVideo_fullscreen";
+	}
+	else if (aspectRatio > 1.5)
+	{
+		document.getElementById("video").className = fullscreenEnabled ? "fullVideo_fullscreen" : "fullVideo";
+	}
+	else
+	{
+		document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
+	}
 }
 
 function goBack()

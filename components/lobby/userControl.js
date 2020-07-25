@@ -1,6 +1,6 @@
 function userUpdate()
 {
-	var lobby = document.getElementById("lobbyName").value;
+	var timeStamp = isYoutubeVideo() ? youtubePlayer.getCurrentTime() : document.getElementById("video").currentTime;
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","userUpdate.php",false);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -11,7 +11,7 @@ function userUpdate()
 			userUpdateAction(this);
 		}
 	}
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&userName=" + localStorage.getItem("userName"));
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&userName=" + localStorage.getItem("userName") + "&timeStamp=" + timeStamp);
 }
 
 function userUpdateAction(file)
@@ -51,7 +51,14 @@ function userUpdateAction(file)
 			var info = userInfo[i].split("^");
 			var li = document.createElement("li");
 			li.className = "user";
-			li.innerHTML = info[0];
+			var temp = parseInt(info[2]);
+			var minutes = temp / 60;
+			var seconds = temp % 60;
+			if (seconds < 10)
+				seconds = "0" + seconds;
+			var hrTimeStamp = parseInt(minutes) + ":" + seconds;
+			
+			li.innerHTML = info[0] + " - " + hrTimeStamp;
 			document.getElementById("userList").appendChild(li);
 		}
 	}

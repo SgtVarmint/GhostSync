@@ -1,12 +1,26 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<!--<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />-->
 		<title>GhostSync Lobby</title>
 		<!--Dependencies-->
-		<link rel="stylesheet" href="/styles.css"/>
-		<link rel="stylesheet" href="/components/loader/loader.css"/>
-		<link rel="stylesheet" href="/components/controls/controls.css"/>
-		<link rel="stylesheet" href="/components/settings/settings.css"/>
+		<!--Phone Styles-->
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/styles_mobile.css"/>
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/loader/loader_mobile.css"/>
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/controls/controls_mobile.css"/>
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/settings/settings_mobile.css"/>
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/youtube/youtube_mobile.css"/>
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/tooltips/tooltips_mobile.css"/>
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/queue/queue_mobile.css"/>
+		<!--Desktop Styles-->
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/styles.css"/>
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/loader/loader.css"/>
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/controls/controls.css"/>
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/settings/settings.css"/>
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/youtube/youtube.css"/>
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/tooltips/tooltips.css"/>
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/queue/queue.css"/>
+		<!--Javascript Files-->
 		<script src="/config.js"></script>
 		<script src="/libraryRoot.js"></script>
 		<script src="/components/lobby/videoBrowserControl.js"></script>
@@ -17,6 +31,13 @@
 		<script src="/components/toast/toast.js"></script>
 		<script src="/components/controls/controls.js"></script>
 		<script src="/components/settings/settings.js"></script>
+		<script src="/components/youtube/youtube.js"></script>
+		<script src="/components/tooltips/tooltips.js"></script>
+		<script src="/components/authentication/authentication.js"></script>
+		<script src="/components/tracking/tracking.js"></script>
+		<script src="/components/confirm/confirm.js"></script>
+		<script src="/components/queue/queue.js"></script>
+		<script src="/components/mobile/mobile.js"></script>
 		<!--<script src="/components/lobby/whoami.js"></script>-->
 		
 	</head>
@@ -28,11 +49,13 @@
 		<input type="hidden" id="filePath" value=""></input>
 		<input type="hidden" id="pushUpdate" value="0"></input>
 		<div id="topNav">
-			<a href="/index.html" id="home">GhostSync</a>
-			<a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-			<a href="javascript:videoBrowserButton();">Video Browser</a>
-			<a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-			<a href="javascript:settingsButton();">Settings</a>
+			<a class="navButton" href="/index.html" id="home">GhostSync</a>
+			<span class="divider"></span>
+			<a class="navButton" href="javascript:videoBrowserButton();">Video Browser</a>
+			<span class="divider"></span>
+			<a class="navButton" href="javascript:youtubeButton();">Youtube</a>
+			<span class="divider"></span>
+			<a class="navButton" href="javascript:settingsButton();">Settings</a>
 		</div>
 		<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
 		<div id="player">
@@ -40,8 +63,14 @@
 			<video id="video" controls>
 				<source id="videoSource">
 			</video>
+			<div id="youtubePlayer" class="youtubeNormal">
+			
+			</div>
 			<button id="playButton" class="controls">&#x25b6;</button>
 			<button id="fullscreenButton" class="controls">&#x26F6;</button>
+			<button id="skipButton" class="controls">&#x23e9;</button>
+			<br>
+			<input id="seekSlider" type="range" class="controls"></input>
 		</div>
 		<div id="users">
 			<h3>Users In Lobby</h3>
@@ -56,23 +85,37 @@
 			
 			</div>
 		</div>
+		<div id="youtubeMenu">
+			<br><br><br><br><br> <!--Temporary solution to spacing issue in youtube dropdown.  (CSS is hard)-->
+			<span>YouTube Link:</span><input id="youtubeInput" type="text"></input>
+			<button class="defaultButton" id="youtubeAddToQueueButton">Add To Queue</button>
+			<button class="defaultButton" id="youtubePlayButton">Play Now</button>
+		</div>
 		<div id="settings">
-			<h3>Username</h3>
+			<h3>Username&nbsp;<span id="usernameTip" class="toolTip">&#63;</span></h3>
 			<input type="text" id="userNameInput"></input><button id="changeUsernameButton" class="defaultButton">Change Username</button>
 			<br>
 			<hr>
 			<br>
-			<h3>Lobby Sounds</h3>
+			<h3>Lobby Sounds&nbsp;<span id="soundsTip" class="toolTip">&#63;</span></h3>
 			<span id="lobbySoundsValue"></span>
 			<br>
 			<input type="checkbox" id="lobbySoundsToggle"></input>
 			<br>
 			<hr>
 			<br>
-			<h3>Sync Tolerance</h3>
-			<span id="toleranceValue"></span><span> second(s)</span>
+			<h3>Sync Tolerance&nbsp;<span id="toleranceTip" class="toolTip">&#63;</span></h3>
+			<span id="toleranceValue"></span><span class="label"> second(s)</span>
 			<br>
 			<input type="range" id="toleranceSlider"></input>
+			<br>
+			<hr>
+			<br>
+			<h3>Disable YouTube&nbsp;<span id="disableYoutubeTip" class="toolTip">&#63;</span></h3>
+			<input type="checkbox" id="youtubeDisabledToggle"></input>
+		</div>
+		<div id="queueArea">
+			<div id="queue"></div>
 		</div>
 		<div id="debug" style="display:none"></div>
 	</body>

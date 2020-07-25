@@ -1,19 +1,66 @@
-function playButtonClicked()
+function skipButtonClicked()
 {
-	if (document.getElementById("video").paused)
+	updateTracking();
+	if (queue.length > 0 && queue[0] != "undefined" && queue[0] != undefined)
 	{
-		document.getElementById("video").play();
-		document.getElementById("playState").value = "playing";
-		document.getElementById("playButton").innerHTML = "&#x23f8;";
-		updateServerTimeStamp();
+		if (queue[0].includes("watch?v="))
+			playYoutubeVideo(queue[0]);
+		else
+			videoBrowserVideoClick(queue[0], 0, true);
+		shiftQueue();
+		updateQueueDOM();
 	}
-	else
+}
+
+function playButtonClicked(pause = false)
+{
+	if (pause == true)
 	{
 		document.getElementById("video").pause();
 		document.getElementById("playState").value = "paused";
 		document.getElementById("playButton").innerHTML = "&#x25b6;";
+		videoEnded = true;
 		updateServerTimeStamp();
+		return;
 	}
+	if (isYoutubeVideo())
+	{
+		var state = youtubePlayer.getPlayerState()
+		//Paused or buffering
+		if (state == 2 || state == 3)
+		{
+			youtubePlayer.playVideo();
+			document.getElementById("playState").value = "playing";
+			document.getElementById("playButton").innerHTML = "&#x23f8;";
+			updateServerTimeStamp();
+		}
+		//Playing or any other state
+		else
+		{
+			youtubePlayer.pauseVideo();
+			document.getElementById("playState").value = "paused";
+			document.getElementById("playButton").innerHTML = "&#x25b6;";
+			updateServerTimeStamp();
+		}
+	}
+	else
+	{
+		if (document.getElementById("video").paused)
+		{
+			document.getElementById("video").play();
+			document.getElementById("playState").value = "playing";
+			document.getElementById("playButton").innerHTML = "&#x23f8;";
+			updateServerTimeStamp();
+		}
+		else
+		{
+			document.getElementById("video").pause();
+			document.getElementById("playState").value = "paused";
+			document.getElementById("playButton").innerHTML = "&#x25b6;";
+			updateServerTimeStamp();
+		}
+	}
+	updateTracking();
 }
 
 function fullscreenButtonClicked()
@@ -31,8 +78,29 @@ function fullscreenButtonClicked()
 		document.getElementById("fullscreenButton").style.top = "0%";
 		document.getElementById("fullscreenButton").style.left = "0%";
 		document.getElementById("fullscreenButton").style.display = "block";
+		
+		document.getElementById("seekSlider").style.position = "relative";
+		document.getElementById("seekSlider").style.top = "0%";
+		document.getElementById("seekSlider").style.left = "0%";
+		document.getElementById("seekSlider").style.display = "block";
 				
-		document.getElementById("video").className = "";
+		if (aspectRatio > 2.0)
+		{
+			document.getElementById("video").className = "widescreenVideo";
+		}
+		else if (aspectRatio > 1.5)
+		{
+			document.getElementById("video").className = "fullVideo";
+		}
+		else
+		{
+			document.getElementById("video").className = "standardVideo";
+		}
+		
+		if (isYoutubeVideo())
+		{
+			document.getElementById("youtubePlayer").className = "youtubeNormal";
+		}
 	}
 	else
 	{
@@ -48,13 +116,31 @@ function fullscreenButtonClicked()
 		document.getElementById("fullscreenButton").style.left = "50%";
 		document.getElementById("fullscreenButton").style.display = "none";
 		
+		document.getElementById("seekSlider").style.position = "absolute";
+		document.getElementById("seekSlider").style.top = "97%";
+		document.getElementById("seekSlider").style.left = "0";
+		document.getElementById("seekSlider").style.display = "none";
+		
+		if (isYoutubeVideo())
+		{
+			document.getElementById("youtubePlayer").className = "youtubeFull";
+		}
+		
 		//Detect if video is widescreen
 		var videoPlayer = document.getElementById("video");
 		var aspectRatio = parseFloat(videoPlayer.videoWidth) / parseFloat(videoPlayer.videoHeight);
 		
 		if (aspectRatio > 2.0)
 		{
-			document.getElementById("video").className = "widescreenVideo";
+			document.getElementById("video").className = "widescreenVideo_fullscreen";
+		}
+		else if (aspectRatio > 1.5)
+		{
+			document.getElementById("video").className = "fullVideo_fullscreen";
+		}
+		else
+		{
+			document.getElementById("video").className = "standardVideo_fullscreen";
 		}
 	}
 		
@@ -67,12 +153,16 @@ function mouseHovered()
 		window.clearTimeout(controlsTimeout);
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
+		if (isYoutubeVideo())
+			document.getElementById("seekSlider").style.display = "inline";
 		controlsTimeout = setTimeout(hideControls, FULLSCREEN_CONTROLS_TIMEOUT * 1000);
 	}
 	else
 	{
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
+		if (isYoutubeVideo())
+			document.getElementById("seekSlider").style.display = "inline";
 	}
 }
 
@@ -82,11 +172,14 @@ function hideControls()
 	{
 		document.getElementById("playButton").style.display = "none";
 		document.getElementById("fullscreenButton").style.display = "none";
+		document.getElementById("seekSlider").style.display = "none";
 	}
 	else
 	{
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
+		if (isYoutubeVideo())
+			document.getElementById("seekSlider").style.display = "inline";
 	}
 }
 
@@ -94,6 +187,8 @@ function showControlsNotFullscreen()
 {
 	document.getElementById("playButton").style.display = "inline";
 	document.getElementById("fullscreenButton").style.display = "inline";
+	if (isYoutubeVideo())
+		document.getElementById("seekSlider").style.display = "inline";
 }
 
 document.onkeypress = function(evt) {
@@ -102,3 +197,11 @@ document.onkeypress = function(evt) {
         showControlsNotFullscreen();
     }
 };
+
+function seekSliderSeeked()
+{
+	var newTimeStamp = (parseFloat(document.getElementById("seekSlider").value) / 100) * parseFloat(youtubePlayer.getDuration());
+	
+	youtubePlayer.seekTo(newTimeStamp, true);
+	updateServerTimeStamp(newTimeStamp);
+}

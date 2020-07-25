@@ -1,0 +1,50 @@
+#youtubeMenu
+{
+	display: none;
+	position: fixed;
+	background: rgba(79, 79, 79, 0.85);
+	border-radius: 5px;
+	border: 1px solid white;
+	padding: 5px;
+	text-align: center;
+	width: 90%;
+	margin-left:5%;
+	margin-right:5%;
+	overflow: auto;
+	height: auto;
+	margin-top: 0px;
+}
+
+#youtubeMenu span, #youtubeMenu input, #youtubeMenu button
+{
+	font-size: 4em;
+	float: left;
+	display: block;
+	clear: both;
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	padding: 10px;
+}
+
+#youtubeMenu input
+{
+	margin-bottom: 10px;
+}
+
+#youtubeMenu button
+{
+	margin-bottom: 50px;
+}
+
+.youtubeNormal
+{
+	width: 100%;
+	height: 390;
+}
+
+.youtubeFull
+{
+	width: 100%;
+	height: 100%;
+}

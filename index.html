@@ -1,26 +1,49 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<!--<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />-->
 		<title>GhostSync: Synchronize Video Watching</title>
 		<!--Dependencies-->
-		<link rel="stylesheet" href="/styles.css"/>
+		<!--Phone Styles-->
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/styles_mobile.css"/>
+		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/tooltips/tooltips_mobile.css"/>
+		<!--Desktop Styles-->
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/styles.css"/>
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/tooltips/tooltips.css"/>
+		<!--Javascript Files-->
 		<script src="/libraryRoot.js"></script>
 		<script src="/home/onload.js"></script>
 		<script src="/home/homeControl.js"></script>
+		<script src="/components/toast/toast.js"></script>
+		<script src="/components/authentication/authentication.js"></script>
+		<script src="/components/tooltips/tooltips.js"></script>
+		<script src="/components/mobile/mobile.js"></script>
+		<script src="/components/build/build.js"></script>
 	</head>
 	<body>
 		<div id="topNav">
-			<a href="index.html" id="home">GhostSync</a>
+			<a class="navButton" href="index.html" id="home">GhostSync</a>
+			<span class="divider"></span>
+			<a class="navButton" href="javascript: authenticationButton();">Authentication</a>
 		</div>
+		
+		<div id="auth">
+			<span>Authentication Key&nbsp;<span id="authTip" class="toolTip">&#63;</span></span>&nbsp;<input id="authText" type="text"></input><button class="defaultButton" id="authButton">Set</button>
+		</div>
+		
 		<div id="joinArea">
 			<div id="joinBox">
-				<h3>Lobby</h3>
+				<br>
 				<span>Lobby: <input type="text" id="lobbyInput"></span>
 				<br>
 				<span>Username: <input type="text" id="userInput"></span>
 				<br>
 				<button id="lobbyButton" class="defaultButton">Create/Join</button>
 			</div>
+		</div>
+		
+		<div id="buildInfo">
+			<span class="label">GhostSync Version <span class="label" id="versionNumber">XXX</span><!--&nbsp;deployed on <span id="buildDate">XXX</span>-->
 		</div>
 	</body>
 </html>

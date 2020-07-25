@@ -1,6 +1,6 @@
 #settings h3
 {
-	font-size: 1.5em;
+	font-size: 3em;
 }
 
 #settings
@@ -22,6 +22,7 @@
 
 #settings a
 {
+	width: 20%;
 	text-decoration: none;
 	color: white;
 	font-size: 1.5em;
@@ -30,33 +31,40 @@
 
 #settings input
 {
-	font-size: 2em;
+	font-size: 3em;
 }
 
 #settings button
 {
 	padding: 5px;
-	font-size: 1.25em;
+	font-size: 3em;
 	margin-bottom: 10px;
 }
 
 #toleranceSlider
 {
-	width: 50%;
-	transform: scale(1.5);
+	width: 20%;
+	height: 2em;
+	transform: scale(4);
+}
+
+#toleranceValue
+{
+	font-size: 2.5em;
+}
+
+#settings.label
+{
+	font-size: 2em;
 }
 
 #lobbySoundsToggle, #youtubeDisabledToggle
 {
 	margin-top: 0;
 	margin-bottom: 20px;
-	transform: scale(2.5);
+	transform: scale(4);
 }
 
-#toleranceValue
-{
-	font-size: 1em;
-}
 /* Main Classes */
 /*
 #lobbySoundsToggle:before {
