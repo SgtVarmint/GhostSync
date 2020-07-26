@@ -77,7 +77,7 @@ function updateTrackingInfo()
 	trackingInfoString += trackingInfo[trackingInfo.length - 1][2];
 	
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","/components/tracking/updateTrackingInfo.php",true);
+	xhttp.open("POST","/components/progression/updateTrackingInfo.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.onreadystatechange = function()
 	{
@@ -92,7 +92,7 @@ function updateTrackingInfo()
 function pullTrackingInfo()
 {
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","/components/tracking/pullTrackingInfo.php",true);
+	xhttp.open("POST","/components/progression/pullTrackingInfo.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.onreadystatechange = function()
 	{

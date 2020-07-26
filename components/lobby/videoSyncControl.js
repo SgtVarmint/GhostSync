@@ -1,6 +1,7 @@
 function syncPull()
 {
-	pullTrackingInfo();
+	//Figure out in what files these functions are defined. Please.
+	pullTrackingInfo(); // defined in progression.js
 	pullQueue();
 	checkForMobile();
 	if (!isYoutubeVideo())
