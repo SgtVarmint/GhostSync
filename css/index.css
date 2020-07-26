@@ -1,0 +1,8 @@
+body,html {
+    background-color: #29293d;
+    height:100%;
+  }
+
+.modal-header {
+    background-color: darkgray;
+}
