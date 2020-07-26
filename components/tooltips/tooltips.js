@@ -18,24 +18,21 @@ function toolTipOut()
 
 function getToolTipMessage(id)
 {
-	if (id == "usernameTip")
-	{
-		return "Changing username will result in your old username lingering for a moment in the lobby (which will make it appear as though someone new joined before your old username expires)";
-	}
-	else if(id == "soundsTip")
-	{
-		return "This toggles whether you will hear lobby sounds when someone leaves or joins the lobby";
-	}
-	else if(id == "toleranceTip")
-	{
-		return "Adjust this slider to suit your connection.  The lower the number, the more 'in-sync' with the lobby you will be, but it may cause issues if your network is slow.  Increase this value if you are having sync-buffering issues";
-	}
-	else if(id == "authTip")
-	{
-		return "An authentication key is required to access this site.  If you think you should have access to this site but do not, contact Ghostmij17#4572 through Discord";
-	}
-	else if(id == "disableYoutubeTip")
-	{
-		return "YouTube may cause issues with some browsers and settings.  If YouTube isn't working and/or the videos being played from server are not syncing properly, disabling YouTube may fix the issue";
+	switch(id){
+		case "usernameTip":
+			return "Changing username will result in your old username lingering for a moment in the lobby (which will make it appear as though someone new joined before your old username expires)";
+			break;
+		case "soundsTip":
+			return "This toggles whether you will hear lobby sounds when someone leaves or joins the lobby";
+			break;
+		case "toleranceTip":
+			return "Adjust this slider to suit your connection.  The lower the number, the more 'in-sync' with the lobby you will be, but it may cause issues if your network is slow.  Increase this value if you are having sync-buffering issues";
+			break;
+		case "authTip":
+			return "An authentication key is required to access this site.  If you think you should have access to this site but do not, contact Ghostmij17#4572 through Discord";
+			break;
+		case "disableYoutubeTip":
+			return "YouTube may cause issues with some browsers and settings.  If YouTube isn't working and/or the videos being played from server are not syncing properly, disabling YouTube may fix the issue";
+			break;
 	}
 }
