@@ -1,0 +1,67 @@
+#queueArea span
+{
+	color: white;
+	font-size: 3em;
+	padding: 5px;
+	z-index: -1;
+}
+
+#queueArea hr
+{
+	height: 2px;
+	background-color: gray;
+	border: none;
+}
+
+#queueArea
+{
+	visibility: hidden;
+	display: block;
+	float: left;
+	position: relative;
+	border: 1px solid gray;
+	border-radius: 10px;
+	text-align: left;
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 50px;
+	padding: 10px;
+	overflow: auto;
+}
+
+#queue
+{
+	display: block;
+}
+
+#queue a
+{
+	text-decoration: none;
+	color: gray;
+	font-size: 4em;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 5px;
+	transition: .25s;
+}
+
+.addToQueue
+{
+	text-decoration: none;
+	color: white;
+	font-size: 6em;
+	background-color: #326785;
+	padding: 0px;
+	margin: 0px;
+	border: 1px solid white;
+	border-radius: 5px;
+	transition: .25s;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#queue a:hover
+{
+	background-color: gray;
+	color: white;
+}

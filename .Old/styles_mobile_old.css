@@ -1,0 +1,278 @@
+#confirmDiv a
+{
+	font-size: 1.2em;
+	padding: 25px;
+}
+
+input
+{
+	border-radius: 10px;
+	padding-left: 5px;
+	font-size: 1.5em;
+	margin: 10px;
+}
+
+span
+{
+	color: white;
+}
+
+#joinArea
+{
+	margin-top: 20px;
+	background-color: #4f4f4f;
+	border-radius: 5px;
+	border: 1px solid white;
+	padding: 5px;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 580px;
+}
+
+#joinArea input, #joinArea span, #joinArea button
+{
+	display: block;
+	font-size: 2em;
+	width: 90%;
+	margin-left: 5%;
+	padding: 10px;
+}
+
+#joinArea input
+{
+	font-size: 1.5em;
+	padding: 10px;
+}
+
+#joinArea span
+{
+	font-size: 3em;
+}
+
+#joinArea button
+{
+	font-size: 4em;
+}
+
+h3
+{
+	color: white;
+	font-size: 3em;
+}
+
+#users h3
+{
+	font-size: 3em;
+}
+
+#player
+{
+	float: left;
+	width: 100%;
+}
+
+.widescreenVideo
+{
+	margin-top: 140px;
+}
+
+#users
+{
+	float: left;
+	width: 100%;
+}
+
+#users ul
+{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	color: #d3d3d3;
+}
+
+#userList li
+{
+	padding: 10px;
+	font-size: 3.6em;
+	background: rgb(0, 0, 0, .1);
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	width: 80%;
+}
+
+#browser
+{
+	display: none;
+	position: fixed;
+	background: rgba(79, 79, 79, 0.85);
+	border-radius: 5px;
+	border: 1px solid white;
+	padding: 5px;
+	text-align: left;
+	width: 80%;
+	margin-left:10%;
+	margin-right:10%;
+	overflow: auto;
+	height: 80%;
+	margin-top: -100px;
+	z-index: 100;
+}
+
+.videoBrowserVideo
+{
+	text-decoration: none;
+	color: white;
+	font-size: 4em;
+	padding: 3px;
+	margin: 5px;
+	transition: 0s;
+}
+
+.videoBrowserDir
+{
+	text-decoration: none;
+	color: #0090e3;
+	font-size: 4em;
+	padding: 3px;
+	margin: 5px;
+	transition: 0s;
+}
+
+#browser button
+{
+	padding: 5px;
+	width: 100%;
+	font-size: 4.5em;
+	margin-bottom: 10px;
+}
+
+video
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	outline: none;
+}
+
+#youtubePlayer
+{
+	display: none;
+}
+
+body{
+    margin: 0;
+    background-color: #29293d;
+	text-align: center;
+	font-family: arial;
+	overflow: auto;
+}
+
+#topNav{
+    background-color: #333333;
+    overflow: hidden;
+    height: 200px;
+	visibility: hidden;
+}
+
+#topNav a{
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 100px;
+	transition: .25s;
+	margin-right: auto;
+	margin-left: auto;
+	mergin-top: 80px;
+	width: 20%;
+	margin: 0;
+	position: relative;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.navButton:hover{
+    background-color: gray;
+	border-radius: 20px;
+}
+
+.defaultButton {
+	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	background-color:#768d87;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:11px 23px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;
+	margin-bottom: 5px;
+}
+.defaultButton:hover {
+	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	background-color:#6c7c7c;
+}
+.defaultButton:active {
+	position:relative;
+	top:1px;
+}
+
+#auth
+{
+	display: none;
+	position: fixed;
+	background: rgba(79, 79, 79, 0.95);
+	border-radius: 5px;
+	border: 1px solid white;
+	padding: 5px;
+	text-align: center;
+	width: 80%;
+	margin-left:10%;
+	margin-right:10%;
+	overflow: visible;
+	height: auto;
+	margin-top: 10px;
+}
+
+#auth input
+{
+	font-size: 2em;
+	padding: 5px;
+}
+
+#auth button
+{
+	font-size: 3em;
+}
+
+#auth > span
+{
+	font-size: 4em;
+}
+
+#authTip
+{
+	font-size: .4em;
+}
+
+#buildInfo
+{
+	position: fixed;
+	bottom: 0;
+	width: 95%;
+	text-align: right;
+	padding: 5px;
+	margin-right: 5%;
+	font-size: 3em;
+}

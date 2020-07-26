@@ -1,3 +1,0 @@
-1.0 - Initial full release
-1.1 - Adds progression tracking as well as queue
-1.1.1 - Fixes several bugs around queue
