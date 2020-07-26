@@ -57,7 +57,7 @@ function playYoutubeVideo(urlOverride = "")
 	{
 		var fullUrl = document.getElementById("youtubeInput").value.split("watch?v=")[1];
 		var youtubeVideoId = "";
-		if (urlOverride.split("watch?v=").length == 2)
+		if (urlOverride.length > 0 && urlOverride.split("watch?v=").length == 2)
 			youtubeVideoId = urlOverride.split("watch?v=")[1];
 		else
 			youtubeVideoId = document.getElementById("youtubeInput").value.split("watch?v=")[1];
