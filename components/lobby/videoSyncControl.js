@@ -90,10 +90,10 @@ function syncVideoAction(file)
 		if (document.getElementById("filePath").value != info[3])
 		{
 			document.getElementById("filePath").value = info[3];
-			
 			if (isYoutubeVideo())
 			{
 				//youtubePlayer.loadVideoById(document.getElementById("filePath").value, 0);
+				playYoutubeVideo("---watch?v=" + document.getElementById("filePath").value, false);
 			}
 			else
 			{

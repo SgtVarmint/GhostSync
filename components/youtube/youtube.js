@@ -17,6 +17,7 @@ function onYouTubeIframeAPIReady()
 //		width: '640',
 		videoId: '',
 		cookieFlags: 'sameSite=none',
+		host: 'http://www.youtube.com',
 		events: {
 			'onReady': onYoutubePlayerReady,
 			'onStateChange': onYoutubePlayerStateChange,
@@ -41,7 +42,7 @@ function youtubeButton()
 	}
 }
 
-function playYoutubeVideo(urlOverride = "")
+function playYoutubeVideo(urlOverride = "", update = true)
 {
 	if (youtubeDisabled)
 	{
@@ -68,7 +69,9 @@ function playYoutubeVideo(urlOverride = "")
 		document.getElementById("youtubePlayer").style.display = "block";
 		document.getElementById("video").style.display = "none";
 		document.getElementById("playButton").innerHTML = "&#x23f8;";
+		document.getElementById("playState").value = "playing";
 		
+	if (update)
 		updateServerTimeStamp(.01);
 	}
 }
@@ -94,9 +97,13 @@ function isYoutubeVideo()
 	if (youtubeDisabled || !youtubeReady)
 		return false;
 	if (document.getElementById("filePath").value.charAt(0) == "/" || document.getElementById("filePath").value == "")
+	{
 		return false;
+	}
 	else
+	{ 
 		return true;
+	}
 }
 
 function getYoutubeVideoTitle(url)
