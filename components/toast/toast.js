@@ -1,4 +1,16 @@
-function toast(message, timeout = 2, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
+function toast(message)
+{
+	if (fullscreenEnabled)
+	{
+		toastMessage(message, 3, "#player", "25%", "15%", "0", "0");
+	}
+	else
+	{
+		toastMessage(message)
+	}
+}
+
+function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
 {
 	var toastDiv = document.createElement("div");
 	if (!mobile)

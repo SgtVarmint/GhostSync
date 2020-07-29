@@ -205,3 +205,17 @@ function seekSliderSeeked()
 	youtubePlayer.seekTo(newTimeStamp, true);
 	updateServerTimeStamp(newTimeStamp);
 }
+
+function setPlayButtonImage(playing)
+{
+	//if playing is false, set the button to the 'pause' button
+	//if playing is true, set the button to the 'play' button
+	if (playing)
+	{
+		document.getElementById("playButton").innerHTML = "&#x23f8;";
+	}
+	else
+	{
+		document.getElementById("playButton").innerHTML = "&#x25b6;";
+	}
+}
