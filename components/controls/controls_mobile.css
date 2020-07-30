@@ -15,7 +15,7 @@ video::-webkit-media-controls-fullscreen-button
 	color: white;
 	border: none;
 	outline: none;
-	font-size: 5em;
+	font-size: 8em;
 }
 
 #seekSlider
@@ -24,4 +24,5 @@ video::-webkit-media-controls-fullscreen-button
 	width: 100%;
 	padding: 0;
 	margin: 0;
+	transform:scale(1);
 }

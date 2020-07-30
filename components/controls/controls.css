@@ -24,4 +24,5 @@ video::-webkit-media-controls-fullscreen-button
 	width: 100%;
 	padding: 0;
 	margin: 0;
+	transform: scale(1);
 }

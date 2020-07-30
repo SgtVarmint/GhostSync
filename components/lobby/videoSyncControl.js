@@ -219,7 +219,7 @@ function syncVideoAction(file)
 						else
 							youtubePlayer.seekTo(serverTimeStamp, true);
 						
-						toast(updateUser + " changed the timestamp..");
+						toast("Syncing..");
 					}
 					else
 					{

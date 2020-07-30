@@ -18,6 +18,7 @@
 	overflow: auto;
 	height: 70%;
 	margin-top: 0px;
+	z-index: 100;
 }
 
 #settings a

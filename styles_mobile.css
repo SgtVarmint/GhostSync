@@ -247,7 +247,8 @@ body{
 
 #auth input
 {
-	font-size: 2em;
+	font-size: 4em;
+	width: 70%;
 	padding: 5px;
 }
 

@@ -151,12 +151,9 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 		fileLocation = rootDir() + document.getElementById("currentDirectory").value + inputVideo;
 	else
 		fileLocation = inputVideo;
-	//fileLocation = fileLocation.replace(/\ /g, "%20");
 	document.getElementById("filePath").value = fileLocation;
 	document.getElementById("playState").value = "paused";
-	
-	//updateServerTimeStamp();
-	
+		
 	document.getElementById("videoSource").src = fileLocation;
 	var temp = inputVideo.split(".");
 	document.getElementById("videoSource").type = "video/" + temp[1];
@@ -164,7 +161,6 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	document.getElementById("browser").style.display = "none";
 	document.getElementById("video").style.display = "block";
 	document.getElementById("youtubePlayer").style.display = "none";
-	document.getElementById("seekSlider").style.display = "none";
 	
 	if (timestamp != 0)
 	{
