@@ -54,11 +54,12 @@ function pullQueue()
 	xhttp.send("lobbyName=" + localStorage.getItem("lobbyName"));
 }
 
+var queueDOMNeedsUpdate = true;
 function pullQueueInfo(file)
 {
 	//Get queue and load it into memory
 	var fileInfo = file.responseText.split("\n");
-	if (fileInfo[0] != "" || fileInfo[0] == "undefined")
+	if (fileInfo[0] != "" && fileInfo[0] != "undefined")
 	{
 		//Check if next video has changed from server
 		if (fileInfo[0] != queue[0] || fileInfo.length != queue.length)
@@ -68,21 +69,34 @@ function pullQueueInfo(file)
 			{
 				queue.push(fileInfo[i]);
 			}
+			queueDOMNeedsUpdate = true;
 		}
 	}
-	updateQueueDOM();
-	
+	else if (fileInfo[0] == "undefined")
+	{
+		if (queue.length > 0)
+		{
+			queue = new Array();
+			queueDOMNeedsUpdate = true;
+		}
+	}
+		
+	if (queueDOMNeedsUpdate)
+	{
+		toast("Queue updated..");
+		updateQueueDOM();
+		queueDOMNeedsUpdate = false;
+	}
 }
 
 function updateQueueDOM()
 {
 	//Display the queue on page
-	document.getElementById("queue").innerHTML = "";
-	if (queue[0] != undefined)
+	document.getElementById("queueArea").style.visibility = "visible";
+	document.getElementById("queue").style.display = "block";
+	document.getElementById("queue").innerHTML = "<span>Next Up..</span><hr>";
+	if (queue.length > 0)
 	{
-		document.getElementById("queueArea").style.visibility = "visible";
-		document.getElementById("queue").style.display = "block";
-		document.getElementById("queue").innerHTML = "<span>Next Up..</span><hr>";
 		for (var i = 0; i < queue.length; i++)
 		{
 			var video = document.createElement("a");
@@ -125,12 +139,8 @@ function updateQueueDOM()
 	else
 	{
 		queue = new Array();
-		updateQueue();
 		var video = document.createElement("a");
 		video.href = "javascript:return null;";
-		document.getElementById("queueArea").style.visibility = "visible";
-		document.getElementById("queue").style.display = "block";
-		document.getElementById("queue").innerHTML = "<span>Next Up..</span><hr>";
 		document.getElementById("queue").appendChild(video);
 	}
 }
@@ -176,21 +186,4 @@ function addYoutubeVideoToQueue()
 	document.getElementById("youtubeInput").value = "";
 	document.getElementById("youtubeMenu").style.display = "none";
 	toast("Video added to queue");
-}
-
-//Deprecated
-function queueButtonClicked()
-{
-	if (document.getElementById("queue").style.display == "block")
-	{
-		document.getElementById("queue").style.display = "none";
-	}
-	else
-	{
-		document.getElementById("queue").style.display = "block";
-		document.getElementById("browser").style.display = "none";
-		document.getElementById("settings").style.display = "none";
-		document.getElementById("youtubeMenu").style.display = "none";
-		getDirectoryInfo();
-	}
 }
