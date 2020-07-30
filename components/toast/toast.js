@@ -1,5 +1,6 @@
 function toast(message)
 {
+	removeToastMessage();
 	if (fullscreenEnabled)
 	{
 		toastMessage(message, 3, "#player", "25%", "15%", "0", "0");
@@ -53,6 +54,6 @@ function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop 
 
 function removeToastMessage()
 {
-	//document.querySelector(elementToAppendToG).removeChild(document.getElementById("toastDiv"));
-	document.getElementById("toastDiv").parentNode.removeChild(document.getElementById("toastDiv"));
+	if (document.getElementById("toastDiv") != null)
+		document.getElementById("toastDiv").parentNode.removeChild(document.getElementById("toastDiv"));
 }

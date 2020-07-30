@@ -65,6 +65,18 @@ var videoDuration;
 //Method stemming from sync video
 function syncVideoAction(file)
 {
+	var d = document.getElementById("debug");
+	d.innerHTML = "";
+	
+	
+	
+	/////////////////////////////////
+	//UNCOMMENT TO ENABLE DEBUGGING//
+	/////////////////////////////////
+	
+	//d.style.display = "block";
+	
+	
 	var info = file.responseText.split("^");
 	//Index 0 is the video timestamp
 	//Index 1 is the server time when it was last updated timestamp
@@ -73,12 +85,8 @@ function syncVideoAction(file)
 	//Index 4 is the username of who posted the update
 	//Index 5 is the current system time when request was fetched
 	
-	//DEBUG SECTION
-	var d = document.getElementById("debug");
-	////////////////////////////
-	//d.style.display = "block";
-	////////////////////////////
-	d.innerHTML = "";
+	var updateUser = info[4];
+	var serverTimeStamp = info[0];
 	
 	var storedServerTime;
 	var currentServerTime;
@@ -100,7 +108,7 @@ function syncVideoAction(file)
 			
 			if (isYoutubeVideo())
 			{
-				//youtubePlayer.loadVideoById(document.getElementById("filePath").value, 0);
+				youtubePlayer.loadVideoById(document.getElementById("filePath").value, 0);
 			}
 			else
 			{
@@ -142,16 +150,15 @@ function syncVideoAction(file)
 			document.getElementById("video").pause();
 			document.getElementById("youtubePlayer").style.display = "block";
 			document.getElementById("video").style.display = "none";
-			
-			document.getElementById("seekSlider").style.display = "block";
 		}
 		else
 		{
 			currentTime = document.getElementById("video").currentTime;
 			paused = document.getElementById("video").paused;
+
+			videoDuration = videoPlayer.duration;
+			document.getElementById("seekSlider").value = parseInt((parseFloat(currentTime) / parseFloat(videoDuration)) * 100);
 			
-			if (youtubePlayer != undefined)
-				youtubePlayer.pauseVideo();
 			document.getElementById("youtubePlayer").style.display = "none";
 			document.getElementById("video").style.display = "block";
 		}
@@ -169,13 +176,8 @@ function syncVideoAction(file)
 		
 		*/
 
-		//d.innerHTML += "YouTube:<br>";
-		//d.innerHTML += "Local Video:<br>";
-		d.innerHTML += "Local Pause: " + paused + "<br>";
-		d.innerHTML += "Server: " + info[2] + "<br>";
-		
-		d.innerHTML += "If POE: ";
-		
+		d.innerHTML += "Local: " + (paused ? "paused" : "playing") + "<br>";
+		d.innerHTML += "Server: " + info[2] + "<br>";		
 		
 		
 		
@@ -187,25 +189,92 @@ function syncVideoAction(file)
 		var outOfSync = checkForOutOfSync(currentTime, newTimeStamp);
 		d.innerHTML += "Current Time: " + currentTime + "<br>";
 		d.innerHTML += "newTimeStamp: " + (newTimeStamp + TOLERANCE)+ "<br>";
-		//First, sync up timestamps and play states
-		//If local video..
-		if (!isYoutubeVideo())
+		
+		var serverPaused = info[2] == "paused";
+		
+		var youtube = isYoutubeVideo();
+
+		if (serverPaused && !paused)
 		{
-			if (outOfSync)
-			{
-				videoPlayer.currentTime = newTimeStamp;
-				toast("Syncing..");
-			}
-		}
-		//If YouTube video..
-		else
-		{
-			if (outOfSync)
-			{
-				
-			}
+			outOfSync = true;
 		}
 		
+		d.innerHTML += "outOfSync: " + outOfSync + "<br>";
+		
+		if (outOfSync)
+		{
+			if (serverPaused)
+			{
+				setPlayButtonImage(false);
+				if (paused)
+				{
+					d.innerHTML += "pausedTimeStamp: " + pausedTimeStamp + "<br>";
+					d.innerHTML += "serverTimeStamp: " + serverTimeStamp + "<br>";
+					if (pausedTimeStamp != serverTimeStamp)
+					{
+						pausedTimeStamp = serverTimeStamp;
+						
+						if (!youtube)
+							videoPlayer.currentTime = serverTimeStamp;
+						else
+							youtubePlayer.seekTo(serverTimeStamp, true);
+						
+						toast(updateUser + " changed the timestamp..");
+					}
+					else
+					{
+						if (!youtube)
+						{
+							videoPlayer.currentTime = serverTimeStamp;
+						}
+						else
+						{
+							youtubePlayer.seekTo(serverTimeStamp, true);
+						}
+					}
+				}
+				else
+				{
+					if (!youtube)
+					{
+						videoPlayer.currentTime = newTimeStamp;
+						videoPlayer.pause();
+					}
+					else
+					{
+						youtubePlayer.seekTo(newTimeStamp, true);
+						youtubePlayer.pauseVideo();
+					}
+					toast(updateUser + " paused the video..");
+				}
+			}
+			else
+			{
+				setPlayButtonImage(true);
+				if (paused)
+				{
+					if (!youtube)
+					{
+						videoPlayer.currentTime = newTimeStamp;
+						videoPlayer.play();
+					}
+					else
+					{
+						youtubePlayer.seekTo(newTimeStamp, true);
+						youtubePlayer.playVideo();
+					}
+					toast(updateUser + " played the video..")
+				}
+				else
+				{
+					if (!youtube)
+						videoPlayer.currentTime = newTimeStamp;
+					else
+						youtubePlayer.seekTo(newTimeStamp, true);
+					toast("Syncing..")
+				}
+			}
+		}
 		
 		
 		//Set the title above video player
@@ -217,7 +286,6 @@ function syncVideoAction(file)
 		{
 			var fullPath = document.getElementById("filePath").value.split("/");
 			var nowPlaying = fullPath[fullPath.length-1];
-			document.getElementById("seekSlider").style.display = "none";
 		}
 		document.getElementById("nowPlaying").innerHTML = nowPlaying;
 		d.innerHTML += "<br> End of sync method";
