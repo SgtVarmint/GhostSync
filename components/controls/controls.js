@@ -57,6 +57,7 @@ function playButtonClicked(pause = false)
 			document.getElementById("video").pause();
 			document.getElementById("playState").value = "paused";
 			document.getElementById("playButton").innerHTML = "&#x25b6;";
+			pausedTimeStamp = document.getElementById("video").currentTime;
 			updateServerTimeStamp();
 		}
 	}
@@ -97,7 +98,7 @@ function fullscreenButtonClicked()
 			document.getElementById("video").className = "standardVideo";
 		}
 		
-		if (isYoutubeVideo())
+		//if (isYoutubeVideo())
 		{
 			document.getElementById("youtubePlayer").className = "youtubeNormal";
 		}
@@ -178,7 +179,7 @@ function hideControls()
 	{
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
-		if (isYoutubeVideo())
+		//if (isYoutubeVideo())
 			document.getElementById("seekSlider").style.display = "inline";
 	}
 }
@@ -187,7 +188,7 @@ function showControlsNotFullscreen()
 {
 	document.getElementById("playButton").style.display = "inline";
 	document.getElementById("fullscreenButton").style.display = "inline";
-	if (isYoutubeVideo())
+	//if (isYoutubeVideo())
 		document.getElementById("seekSlider").style.display = "inline";
 }
 
@@ -200,8 +201,29 @@ document.onkeypress = function(evt) {
 
 function seekSliderSeeked()
 {
-	var newTimeStamp = (parseFloat(document.getElementById("seekSlider").value) / 100) * parseFloat(youtubePlayer.getDuration());
-	
-	youtubePlayer.seekTo(newTimeStamp, true);
+	if (isYoutubeVideo())
+	{
+		var newTimeStamp = (parseFloat(document.getElementById("seekSlider").value) / 100) * parseFloat(youtubePlayer.getDuration());
+		youtubePlayer.seekTo(newTimeStamp, true);
+	}
+	else
+	{
+		var newTimeStamp = (parseFloat(document.getElementById("seekSlider").value) / 100) * parseFloat(document.getElementById("video").duration);
+		document.getElementById("video").currentTime = newTimeStamp;
+	}
 	updateServerTimeStamp(newTimeStamp);
+}
+
+function setPlayButtonImage(playing)
+{
+	//if playing is false, set the button to the 'pause' button
+	//if playing is true, set the button to the 'play' button
+	if (playing)
+	{
+		document.getElementById("playButton").innerHTML = "&#x23f8;";
+	}
+	else
+	{
+		document.getElementById("playButton").innerHTML = "&#x25b6;";
+	}
 }

@@ -14,3 +14,4 @@ var videoEnded = false;
 var mobile = false;
 var youtubeDisabled;
 var youtubeReady = false;
+var pausedTimeStamp = "";

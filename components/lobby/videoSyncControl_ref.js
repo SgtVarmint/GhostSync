@@ -52,31 +52,12 @@ function syncVideo()
 	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value);
 }
 
-////These variables are used to keep track of local video
-//Current time of video element
 var currentTime;
-//Boolean, when true, means video is paused
 var paused;
-//Total length of the video currently loaded
 var videoDuration;
-////
-
-
 //Method stemming from sync video
 function syncVideoAction(file)
 {
-	var d = document.getElementById("debug");
-	d.innerHTML = "";
-	
-	
-	
-	/////////////////////////////////
-	//UNCOMMENT TO ENABLE DEBUGGING//
-	/////////////////////////////////
-	
-	//d.style.display = "block";
-	
-	
 	var info = file.responseText.split("^");
 	//Index 0 is the video timestamp
 	//Index 1 is the server time when it was last updated timestamp
@@ -85,8 +66,12 @@ function syncVideoAction(file)
 	//Index 4 is the username of who posted the update
 	//Index 5 is the current system time when request was fetched
 	
-	var updateUser = info[4];
-	var serverTimeStamp = info[0];
+	//DEBUG SECTION
+	var d = document.getElementById("debug");
+	////////////////////////////
+	//d.style.display = "block";
+	////////////////////////////
+	d.innerHTML = "";
 	
 	var storedServerTime;
 	var currentServerTime;
@@ -108,7 +93,7 @@ function syncVideoAction(file)
 			
 			if (isYoutubeVideo())
 			{
-				youtubePlayer.loadVideoById(document.getElementById("filePath").value, 0);
+				//youtubePlayer.loadVideoById(document.getElementById("filePath").value, 0);
 			}
 			else
 			{
@@ -150,15 +135,16 @@ function syncVideoAction(file)
 			document.getElementById("video").pause();
 			document.getElementById("youtubePlayer").style.display = "block";
 			document.getElementById("video").style.display = "none";
+			
+			document.getElementById("seekSlider").style.display = "block";
 		}
 		else
 		{
 			currentTime = document.getElementById("video").currentTime;
 			paused = document.getElementById("video").paused;
-
-			videoDuration = videoPlayer.duration;
-			document.getElementById("seekSlider").value = parseInt((parseFloat(currentTime) / parseFloat(videoDuration)) * 100);
 			
+			if (youtubePlayer != undefined)
+				youtubePlayer.pauseVideo();
 			document.getElementById("youtubePlayer").style.display = "none";
 			document.getElementById("video").style.display = "block";
 		}
@@ -176,106 +162,150 @@ function syncVideoAction(file)
 		
 		*/
 
-		d.innerHTML += "Local: " + (paused ? "paused" : "playing") + "<br>";
-		d.innerHTML += "Server: " + info[2] + "<br>";		
+		//d.innerHTML += "YouTube:<br>";
+		//d.innerHTML += "Local Video:<br>";
+		d.innerHTML += "Local Pause: " + paused + "<br>";
+		d.innerHTML += "Server: " + info[2] + "<br>";
 		
+		d.innerHTML += "If POE: ";
 		
-		
-		/////////////////////////////
-		//SYNC SECTION
-		/////////////////////////////
-		
-		//Check if video is out of sync with server
-		var outOfSync = checkForOutOfSync(currentTime, newTimeStamp);
-		d.innerHTML += "Current Time: " + currentTime + "<br>";
-		d.innerHTML += "newTimeStamp: " + (newTimeStamp + TOLERANCE)+ "<br>";
-		
-		var serverPaused = info[2] == "paused";
-		
-		var youtube = isYoutubeVideo();
-
-		if (serverPaused && !paused)
+		if (videoEnded == true)
 		{
-			outOfSync = true;
+		//	return;
 		}
-		
-		d.innerHTML += "outOfSync: " + outOfSync + "<br>";
-		
-		if (outOfSync)
+		if ((currentTime > (newTimeStamp + TOLERANCE)) || (currentTime < (newTimeStamp - TOLERANCE)))
+		//if (parseInt(info[0]) != parseInt(savedTimeStamp))
 		{
-			if (serverPaused)
+			if (info[2] == "playing" && paused)
 			{
-				setPlayButtonImage(false);
-				if (paused)
+				d.innerHTML += "1";
+				if (isYoutubeVideo())
+					youtubePlayer.seekTo(newTimeStamp, true);
+				else
+					document.getElementById("video").currentTime = newTimeStamp;
+				document.getElementById("playState").value = "playing";
+				if (isYoutubeVideo())
+					youtubePlayer.playVideo();
+				else
+					document.getElementById("video").play();
+				
+				document.getElementById("playButton").innerHTML = "&#x23f8;";
+				if (fullscreenEnabled)
+					toast(info[4] + " Played The Video..", 3, "#player", "25%", "15%", "0", "0");
+				else
+					toast(info[4] + " Played The Video..");
+			}
+			else if (info[2] == "paused" && !paused)
+			{
+				d.innerHTML += "2";
+				if (isYoutubeVideo())
+					youtubePlayer.seekTo(newTimeStamp, true);
+				else
+					document.getElementById("video").currentTime = newTimeStamp;
+				document.getElementById("playState").value = "paused";
+				if (isYoutubeVideo())
+					youtubePlayer.pauseVideo();
+				else
+					document.getElementById("video").pause();
+				document.getElementById("playButton").innerHTML = "&#x25b6;";
+				if (fullscreenEnabled)
+					toast(info[4] + " Paused The Video..", 3, "#player", "25%", "15%", "0", "0");
+				else
+					toast(info[4] + " Paused The Video..");
+				
+			}
+			else if (info[2] == "playing" && !paused)
+			{
+				d.innerHTML += "3";
+				if (isYoutubeVideo())
 				{
-					d.innerHTML += "pausedTimeStamp: " + pausedTimeStamp + "<br>";
-					d.innerHTML += "serverTimeStamp: " + serverTimeStamp + "<br>";
-					if (pausedTimeStamp != serverTimeStamp)
+					d.innerHTML += "-1";
+					youtubePlayer.seekTo(newTimeStamp, true);
+					if (youtubePlayer.getPlayerState() != 0)
 					{
-						pausedTimeStamp = serverTimeStamp;
-						
-						if (!youtube)
-							videoPlayer.currentTime = serverTimeStamp;
+						youtubePlayer.playVideo();
+						if (fullscreenEnabled)
+							toast("Syncing..", 3, "#player", "25%", "15%", "0", "0");
 						else
-							youtubePlayer.seekTo(serverTimeStamp, true);
-						
-						toast(updateUser + " changed the timestamp..");
-					}
-					else
-					{
-						if (!youtube)
-						{
-							videoPlayer.currentTime = serverTimeStamp;
-						}
-						else
-						{
-							youtubePlayer.seekTo(serverTimeStamp, true);
-						}
+							toast("Syncing..");
 					}
 				}
 				else
 				{
-					if (!youtube)
+					d.innerHTML += "-2";
+					document.getElementById("video").currentTime = newTimeStamp;
+					if (document.getElementById("video").currentTime == !document.getElementById("video").duration)
 					{
-						videoPlayer.currentTime = newTimeStamp;
-						videoPlayer.pause();
+						document.getElementById("video").play();
+						if (fullscreenEnabled)
+							toast("Syncing..", 3, "#player", "25%", "15%", "0", "0");
+						else
+							toast("Syncing..");
 					}
-					else
-					{
-						youtubePlayer.seekTo(newTimeStamp, true);
-						youtubePlayer.pauseVideo();
-					}
-					toast(updateUser + " paused the video..");
 				}
+			}
+			/*
+			else if (info[2] == "paused" && document.getElementById("video").paused)
+			{
+				if (fullscreenEnabled)
+					toast(info[4] + " Changed The Timestamp..", 3, "#player", "0", "0", "0", "-175px");
+				else
+					toast(info[4] + " Changed The Timestamp..");
+			}
+			*/
+		}
+		else
+		{
+			if (info[2] == "playing" && paused)
+			{
+				d.innerHTML += "4";
+				if (isYoutubeVideo())
+					youtubePlayer.playVideo();
+				else
+					document.getElementById("video").play();
+				
+				document.getElementById("playButton").innerHTML = "&#x23f8;";
+				if (fullscreenEnabled)
+					toast(info[4] + " Played The Video..", 3, "#player", "25%", "15%", "0", "0");
+				else
+					toast(info[4] + " Played The Video..");
+			}
+			else if (info[2] == "paused" && paused)
+			{
+				d.innerHTML += "5";
+				if (isYoutubeVideo())
+					youtubePlayer.pauseVideo();
+				else
+					document.getElementById("video").pause();
+				
+				document.getElementById("playButton").innerHTML = "&#x25b6;";
+				if (fullscreenEnabled)
+					toast(info[4] + " Paused The Video..", 3, "#player", "25%", "15%", "0", "0");
+				else
+					toast(info[4] + " Paused The Video..");
+			}
+			else if (info[2] == "paused" && !paused)
+			{
+				d.innerHTML += "6";
+				document.getElementById("playState").value = "paused";
+				if (isYoutubeVideo())
+					youtubePlayer.pauseVideo();
+				else
+					document.getElementById("video").pause();
+				
+				document.getElementById("playButton").innerHTML = "&#x25b6;";
+				if (fullscreenEnabled)
+					toast(info[4] + " Paused The Video..", 3, "#player", "25%", "15%", "0", "0");
+				else
+					toast(info[4] + " Paused The Video..");
+				
 			}
 			else
 			{
-				setPlayButtonImage(true);
-				if (paused)
-				{
-					if (!youtube)
-					{
-						videoPlayer.currentTime = newTimeStamp;
-						videoPlayer.play();
-					}
-					else
-					{
-						youtubePlayer.seekTo(newTimeStamp, true);
-						youtubePlayer.playVideo();
-					}
-					toast(updateUser + " played the video..")
-				}
-				else
-				{
-					if (!youtube)
-						videoPlayer.currentTime = newTimeStamp;
-					else
-						youtubePlayer.seekTo(newTimeStamp, true);
-					toast("Syncing..")
-				}
+				//Everything is on-track
+				d.innerHTML += "7";
 			}
 		}
-		
 		
 		//Set the title above video player
 		if (isYoutubeVideo())
@@ -286,6 +316,7 @@ function syncVideoAction(file)
 		{
 			var fullPath = document.getElementById("filePath").value.split("/");
 			var nowPlaying = fullPath[fullPath.length-1];
+			document.getElementById("seekSlider").style.display = "none";
 		}
 		document.getElementById("nowPlaying").innerHTML = nowPlaying;
 		d.innerHTML += "<br> End of sync method";
@@ -313,14 +344,4 @@ function getServerTimeAction(file)
 	var temp = file.responseText;
 	var serverTime = temp.slice(0, temp.length - 4) + "." + temp.slice(temp.length - 4, temp.length - 1)
 	document.getElementById("serverTime").value = serverTime;
-}
-
-function checkForOutOfSync(currentTime, newTimeStamp)
-{
-	//If statement is split up for readability (as opposed to using || )
-	if (currentTime > (newTimeStamp + parseFloat(TOLERANCE)))
-		return true;
-	else if (currentTime < (newTimeStamp - parseFloat(TOLERANCE)))
-		return true;
-	else return false;
 }
