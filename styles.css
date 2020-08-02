@@ -312,6 +312,13 @@ body{
 	margin-top: 50px;
 }
 
+#auth input
+{
+	font-size: 1.5em;
+	width: 70%;
+	padding: 5px;
+}
+
 #auth button
 {
 	font-size: 1.5em;
