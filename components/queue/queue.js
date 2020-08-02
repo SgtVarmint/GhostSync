@@ -119,7 +119,7 @@ function updateQueueDOM()
 				if (titleIndex == -1)
 				{
 					var fetchedTitle = getYoutubeVideoTitle(queue[i]);
-					video.innerHTML = fetchedTitle
+					video.innerHTML = "(YT) " + fetchedTitle;
 					var newArray = new Array();
 					newArray.push(queue[i]);
 					newArray.push(fetchedTitle);
