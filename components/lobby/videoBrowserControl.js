@@ -42,7 +42,7 @@ function videoBrowserButton()
 	}
 }
 
-function getDirectoryInfo()
+function getDirectoryInfo(uploadsFolder = false)
 {
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","getDirectoryInfo.php",true);
@@ -51,13 +51,13 @@ function getDirectoryInfo()
 	{
 		if(this.readyState == 4 && this.status == 200)
 		{
-			updateVideoBrowser(this);
+			updateVideoBrowser(this, uploadsFolder);
 		}
 	}
 	xhttp.send("rootDir=" + rootDir() + "&subDir=" + document.getElementById("currentDirectory").value);
 }
 
-function updateVideoBrowser(file)
+function updateVideoBrowser(file, uploadsFolder = false)
 {
 	var contents = file.responseText.split("|");
 	var videoBrowser = document.getElementById("videoBrowser");
@@ -69,6 +69,68 @@ function updateVideoBrowser(file)
 	var progressColor3 = "#a09fbd";
 	var progressColor4 = "#b8b8b8";	
 	
+	//If this folder is the uploads folder, add button to allow uploads
+	if (uploadsFolder)
+	{
+		var newSection = document.createElement("div");
+		
+		//This form could be reworked to use DOM methods for creation as opposed to innerHTML
+		
+		//var newForm = document.createElement("form");
+		var newInput = document.createElement("input");
+		newInput.id = "fileInput";
+		//newForm.method = "post";
+		//newForm.enctype = "multipart/form-data";
+		//newForm.action = "/components/upload/upload.php
+		
+		newInput.onchange = function(e){
+		//newForm.submit(); 
+		e.preventDefault();
+		uploadFile();	
+		}
+		
+		newInput.type = "file";
+		newInput.name = "file";
+		newInput.multiple = false;
+		
+		newSection.className = "fileUploadSection";
+		//newForm.className = "fileUploadSection";
+		newInput.className = "fileUploadSection";
+		
+		//newForm.appendChild(newInput);
+		newSection.appendChild(newInput);
+		
+		videoBrowser.appendChild(newSection);
+		
+/*
+		//This section was ripped from https://www.taniarascia.com/how-to-upload-files-to-a-server-with-plain-javascript-and-php/#:~:text=Build%20the%20simplest%20possible%20form,uploads%2F%20directory%20on%20a%20server.
+		//Slight modifications were made
+
+		const url = '/components/upload/upload.php'
+		const form = document.querySelector('form')
+
+		form.addEventListener('submit', (e) => {
+		  e.preventDefault()
+
+		  const files = document.querySelector('[type=file]').files
+		  const formData = new FormData()
+
+		  for (let i = 0; i < files.length; i++) {
+			let file = files[i]
+
+			formData.append('files[]', file)
+		}
+
+		  fetch(url, {
+			method: 'POST',
+			body: formData,
+		  }).then((response) => {
+			console.log(response)
+		  })
+		})
+*/
+	}
+
 	for (var i = 0; i < contents.length; i++)
 	{
 		var newSection = document.createElement("div");
@@ -141,7 +203,12 @@ function updateVideoBrowser(file)
 function videoBrowserDirClick(inputDir)
 {
 	document.getElementById("currentDirectory").value += inputDir + "/";
-	getDirectoryInfo();
+	
+	var uploadsFolder = false;
+	if (inputDir == "Uploads")
+		uploadsFolder = true;
+	
+	getDirectoryInfo(uploadsFolder);
 }
 
 function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationLogic = false)
