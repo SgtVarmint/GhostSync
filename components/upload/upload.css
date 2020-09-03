@@ -1,0 +1,17 @@
+button.fileUploadSection
+{
+	border: solid black;
+	border-radius: 10px;
+	background-color: white;
+}
+
+#uploadProgress
+{
+	position: fixed;
+	width: 90%;
+	top: 50px;
+	left: 5%;
+	height: .5em;
+	margin-left: auto;
+	margin-right: auto;
+}

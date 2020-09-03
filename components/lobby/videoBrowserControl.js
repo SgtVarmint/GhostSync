@@ -38,7 +38,6 @@ function videoBrowserButton()
 		document.getElementById("browser").style.display = "block";
 		document.getElementById("settings").style.display = "none";
 		document.getElementById("youtubeMenu").style.display = "none";
-		getDirectoryInfo();
 	}
 }
 
@@ -73,62 +72,34 @@ function updateVideoBrowser(file, uploadsFolder = false)
 	if (uploadsFolder)
 	{
 		var newSection = document.createElement("div");
-		
-		//This form could be reworked to use DOM methods for creation as opposed to innerHTML
-		
-		//var newForm = document.createElement("form");
+		//This label will be tied to the file input element
+		var newButton = document.createElement("button");
+		//This input will be hidden
 		var newInput = document.createElement("input");
-		newInput.id = "fileInput";
-		//newForm.method = "post";
-		//newForm.enctype = "multipart/form-data";
-		//newForm.action = "/components/upload/upload.php
 		
+		newButton.onclick = function(){ document.getElementById("fileInput").click() };
+		newButton.innerHTML = "Upload Video(s)";
+		
+		newInput.id = "fileInput";
 		newInput.onchange = function(e){
-		//newForm.submit(); 
 		e.preventDefault();
+		document.getElementById("browser").style.display = "none";
 		uploadFile();	
 		}
 		
 		newInput.type = "file";
 		newInput.name = "file";
-		newInput.multiple = false;
+		newInput.multiple = true;
+		newInput.style.display = "none";
 		
 		newSection.className = "fileUploadSection";
-		//newForm.className = "fileUploadSection";
+		newButton.className = "defaultButton";
 		newInput.className = "fileUploadSection";
 		
-		//newForm.appendChild(newInput);
+		newSection.appendChild(newButton);
 		newSection.appendChild(newInput);
 		
 		videoBrowser.appendChild(newSection);
-		
-/*
-		//This section was ripped from https://www.taniarascia.com/how-to-upload-files-to-a-server-with-plain-javascript-and-php/#:~:text=Build%20the%20simplest%20possible%20form,uploads%2F%20directory%20on%20a%20server.
-		//Slight modifications were made
-
-		const url = '/components/upload/upload.php'
-		const form = document.querySelector('form')
-
-		form.addEventListener('submit', (e) => {
-		  e.preventDefault()
-
-		  const files = document.querySelector('[type=file]').files
-		  const formData = new FormData()
-
-		  for (let i = 0; i < files.length; i++) {
-			let file = files[i]
-
-			formData.append('files[]', file)
-		}
-
-		  fetch(url, {
-			method: 'POST',
-			body: formData,
-		  }).then((response) => {
-			console.log(response)
-		  })
-		})
-*/
 	}
 
 	for (var i = 0; i < contents.length; i++)
