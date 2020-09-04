@@ -17,6 +17,11 @@ function uploadFile()
 		//When upload is finished, clean up..
 		toast("Upload Done!");
 		document.getElementById("uploadProgress").parentNode.removeChild(document.getElementById("uploadProgress"));
+		if (document.getElementById("currentDirectory").value.includes("/Uploads/"))
+		{
+			alert("hit");
+			getDirectoryInfo(true);
+		}
     }, false);
 			
 	if ( xhttp.upload )

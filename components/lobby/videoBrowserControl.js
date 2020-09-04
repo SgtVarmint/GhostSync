@@ -84,7 +84,10 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		newInput.onchange = function(e){
 		e.preventDefault();
 		document.getElementById("browser").style.display = "none";
-		uploadFile();	
+		if (this.files.length > 0)
+			uploadFile();
+		else
+			toast("Upload cancelled");
 		}
 		
 		newInput.type = "file";
