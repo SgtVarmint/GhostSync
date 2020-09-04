@@ -8,9 +8,9 @@ function syncPull()
 	{
 		var timestamp = document.getElementById("video").currentTime;
 		var duration = document.getElementById("video").duration;
-		if (duration - 6 < timestamp)
+		if (duration <= timestamp)
 		{
-			playButtonClicked(true);
+			skipButtonClicked();
 		}
 	}
 	syncVideo();

@@ -185,7 +185,7 @@ function videoBrowserDirClick(inputDir)
 	getDirectoryInfo(uploadsFolder);
 }
 
-function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationLogic = false)
+function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationLogic = false, overridePlaystateToPlay = false)
 {
 	var fileLocation = "";
 	if (!overrideFileLocationLogic)
@@ -193,7 +193,7 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	else
 		fileLocation = inputVideo;
 	document.getElementById("filePath").value = fileLocation;
-	document.getElementById("playState").value = "paused";
+	document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
 	document.getElementById("videoSource").src = fileLocation;
 	var temp = inputVideo.split(".");

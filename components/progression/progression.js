@@ -22,27 +22,37 @@ function updateTracking()
 	if (percentageFinished >= 0.0 && percentageFinished <= 0.25)
 	{
 		progressNumber = "0";
+		videoEnded = false;
 	}
 	else if(percentageFinished > 0.25 && percentageFinished <= 0.50)
 	{
 		progressNumber = "1";
+		videoEnded = false;
 	}
 	else if(percentageFinished > 0.50 && percentageFinished <= 0.75)
 	{
 		progressNumber = "2";
+		videoEnded = false;
 	}
-	else if(percentageFinished > 0.75 && percentageFinished <= 0.90)
+	else if(percentageFinished > 0.75 && percentageFinished <= 0.95)
 	{
 		progressNumber = "3";
+		videoEnded = false;
 	}
-	else if(percentageFinished > 0.90)
+	else if(percentageFinished > 0.95)
 	{
 		progressNumber = "4";
+		videoEnded = true;
 	}
 	
-	if (titleAlreadyTrackedIndex != -1)
+	if (titleAlreadyTrackedIndex != -1 && !videoEnded)
 	{
 		trackingInfo[titleAlreadyTrackedIndex][1] = currentTime;
+		trackingInfo[titleAlreadyTrackedIndex][2] = progressNumber;
+	}
+	else if (titleAlreadyTrackedIndex != 1 && videoEnded)
+	{
+		trackingInfo[titleAlreadyTrackedIndex][1] = 0;
 		trackingInfo[titleAlreadyTrackedIndex][2] = progressNumber;
 	}
 	else

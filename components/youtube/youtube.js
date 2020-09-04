@@ -41,7 +41,7 @@ function youtubeButton()
 	}
 }
 
-function playYoutubeVideo(urlOverride = "")
+function playYoutubeVideo(urlOverride = "", overridePlaystateToPlay = false)
 {
 	if (youtubeDisabled)
 	{
@@ -68,6 +68,7 @@ function playYoutubeVideo(urlOverride = "")
 		document.getElementById("youtubePlayer").style.display = "block";
 		document.getElementById("video").style.display = "none";
 		document.getElementById("playButton").innerHTML = "&#x23f8;";
+		document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
 		updateServerTimeStamp(.01);
 	}

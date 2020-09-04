@@ -4,9 +4,9 @@ function skipButtonClicked()
 	if (queue.length > 0 && queue[0] != "undefined" && queue[0] != undefined)
 	{
 		if (queue[0].includes("watch?v="))
-			playYoutubeVideo(queue[0]);
+			playYoutubeVideo(queue[0], true);
 		else
-			videoBrowserVideoClick(queue[0], 0, true);
+			videoBrowserVideoClick(queue[0], 0, true, true);
 		shiftQueue();
 		updateQueueDOM();
 	}
