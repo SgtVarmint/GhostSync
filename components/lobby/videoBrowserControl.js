@@ -62,11 +62,11 @@ function updateVideoBrowser(file, uploadsFolder = false)
 	var videoBrowser = document.getElementById("videoBrowser");
 	videoBrowser.innerHTML = "";
 	
-	var progressColor0 = "#a09fbd";
-	var progressColor1 = "#a09fbd";
-	var progressColor2 = "#a09fbd";
-	var progressColor3 = "#a09fbd";
-	var progressColor4 = "#b8b8b8";	
+	var progressColor0 = "white";
+	var progressColor1 = "#7dafff";
+	var progressColor2 = "#7dafff";
+	var progressColor3 = "#7dafff";
+	var progressColor4 = "#b8b8b8";
 	
 	//If this folder is the uploads folder, add button to allow uploads
 	if (uploadsFolder)
