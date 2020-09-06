@@ -19,7 +19,6 @@ function uploadFile()
 		document.getElementById("uploadProgress").parentNode.removeChild(document.getElementById("uploadProgress"));
 		if (document.getElementById("currentDirectory").value.includes("/Uploads/"))
 		{
-			alert("hit");
 			getDirectoryInfo(true);
 		}
     }, false);

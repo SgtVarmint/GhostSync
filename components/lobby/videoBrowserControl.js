@@ -196,8 +196,13 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
 	document.getElementById("videoSource").src = fileLocation;
-	var temp = inputVideo.split(".");
-	document.getElementById("videoSource").type = "video/" + temp[1];
+	///////////////
+	//This gets the file extension and sets the video source type
+	//For mov and mkv files, the type seems to have to be set to video/mp4 regardless
+	//DESPITE THIS, this can just be left blank and HTML knows how to handle the extension
+	///////////////
+	//var temp = inputVideo.split(".");
+	//document.getElementById("videoSource").type = "video/" + temp[temp.length - 1] == "mkv" || temp[temp.length - 1] == "mov" ? "mp4" : temp[temp.length - 1];
 	document.getElementById("video").load();
 	document.getElementById("browser").style.display = "none";
 	document.getElementById("video").style.display = "block";

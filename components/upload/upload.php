@@ -1,7 +1,7 @@
 <?php
 
 $path = '/Videos/Uploads/';
-$extensions = ['video/mp4', 'video/mov', 'video/mvk'];
+$extensions = ['video/mp4', 'video/mov', 'video/mvk', 'video/quicktime'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 { 
