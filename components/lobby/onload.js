@@ -6,26 +6,6 @@ window.onload = function(){
 		TOLERANCE = .3;
 		localStorage.setItem("tolerance", TOLERANCE);
 	}
-
-	if (localStorage.getItem("youtubeDisabled") == null)
-	{
-		youtubeDisabled = false;
-		localStorage.setItem("youtubeDisabled", "false");
-	}
-	else if (localStorage.getItem("youtubeDisabled") == "true")
-	{
-		youtubeDisabled = true;
-	}
-	else
-	{
-		youtubeDisabled = false;
-	}
-	document.getElementById("youtubeDisabledToggle").checked = youtubeDisabled;
-	document.getElementById("youtubeDisabledToggle").oninput = function(){
-		youtubeDisabled = document.getElementById("youtubeDisabledToggle").checked;
-		localStorage.setItem("youtubeDisabled", youtubeDisabled ? "true" : "false");
-		location.reload();
-	};
 	
 	initYoutube();
 	

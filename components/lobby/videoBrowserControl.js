@@ -31,13 +31,19 @@ function videoBrowserButton()
 	updateTracking();
 	if (document.getElementById("browser").style.display == "block")
 	{
-		document.getElementById("browser").style.display = "none";
+		setTimeout(function(){ document.getElementById("browser").style.display = "none"; }, 200);
+		document.getElementById("browser").className = "popupWindow_out";
 	}
 	else
 	{
+		setTimeout(function(){
+			document.getElementById("settings").style.display = "none";
+			document.getElementById("youtubeMenu").style.display = "none";
+		}, 200);
+		document.getElementById("youtubeMenu").className = "popupWindow_out";
+		document.getElementById("settings").className = "popupWindow_out";
 		document.getElementById("browser").style.display = "block";
-		document.getElementById("settings").style.display = "none";
-		document.getElementById("youtubeMenu").style.display = "none";
+		document.getElementById("browser").className = "popupWindow_in";
 	}
 }
 
