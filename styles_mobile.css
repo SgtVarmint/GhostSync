@@ -4,6 +4,46 @@
 	padding: 25px;
 }
 
+@keyframes popup-in
+{
+	from
+	{
+		opacity: 0;
+		margin-top: 0px;
+	}
+	to
+	{
+		opacity: 1;
+		margin-top: -100px;
+	}
+}
+
+@keyframes popup-out
+{
+	from
+	{
+		opacity: 1;
+		margin-top: -100px;
+	}
+	to
+	{
+		opacity: 0;
+		margin-top: 0px;
+	}
+}
+
+.popupWindow_in
+{
+	animation-name: popup-in;
+	animation-duration: .2s;
+}
+
+.popupWindow_out
+{
+	animation-name: popup-out;
+	animation-duration: .2s;
+}
+
 input
 {
 	border-radius: 10px;
