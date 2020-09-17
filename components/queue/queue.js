@@ -94,7 +94,21 @@ function updateQueueDOM()
 	//Display the queue on page
 	document.getElementById("queueArea").style.visibility = "visible";
 	document.getElementById("queue").style.display = "block";
-	document.getElementById("queue").innerHTML = "<span>Next Up..</span><hr>";
+	document.getElementById("queue").innerHTML = "";
+	
+	var newText = document.createElement("span");
+	newText.innerHTML = "Next Up..";
+	document.getElementById("queue").appendChild(newText);
+	
+	document.getElementById("queue").appendChild(document.createElement("hr"));
+	
+	var clearButton = document.createElement("a");
+	clearButton.innerHTML = "Clear Queue";
+	clearButton.href = "javascript:clearButtonClicked();";
+	document.getElementById("queue").appendChild(clearButton);
+	
+	document.getElementById("queue").appendChild(document.createElement("hr"));
+	
 	if (queue.length > 0)
 	{
 		for (var i = 0; i < queue.length; i++)
@@ -145,27 +159,47 @@ function updateQueueDOM()
 	}
 }
 
-var indexToRemove = 0;
-
 function queueVideoClicked(video, index)
-{
-	indexToRemove = index;
-	ghostConfirm("Remove " + video + " video from the queue?", "removeQueueVideo");
+{	
+	customQueuePopup(video, index);
 }
 
-function removeQueueVideo(confirmed)
+function removeQueueVideo(indexToRemove)
 {
-	if (confirmed)
-	{
-		queue.splice(indexToRemove, 1);
-		updateQueue();
+	queue.splice(indexToRemove, 1);
+	updateQueue();
 		
-		toast("Video removed from queue");
+	toast("Video removed from queue");
+	updateQueueDOM();
+}
+
+function pushToFrontOfQueue(indexToPush)
+{
+	var tempVideo = queue[indexToPush];
+	queue.splice(indexToPush, 1);
+	queue.unshift(tempVideo);
+	updateQueue();
+	toast("Video moved to top of queue");
+	updateQueueDOM();
+}
+
+function clearButtonClicked()
+{
+	ghostConfirm("This will COMPLETELY wipe the current queue.&nbsp;&nbsp;Are you sure you want to do this?", "clearQueue");
+}
+
+function clearQueue(confirm)
+{
+	if (confirm)
+	{
+		queue = new Array();
+		updateQueue();
 		updateQueueDOM();
+		toast("Queue has been cleared");
 	}
 	else
 	{
-		//Cancel was clicked
+		//Cancel clicked
 	}
 }
 
@@ -186,4 +220,79 @@ function addYoutubeVideoToQueue()
 	document.getElementById("youtubeInput").value = "";
 	document.getElementById("youtubeMenu").style.display = "none";
 	toast("Video added to queue");
+}
+
+function customQueuePopup(message, index, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
+{
+	var confirmDiv = document.createElement("div");
+
+	var messageDiv = document.createElement("div");
+	messageDiv.innerHTML = message;
+	confirmDiv.appendChild(messageDiv);
+	
+	var buttonDiv = document.createElement("div");
+	
+	var moveToFrontButton = document.createElement("a");
+	moveToFrontButton.innerHTML = "Play Next";
+	moveToFrontButton.href = "javascript:pushToFrontOfQueue(" + index + "); removeCustomQueuePopup();";
+	moveToFrontButton.className = "defaultButton";
+	moveToFrontButton.style.margin = "10px";
+	buttonDiv.appendChild(moveToFrontButton);
+	
+	var removeButton = document.createElement("a");
+	removeButton.innerHTML = "Remove";
+	removeButton.href = "javascript:removeQueueVideo(" + index + ") ; removeCustomQueuePopup();";
+	removeButton.className = "defaultButton";
+	removeButton.style.margin = "10px";
+	buttonDiv.appendChild(removeButton);
+	
+	var cancelButton = document.createElement("a");
+	cancelButton.innerHTML = "Cancel";
+	cancelButton.href = "javascript:removeCustomQueuePopup();";
+	cancelButton.className = "defaultButton";
+	cancelButton.style.margin = "10px";
+	buttonDiv.appendChild(cancelButton);
+	
+	confirmDiv.appendChild(buttonDiv);
+
+	if (!mobile)
+	{
+		confirmDiv.id = "confirmDiv";
+		confirmDiv.style.position = "fixed";
+		confirmDiv.style.width = "74%";
+		confirmDiv.style.background = "rgba(79, 79, 79, 0.8)";
+		confirmDiv.style.border = "2px solid white";
+		confirmDiv.style.textAlign = "center";
+		confirmDiv.style.marginTop = margTop;
+		confirmDiv.style.marginLeft = margLeft;
+		confirmDiv.style.marginRight = margRight;
+		confirmDiv.style.padding = "20px";
+		confirmDiv.style.borderRadius = "10px";
+		confirmDiv.style.color = "white";
+		confirmDiv.style.top = styleTop;
+	}
+	else
+	{
+		confirmDiv.id = "confirmDiv";
+		confirmDiv.style.position = "fixed";
+		confirmDiv.style.width = "74%";
+		confirmDiv.style.background = "rgba(79, 79, 79, 0.8)";
+		confirmDiv.style.textAlign = "center";
+		confirmDiv.style.marginTop = margTop;
+		confirmDiv.style.marginLeft = margLeft;
+		confirmDiv.style.marginRight = margRight;
+		confirmDiv.style.padding = "20px";
+		confirmDiv.style.borderRadius = "10px";
+		confirmDiv.style.border = "2px solid white";
+		confirmDiv.style.fontSize = "3em";
+		confirmDiv.style.color = "white";
+		confirmDiv.style.top = "500";
+	}
+	
+	document.querySelector(elementToAppendTo).appendChild(confirmDiv);
+}
+
+function removeCustomQueuePopup()
+{
+	document.getElementById("confirmDiv").parentNode.removeChild(document.getElementById("confirmDiv"));
 }
