@@ -1,7 +1,7 @@
 function checkForMobile()
 {
 	document.getElementById("topNav").style.visibility = "visible";
-	var mq = window.matchMedia( "(max-width: 700px)" );
+	var mq = window.matchMedia( "(max-width: 992px)" );
 	if (mq.matches && !mobile) //Mobile
 	{
 		mobile = true;
@@ -39,7 +39,7 @@ function checkForMobile()
 
 function checkForMobileHome()
 {
-	var mq = window.matchMedia( "(max-width: 700px)" );
+	var mq = window.matchMedia( "(max-width: 992px)" );
 	if (mq.matches) //Mobile
 	{
 		mobile = true;
