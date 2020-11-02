@@ -116,7 +116,7 @@ function updateQueueDOM()
 			var video = document.createElement("a");
 			if (!queue[i].includes("watch?v="))
 			{
-				video.innerHTML += queue[i] != "undefined" ? queue[i].split("/")[queue[i].split("/").length - 1] : "Queue is empty";
+				video.innerHTML += queue[i] != "undefined" ? queue[i].split("/")[queue[i].split("/").length - 1].replace(/\.[^/.]+$/, "") : "Queue is empty";
 			}
 			else
 			{

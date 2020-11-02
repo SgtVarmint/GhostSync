@@ -285,7 +285,8 @@ function syncVideoAction(file)
 		else
 		{
 			var fullPath = document.getElementById("filePath").value.split("/");
-			var nowPlaying = fullPath[fullPath.length-1];
+			var titleWithExtension = fullPath[fullPath.length - 1];
+			var nowPlaying = titleWithExtension.replace(/\.[^/.]+$/, "");
 		}
 		document.getElementById("nowPlaying").innerHTML = nowPlaying;
 		d.innerHTML += "<br> End of sync method";

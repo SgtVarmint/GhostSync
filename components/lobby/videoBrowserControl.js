@@ -117,7 +117,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		if (contents[i].includes("."))
 		{	
 			var newVideo = document.createElement("a");
-			newVideo.innerHTML = contents[i];
+			newVideo.innerHTML = contents[i].replace(/\.[^/.]+$/, "");
 			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
 			newVideo.className = "videoBrowserVideo";
 			
