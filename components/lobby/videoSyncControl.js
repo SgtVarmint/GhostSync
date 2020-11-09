@@ -101,10 +101,17 @@ function syncVideoAction(file)
 		var aspectRatio = parseFloat(videoPlayer.videoWidth) / parseFloat(videoPlayer.videoHeight);
 		d.innerHTML += "Aspect Ratio: " + aspectRatio + "<br>";
 		
-		//Checks if a new video was chosen for play, and changes it if true
-		if (document.getElementById("filePath").value != info[3])
+		var serverFilePath = info[3];
+		
+		if (serverFilePath == "null")
 		{
-			document.getElementById("filePath").value = info[3];
+			return; //EXIT OUT OF SYNC FUNCTION.  Sync will only begin again once a video is loaded
+		}
+		
+		//Checks if a new video was chosen for play, and changes it if true
+		if (document.getElementById("filePath").value != serverFilePath)
+		{
+			document.getElementById("filePath").value = serverFilePath;
 			
 			if (isYoutubeVideo())
 			{
@@ -275,7 +282,6 @@ function syncVideoAction(file)
 				}
 			}
 		}
-		
 		
 		//Set the title above video player
 		if (isYoutubeVideo())

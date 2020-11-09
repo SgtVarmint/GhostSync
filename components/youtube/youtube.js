@@ -100,7 +100,7 @@ function isYoutubeVideo()
 {
 	if (youtubeDisabled || !youtubeReady)
 		return false;
-	if (document.getElementById("filePath").value.charAt(0) == "/" || document.getElementById("filePath").value == "")
+	if (document.getElementById("filePath").value.charAt(0) == "/" || document.getElementById("filePath").value == "" || document.getElementById("filePath").value == "null")
 		return false;
 	else
 		return true;

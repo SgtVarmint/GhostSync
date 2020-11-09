@@ -50,7 +50,7 @@ function updateTracking()
 		trackingInfo[titleAlreadyTrackedIndex][1] = currentTime;
 		trackingInfo[titleAlreadyTrackedIndex][2] = progressNumber;
 	}
-	else if (titleAlreadyTrackedIndex != 1 && videoEnded)
+	else if (titleAlreadyTrackedIndex != -1 && videoEnded)
 	{
 		trackingInfo[titleAlreadyTrackedIndex][1] = 0;
 		trackingInfo[titleAlreadyTrackedIndex][2] = progressNumber;

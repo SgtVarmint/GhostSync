@@ -45,6 +45,16 @@ function videoBrowserButton()
 		document.getElementById("browser").style.display = "block";
 		document.getElementById("browser").className = "popupWindow_in";
 	}
+	
+	//Update tracking color info without needing to go up a directory and then back in
+	
+	var currentPath = document.getElementById("currentDirectory").value.split("/");
+	var currentDirectory = currentPath[currentPath.length - 1];
+	var uploadsFolder = false;
+	if (currentDirectory == "Uploads")
+		uploadsFolder = true;
+	
+	getDirectoryInfo(uploadsFolder);
 }
 
 function getDirectoryInfo(uploadsFolder = false)
@@ -214,9 +224,19 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	document.getElementById("video").style.display = "block";
 	document.getElementById("youtubePlayer").style.display = "none";
 	
+	
+	
 	if (timestamp != 0)
 	{
-		document.getElementById("video").currentTime = timestamp;
+		var videoDuration = document.getElementById("video").duration;
+		if (timestamp >= videoDuration - 4) //-4 was added for a few second buffer room at end of video for this to trigger
+		{
+			var newTimeStamp = 0;
+			document.getElementById("video").currentTime = newTimeStamp;
+			updateServerTimeStamp(newTimeStamp);
+		}
+		else
+			document.getElementById("video").currentTime = timestamp;
 	}
 	
 	document.getElementById("playButton").innerHTML = "&#x25b6;";

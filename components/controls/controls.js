@@ -10,6 +10,16 @@ function skipButtonClicked()
 		shiftQueue();
 		updateQueueDOM();
 	}
+	else
+	{
+		var videoElement = document.getElementById("video");
+		var videoSourceElement = document.getElementById("videoSource");
+		document.getElementById("filePath").value = "null";
+		playButtonClicked(true);
+		videoSourceElement.removeAttribute("src");
+		videoElement.load();
+		document.getElementById("nowPlaying").innerHTML = "Nothing Is Playing Yet..";
+	}
 }
 
 function playButtonClicked(pause = false)
