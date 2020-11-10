@@ -12,6 +12,12 @@ function skipButtonClicked()
 	}
 	else
 	{
+		if (isYoutubeVideo())
+		{
+			youtubePlayer.pauseVideo();
+			document.getElementById("video").style.display = "block";
+			document.getElementById("youtubePlayer").style.display = "none";
+		}
 		var videoElement = document.getElementById("video");
 		var videoSourceElement = document.getElementById("videoSource");
 		document.getElementById("filePath").value = "null";

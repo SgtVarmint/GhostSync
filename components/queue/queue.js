@@ -161,7 +161,8 @@ function updateQueueDOM()
 
 function queueVideoClicked(video, index)
 {	
-	customQueuePopup(video, index);
+	var message = video.split("/")[video.split("/").length - 1].replace(/\.[^/.]+$/, "");
+	customQueuePopup(message, index);
 }
 
 function removeQueueVideo(indexToRemove)
@@ -208,12 +209,17 @@ function addToQueueClicked(video)
 	if (queue[0] == "undefined" || queue[0] == undefined)
 		queue = new Array();
 	pushQueue(video);
-	document.getElementById("browser").style.display = "none";
 	toast("Video added to queue");
 }
 
 function addYoutubeVideoToQueue()
 {
+	if (!document.getElementById("youtubeInput").value.includes("watch?v="))
+	{
+		toast("Invalid YouTube Video URL");
+		return;
+	}
+	
 	if (queue[0] == "undefined" || queue[0] == undefined)
 		queue = new Array();
 	pushQueue(document.getElementById("youtubeInput").value);

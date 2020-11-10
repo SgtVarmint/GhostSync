@@ -29,6 +29,7 @@ function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop 
 		toastDiv.innerHTML = message;
 		toastDiv.style.color = "white";
 		toastDiv.style.top = styleTop;
+		toastDiv.style.zIndex = "1000";
 	}
 	else
 	{
@@ -46,6 +47,7 @@ function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop 
 		toastDiv.style.fontSize = "3em";
 		toastDiv.style.color = "white";
 		toastDiv.style.top = "500";
+		toastDiv.style.zIndex = "1000";
 	}
 	
 	document.querySelector(elementToAppendTo).appendChild(toastDiv);

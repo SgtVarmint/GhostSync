@@ -64,9 +64,22 @@ function playYoutubeVideo(urlOverride = "", overridePlaystateToPlay = false)
 		var fullUrl = document.getElementById("youtubeInput").value.split("watch?v=")[1];
 		var youtubeVideoId = "";
 		if (urlOverride.length > 0 && urlOverride.split("watch?v=").length == 2)
+		{
 			youtubeVideoId = urlOverride.split("watch?v=")[1];
+		}
 		else
-			youtubeVideoId = document.getElementById("youtubeInput").value.split("watch?v=")[1];
+		{
+			if (fullUrl != undefined && fullUrl.length == 11) //WARNING:  This number is 11 because it is how long video IDs are right now in 2020.  If this is ever changed, this won't work
+			{
+				youtubeVideoId = document.getElementById("youtubeInput").value.split("watch?v=")[1];
+			}
+			else
+			{
+				toast("Invalid YouTube Video URL");
+				return;
+			}
+		}
+		
 		document.getElementById("filePath").value = youtubeVideoId;
 		youtubePlayer.loadVideoById(youtubeVideoId, 0);
 		document.getElementById("youtubeInput").value = "";

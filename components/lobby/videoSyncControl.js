@@ -4,14 +4,26 @@ function syncPull()
 	pullTrackingInfo(); // defined in progression.js
 	pullQueue();
 	checkForMobile();
+	var timestamp;
+	var duration;
+	
 	if (!isYoutubeVideo())
 	{
-		var timestamp = document.getElementById("video").currentTime;
-		var duration = document.getElementById("video").duration;
-		if (duration <= timestamp)
-		{
-			skipButtonClicked();
-		}
+		timestamp = document.getElementById("video").currentTime;
+		duration = document.getElementById("video").duration;
+	}
+	else
+	{
+		if (youtubePlayer.getPlayerState() == 0) //getPlayerState() will return 0 if youtube video is ended
+			timestamp = 1;
+		else
+			timestamp = 0
+		duration = 1
+	}
+	
+	if (duration <= timestamp)
+	{
+		skipButtonClicked();
 	}
 	syncVideo();
 }
@@ -105,6 +117,7 @@ function syncVideoAction(file)
 		
 		if (serverFilePath == "null")
 		{
+			skipButtonClicked();
 			return; //EXIT OUT OF SYNC FUNCTION.  Sync will only begin again once a video is loaded
 		}
 		
@@ -166,6 +179,7 @@ function syncVideoAction(file)
 			videoDuration = videoPlayer.duration;
 			document.getElementById("seekSlider").value = parseInt((parseFloat(currentTime) / parseFloat(videoDuration)) * 100);
 			
+			youtubePlayer.pauseVideo();
 			document.getElementById("youtubePlayer").style.display = "none";
 			document.getElementById("video").style.display = "block";
 		}

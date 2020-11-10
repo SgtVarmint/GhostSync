@@ -49,7 +49,7 @@ function videoBrowserButton()
 	//Update tracking color info without needing to go up a directory and then back in
 	
 	var currentPath = document.getElementById("currentDirectory").value.split("/");
-	var currentDirectory = currentPath[currentPath.length - 1];
+	var currentDirectory = currentPath[currentPath.length - 2];
 	var uploadsFolder = false;
 	if (currentDirectory == "Uploads")
 		uploadsFolder = true;
@@ -121,8 +121,17 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		videoBrowser.appendChild(newSection);
 	}
 
-	for (var i = 0; i < contents.length; i++)
+	for (var i = 0; i < contents.length - 1; i++)
 	{
+		var isAlreadyInQueue = false;
+		for (var j = 0; j < queue.length; j++)
+		{
+			if (queue[j].split("/")[queue[j].split("/").length - 1] == contents[i])
+			{
+				isAlreadyInQueue = true;
+				break;
+			}
+		}
 		var newSection = document.createElement("div");
 		if (contents[i].includes("."))
 		{	
@@ -134,7 +143,17 @@ function updateVideoBrowser(file, uploadsFolder = false)
 			var addToQueue = document.createElement("a");
 			addToQueue.innerHTML = "+";
 			var tempFileLocation = rootDir() + document.getElementById("currentDirectory").value + contents[i];
-			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
+			if (!isAlreadyInQueue)
+			{
+				addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
+				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"};
+			}
+			else
+			{
+				addToQueue.style.backgroundColor = "#1e3949";
+				addToQueue.href = 'javascript:return null;';
+				addToQueue.onclick = function(){ toast("This video is already in the queue"); };
+			}
 			addToQueue.className = "addToQueue";
 			
 			//This section handles updating the tracking info for each video
