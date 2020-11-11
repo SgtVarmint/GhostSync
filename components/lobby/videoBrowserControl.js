@@ -143,16 +143,15 @@ function updateVideoBrowser(file, uploadsFolder = false)
 			var addToQueue = document.createElement("a");
 			addToQueue.innerHTML = "+";
 			var tempFileLocation = rootDir() + document.getElementById("currentDirectory").value + contents[i];
+			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
 			if (!isAlreadyInQueue)
 			{
-				addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
-				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"};
+				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"; this.onclick = function(){ toast("This video is already in the queue"); return false; }; };
 			}
 			else
 			{
 				addToQueue.style.backgroundColor = "#1e3949";
-				addToQueue.href = 'javascript:return null;';
-				addToQueue.onclick = function(){ toast("This video is already in the queue"); };
+				addToQueue.onclick = function(){ toast("This video is already in the queue"); return false; };
 			}
 			addToQueue.className = "addToQueue";
 			
