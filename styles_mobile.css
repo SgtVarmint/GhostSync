@@ -150,15 +150,22 @@ h3
 	background: rgba(79, 79, 79, 0.85);
 	border-radius: 5px;
 	border: 1px solid white;
-	padding: 5px;
+	padding: 10px;
 	text-align: left;
 	width: 80%;
 	margin-left:10%;
 	margin-right:10%;
-	overflow: auto;
+	overflow: none;
 	height: 80%;
 	margin-top: -100px;
 	z-index: 100;
+}
+
+#videoBrowser
+{
+	overflow: auto;
+	height: 90%;
+	padding: 5px;
 }
 
 .videoBrowserVideo
@@ -174,7 +181,7 @@ h3
 .videoBrowserDir
 {
 	text-decoration: none;
-	color: #0090e3;
+	color: #89d3ff;
 	font-size: 4em;
 	padding: 3px;
 	margin: 5px;

@@ -208,10 +208,17 @@ h3
 	width: 80%;
 	margin-left:10%;
 	margin-right:10%;
-	overflow: auto;
+	overflow: none;
 	height: 80%;
 	margin-top: 0px;
 	z-index: 100;
+}
+
+#videoBrowser
+{
+	overflow: auto;
+	height: 90%;
+	padding: 5px;
 }
 
 .videoBrowserVideo
@@ -228,7 +235,8 @@ h3
 .videoBrowserDir
 {
 	text-decoration: none;
-	color: #0090e3;
+	color: #89d3ff;
+	/* color: #0090e3; --old color*/
 	font-size: 1.5em;
 	padding: 3px;
 	margin: 5px;
