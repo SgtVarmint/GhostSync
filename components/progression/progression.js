@@ -19,12 +19,12 @@ function updateTracking()
 	var percentageFinished = parseFloat(currentTime) / parseFloat(duration);
 	var progressNumber = "-1";
 
-	if (percentageFinished >= 0.0 && percentageFinished <= 0.25)
+	if (percentageFinished >= 0.0 && percentageFinished <= 0.05)
 	{
 		progressNumber = "0";
 		videoEnded = false;
 	}
-	else if(percentageFinished > 0.25 && percentageFinished <= 0.50)
+	else if(percentageFinished > 0.05 && percentageFinished <= 0.50)
 	{
 		progressNumber = "1";
 		videoEnded = false;
