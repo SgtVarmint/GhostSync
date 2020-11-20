@@ -230,6 +230,8 @@ function addYoutubeVideoToQueue()
 
 function customQueuePopup(message, index, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
 {
+	removeCustomQueuePopup();
+	
 	var confirmDiv = document.createElement("div");
 
 	var messageDiv = document.createElement("div");
@@ -300,5 +302,6 @@ function customQueuePopup(message, index, elementToAppendTo = "body", margTop = 
 
 function removeCustomQueuePopup()
 {
-	document.getElementById("confirmDiv").parentNode.removeChild(document.getElementById("confirmDiv"));
+	if (document.getElementById("confirmDiv") != null)
+		document.getElementById("confirmDiv").parentNode.removeChild(document.getElementById("confirmDiv"));
 }
