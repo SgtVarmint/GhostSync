@@ -10,7 +10,7 @@ video::-webkit-media-controls-fullscreen-button
 
 video::-webkit-media-controls-timeline
 {
-	display: none;
+	/*display: none;*/
 }
 
 .controls

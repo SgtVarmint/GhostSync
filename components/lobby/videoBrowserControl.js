@@ -238,6 +238,8 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	//var temp = inputVideo.split(".");
 	//document.getElementById("videoSource").type = "video/" + temp[temp.length - 1] == "mkv" || temp[temp.length - 1] == "mov" ? "mp4" : temp[temp.length - 1];
 	document.getElementById("video").load();
+	if (checkPreload())
+		preloadVideo(document.getElementById("filePath").value);
 	document.getElementById("browser").style.display = "none";
 	document.getElementById("video").style.display = "block";
 	document.getElementById("youtubePlayer").style.display = "none";

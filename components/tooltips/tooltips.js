@@ -34,5 +34,8 @@ function getToolTipMessage(id)
 		case "disableYoutubeTip":
 			return "YouTube may cause issues with some browsers and settings.  If YouTube isn't working and/or the videos being played from server are not syncing properly, disabling YouTube may fix the issue";
 			break;
+		case "preloadTip":
+			return "Enabling will allow video to buffer the entire video.  Useful if video buffers often, but will use more bandwith up-front.  (requires page refresh or new video to take effect)";
+			break;
 	}
 }

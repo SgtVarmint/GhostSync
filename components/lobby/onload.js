@@ -1,5 +1,6 @@
 window.onload = function(){
 	authenticate();
+	
 	TOLERANCE = localStorage.getItem("tolerance");
 	if (TOLERANCE == null)
 	{
@@ -22,7 +23,35 @@ window.onload = function(){
 		localStorage.setItem("tolerance", TOLERANCE);
 		document.getElementById("toleranceValue").innerHTML = TOLERANCE;
 		};
+
+	PRELOAD = localStorage.getItem("preload");
+	if (PRELOAD == null)
+	{
+		PRELOAD = "off";
+		localStorage.setItem("preload", PRELOAD);
+		document.getElementById("preloadProgress").className = "hidden";
+	}
+	else
+	{
+		PRELOAD = localStorage.getItem("preload");
+		document.getElementById("preloadProgress").className = checkPreload() ? "error" : "hidden";
+	}
 	
+	document.getElementById("preloadToggle").checked = PRELOAD == "on";
+	document.getElementById("preloadToggle").oninput = function(){
+		if (document.getElementById("preloadToggle").checked)
+		{
+			PRELOAD = "on";
+			document.getElementById("preloadProgress").className = "error";
+		}
+		else
+		{
+			PRELOAD = "off";
+			document.getElementById("preloadProgress").className = "hidden";
+		}
+		localStorage.setItem("preload", PRELOAD);
+	};
+
 	document.getElementById("userNameInput").addEventListener("keyup", function(event)
 	{
 		if (event.keyCode === 13)

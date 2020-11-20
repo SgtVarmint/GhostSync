@@ -134,6 +134,8 @@ function syncVideoAction(file)
 			{
 				document.getElementById("videoSource").src = info[3];
 				document.getElementById("video").load();
+				if (checkPreload())
+					preloadVideo(document.getElementById("filePath").value);
 			}
 			document.getElementById("playState").value = "paused";
 			toast(info[4] + " Chose A New Video");
