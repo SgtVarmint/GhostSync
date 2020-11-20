@@ -100,6 +100,7 @@ function fullscreenButtonClicked()
 		document.getElementById("seekSlider").style.top = "0%";
 		document.getElementById("seekSlider").style.left = "0%";
 		document.getElementById("seekSlider").style.display = "block";
+		document.getElementById("seekSlider").style.opacity = "1";
 		
 		document.getElementById("skipButton").style.position = "relative";
 		document.getElementById("skipButton").style.top = "0%";
@@ -139,12 +140,16 @@ function fullscreenButtonClicked()
 		document.getElementById("fullscreenButton").style.left = "50%";
 		document.getElementById("fullscreenButton").style.display = "none";
 		
+		document.getElementById("skipButton").style.position = "absolute";
+		document.getElementById("skipButton").style.top = "92%";
+		document.getElementById("skipButton").style.left = "54%";
+		document.getElementById("skipButton").style.display = "none";
+		
 		document.getElementById("seekSlider").style.position = "absolute";
 		document.getElementById("seekSlider").style.top = "97%";
 		document.getElementById("seekSlider").style.left = "0";
 		document.getElementById("seekSlider").style.display = "none";
-		
-		document.getElementById("skipButton").style.display = "none";
+		document.getElementById("seekSlider").style.opacity = "0.4";
 
 		
 		if (isYoutubeVideo())
@@ -179,7 +184,8 @@ function mouseHovered()
 		window.clearTimeout(controlsTimeout);
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
-		if (isYoutubeVideo())
+		document.getElementById("skipButton").style.display = "inline";
+		//if (isYoutubeVideo())
 			document.getElementById("seekSlider").style.display = "inline";
 		controlsTimeout = setTimeout(hideControls, FULLSCREEN_CONTROLS_TIMEOUT * 1000);
 	}
@@ -187,6 +193,7 @@ function mouseHovered()
 	{
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
+		document.getElementById("skipButton").style.display = "inline";
 		if (isYoutubeVideo())
 			document.getElementById("seekSlider").style.display = "inline";
 	}
@@ -198,12 +205,14 @@ function hideControls()
 	{
 		document.getElementById("playButton").style.display = "none";
 		document.getElementById("fullscreenButton").style.display = "none";
+		document.getElementById("skipButton").style.display = "none";
 		document.getElementById("seekSlider").style.display = "none";
 	}
 	else
 	{
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
+		document.getElementById("skipButton").style.display = "inline";
 		//if (isYoutubeVideo())
 			document.getElementById("seekSlider").style.display = "inline";
 	}
@@ -213,6 +222,7 @@ function showControlsNotFullscreen()
 {
 	document.getElementById("playButton").style.display = "inline";
 	document.getElementById("fullscreenButton").style.display = "inline";
+	document.getElementById("skipButton").style.display = "inline";
 	//if (isYoutubeVideo())
 		document.getElementById("seekSlider").style.display = "inline";
 }
