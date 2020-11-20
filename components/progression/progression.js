@@ -4,6 +4,10 @@ function updateTracking()
 	//No tracking for YouTube videos
 	if (isYoutubeVideo())
 		return;
+	
+	//Don't try updating tracking info if no video is selected
+	if (document.getElementById("filePath").value == "null")
+		return;
 
 	var titleAlreadyTrackedIndex = -1;
 	for (var i = 0; i < trackingInfo.length; i++)
