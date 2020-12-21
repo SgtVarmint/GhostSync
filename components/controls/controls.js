@@ -1,6 +1,5 @@
 function skipButtonClicked()
 {
-	updateTracking();
 	if (queue.length > 0 && queue[0] != "undefined" && queue[0] != undefined)
 	{
 		if (queue[0].includes("watch?v="))
@@ -26,6 +25,8 @@ function skipButtonClicked()
 		videoElement.load();
 		document.getElementById("nowPlaying").innerHTML = "Nothing Is Playing Yet..";
 	}
+	
+	updateTracking();
 }
 
 function playButtonClicked(pause = false)
@@ -247,6 +248,7 @@ function seekSliderSeeked()
 		document.getElementById("video").currentTime = newTimeStamp;
 	}
 	updateServerTimeStamp(newTimeStamp);
+	updateTracking();
 }
 
 function setPlayButtonImage(playing)
