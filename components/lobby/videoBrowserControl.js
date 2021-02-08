@@ -256,7 +256,7 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	document.getElementById("video").style.display = "block";
 	document.getElementById("youtubePlayer").style.display = "none";
 	
-	
+	resetNavButtons();
 	
 	if (timestamp != 0)
 	{

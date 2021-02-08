@@ -225,6 +225,9 @@ function addYoutubeVideoToQueue()
 	pushQueue(document.getElementById("youtubeInput").value);
 	document.getElementById("youtubeInput").value = "";
 	document.getElementById("youtubeMenu").style.display = "none";
+	
+	resetNavButtons();
+	
 	toast("Video added to queue");
 }
 

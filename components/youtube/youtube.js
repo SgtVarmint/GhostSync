@@ -101,6 +101,8 @@ function playYoutubeVideo(urlOverride = "", overridePlaystateToPlay = false)
 		document.getElementById("playButton").innerHTML = "&#x23f8;";
 		document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
+		resetNavButtons();
+		
 		updateServerTimeStamp(.01);
 	}
 }
