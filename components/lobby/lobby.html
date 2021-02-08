@@ -46,6 +46,7 @@
 		<script src="/components/mobile/mobile.js"></script>
 		<script src="/components/upload/upload.js"></script>
 		<script src="/components/preload/preload.js"></script>
+		<script src="/components/ui/uiAdditions.js"></script>
 		<!--<script src="/components/lobby/whoami.js"></script>-->
 		
 	</head>
@@ -59,11 +60,11 @@
 		<div id="topNav">
 			<a class="navButton" href="/index.html" id="home">GhostSync</a>
 			<span class="divider"></span>
-			<a class="navButton" href="javascript:videoBrowserButton();">Video Browser</a>
+			<a id="videoBrowserButton" class="navButton" href="javascript:videoBrowserButton();">Video Browser</a>
 			<span class="divider"></span>
-			<a class="navButton" href="javascript:youtubeButton();">Youtube</a>
+			<a id="youtubeButton" class="navButton" href="javascript:youtubeButton();">Youtube</a>
 			<span class="divider"></span>
-			<a class="navButton" href="javascript:settingsButton();">Settings</a>
+			<a id="settingsButton" class="navButton" href="javascript:settingsButton();">Settings</a>
 		</div>
 		<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
 		<div id="player">
