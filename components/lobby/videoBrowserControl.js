@@ -112,6 +112,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		newInput.onchange = function(e){
 		e.preventDefault();
 		document.getElementById("browser").style.display = "none";
+		resetNavButtons();
 		if (this.files.length > 0)
 			uploadFile();
 		else
