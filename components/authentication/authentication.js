@@ -48,5 +48,7 @@ function homeAuth()
 function authButtonClick()
 {
 	localStorage.setItem("access", document.getElementById("authText").value);
+	localStorage.setItem("lobbyName", document.getElementById("lobbyInput").value.toUpperCase());
+	localStorage.setItem("userName", document.getElementById("userInput").value);
 	location.reload();
 }
