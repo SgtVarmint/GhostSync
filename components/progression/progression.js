@@ -1,6 +1,10 @@
 //This method handles updating tracking on the client, but ends with a call to server to update server file
 function updateTracking()
 {
+	//Don't try updating tracking info if tracking info was never pulled - will cause overwrite
+	if (initialTrackingInfoPulled == false)
+		return;
+	
 	//No tracking for YouTube videos
 	if (isYoutubeVideo())
 		return;
@@ -126,4 +130,5 @@ function pullTrackingInfoAction(file)
 	{
 		trackingInfo[i] = fileInfo[i].split("^");
 	}
+	initialTrackingInfoPulled = true;
 }

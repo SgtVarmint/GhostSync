@@ -15,3 +15,4 @@ var mobile = false;
 var youtubeDisabled;
 var youtubeReady = false;
 var pausedTimeStamp = "";
+var initialTrackingInfoPulled = false;
