@@ -26,13 +26,14 @@
 		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/upload/upload.css"/>
 		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/toast/toast.css"/>
 		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/preload/preload.css"/>
+		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/reaction/reaction.css"/>
 		<!--Javascript Files-->
 		<script src="/config.js"></script>
 		<script src="/libraryRoot.js"></script>
 		<script src="/components/lobby/videoBrowserControl.js"></script>
 		<script src="/components/lobby/onload.js"></script>
 		<script src="/components/lobby/videoSyncControl.js"></script>
-		<script src="/components/lobby/userControl.js"></script>
+		<script src="/components/user/userControl.js"></script>
 		<script src="/components/loader/loader.js"></script>
 		<script src="/components/toast/toast.js"></script>
 		<script src="/components/controls/controls.js"></script>
@@ -47,6 +48,9 @@
 		<script src="/components/upload/upload.js"></script>
 		<script src="/components/preload/preload.js"></script>
 		<script src="/components/ui/uiAdditions.js"></script>
+		<script src="/components/activity/activity.js"></script>
+		<script src="/components/reaction/reaction.js"></script>
+		<script src="/components/tools/stringStorage.js"></script>
 		<!--<script src="/components/lobby/whoami.js"></script>-->
 		
 	</head>
@@ -68,13 +72,28 @@
 		</div>
 		<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
 		<div id="player">
-			
+			<div id="reactionMenuContainer">
+				<div id="reactionMenuTop">
+				<div id="reactionMenuTop_Left">
+					<button id="reactionMenuFavoritesButton">Favorites</span>
+					<button id="reactionMenuAllButton">All Emojis</span>
+				</div>
+				<div id="reactionMenuTop_Right">
+					<button id="closeReactionMenuButton">X</button>
+				</div>
+				<hr>
+				</div>
+				<div id="reactionMenuFavorites"></div>
+				<div id="reactionMenuAll"></div>
+			</div>
+			<div id="reactionPanel"></div>
 			<video id="video" preload="auto" controls>
 				<source id="videoSource">
 			</video>
 			<div id="youtubePlayer" class="youtubeNormal">
 			
 			</div>
+			<button id="reactionButton" class="controls">&#x1F636;</button>
 			<button id="playButton" class="controls">&#x25b6;</button>
 			<button id="fullscreenButton" class="controls">&#x26F6;</button>
 			<button id="skipButton" class="controls">&#x23e9;</button>
@@ -110,9 +129,12 @@
 			<hr>
 			<br>
 			<h3>Lobby Sounds&nbsp;<span id="soundsTip" class="toolTip">&#63;</span></h3>
-			<span id="lobbySoundsValue"></span>
-			<br>
 			<input type="checkbox" id="lobbySoundsToggle"></input>
+			<br>
+			<hr>
+			<br>
+			<h3>Reactions&nbsp;<span id="reactionsTip" class="toolTip">&#63;</span></h3>
+			<input type="checkbox" id="reactionsToggle"></input>
 			<br>
 			<hr>
 			<br>

@@ -143,6 +143,7 @@ function syncVideoAction(file)
 			videoEnded = false;
 		}
 
+		/*
 		//Detect aspect ratio of video and set css class
 		if (aspectRatio > 2.0)
 		{
@@ -156,6 +157,8 @@ function syncVideoAction(file)
 		{
 			document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
 		}
+		*/
+		document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
 		
 		//Setting variables based on whether current video is on server or through YouTube
 		

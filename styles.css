@@ -129,6 +129,7 @@ h3
 
 #player
 {
+	position: relative;
 	float: left;
 	width: 65%;
 	height: 68%;

@@ -8,6 +8,13 @@ window.onload = function(){
 		localStorage.setItem("tolerance", TOLERANCE);
 	}
 	
+	LOBBY_REACTIONS_SETTING = localStorage.getItem("lobbyReactionsSetting");
+	if (LOBBY_REACTIONS_SETTING == null)
+	{
+		LOBBY_REACTIONS_SETTING = "on";
+		localStorage.setItem("lobbyReactionsSetting", LOBBY_REACTIONS_SETTING);
+	}
+	
 	initYoutube();
 	
 	document.getElementById("userNameInput").value = localStorage.getItem("userName");
@@ -70,6 +77,19 @@ window.onload = function(){
 		}
 	});
 	
+	//Visibility event listener bind
+	document.addEventListener("visibilitychange", function()
+	{
+		if (document.hidden)
+		{
+			awayMode(); //activity.js
+		}
+		else
+		{
+			activeMode(); //activity.js
+		}
+	});
+	
 	LOBBY_SOUND_SETTING = localStorage.getItem("lobbySounds");
 	if (LOBBY_SOUND_SETTING == null)
 	{
@@ -88,6 +108,12 @@ window.onload = function(){
 		localStorage.setItem("lobbySounds", LOBBY_SOUND_SETTING);
 	};
 	
+	document.getElementById("reactionsToggle").checked = LOBBY_REACTIONS_SETTING == "on";
+	document.getElementById("reactionsToggle").oninput = function(){
+		LOBBY_REACTIONS_SETTING = document.getElementById("reactionsToggle").checked ? "on" : "off";
+		localStorage.setItem("lobbyReactionsSetting", LOBBY_REACTIONS_SETTING);
+	};
+	
 	//document.getElementById("video").onseeked = function(){ document.getElementById("video").pause(); document.getElementById("playState").value = "paused"; };//updateServerTimeStamp(); };
 	document.getElementById("playButton").onclick = playButtonClicked;
 	document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;
@@ -98,6 +124,10 @@ window.onload = function(){
 	document.getElementById("youtubePlayButton").onclick = playYoutubeVideo;
 	document.getElementById("youtubeAddToQueueButton").onclick = addYoutubeVideoToQueue;
 	document.getElementById("video").onclick = function(){ document.getElementById("playButton").click(); };
+	document.getElementById("reactionButton").onclick = reactionButtonClicked;
+	document.getElementById("closeReactionMenuButton").onclick = function(){ document.getElementById("reactionButton").click(); };
+	document.getElementById("reactionMenuFavoritesButton").onclick = showFavoriteEmojis;
+	document.getElementById("reactionMenuAllButton").onclick = showAllEmojis;
 	
 	var toolTips = document.getElementsByClassName("toolTip");
 	for (var i = 0; i < toolTips.length; i++)
@@ -107,6 +137,8 @@ window.onload = function(){
 	}
 	
 	document.getElementById("lobbyName").value = localStorage.getItem("lobbyName");
+	
+	initializeReactionMenu();
 	
 	setInterval(syncPull, SYNC_INTERVAL * 1000);
 	setInterval(userUpdate, USER_UPDATE_INTERVAL * 1000);

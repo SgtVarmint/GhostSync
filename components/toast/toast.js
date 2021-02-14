@@ -19,7 +19,7 @@ function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop 
 		toastDiv.id = "toastDiv";
 		toastDiv.style.position = "fixed";
 		toastDiv.style.width = "74%";
-		toastDiv.style.background = "rgba(79, 79, 79, 0.5)";
+		toastDiv.style.background = "rgba(79, 79, 79, 0.75)";
 		toastDiv.style.textAlign = "center";
 		toastDiv.style.marginTop = margTop;
 		toastDiv.style.marginLeft = margLeft;
@@ -30,13 +30,14 @@ function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop 
 		toastDiv.style.color = "white";
 		toastDiv.style.top = styleTop;
 		toastDiv.style.zIndex = "1000";
+		toastDiv.style.border = "1px solid white";
 	}
 	else
 	{
 		toastDiv.id = "toastDiv";
 		toastDiv.style.position = "fixed";
 		toastDiv.style.width = "74%";
-		toastDiv.style.background = "rgba(79, 79, 79, 0.5)";
+		toastDiv.style.background = "rgba(79, 79, 79, 0.75)";
 		toastDiv.style.textAlign = "center";
 		toastDiv.style.marginTop = margTop;
 		toastDiv.style.marginLeft = margLeft;
@@ -48,6 +49,7 @@ function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop 
 		toastDiv.style.color = "white";
 		toastDiv.style.top = "500";
 		toastDiv.style.zIndex = "1000";
+		toastDiv.style.border = "1px solid white";
 	}
 	
 	document.querySelector(elementToAppendTo).appendChild(toastDiv);
