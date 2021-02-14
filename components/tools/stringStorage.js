@@ -1,12 +1,15 @@
 function convertEmojiArrayToStorageFormat(inputArray)
 {
 	var storageString = "";
-	for (var i = 0; i < inputArray.length - 1; i++)
+	if (inputArray.length != 0)
 	{
-		storageString += inputArray[i];
-		storageString += "^";
+		for (var i = 0; i < inputArray.length - 1; i++)
+		{
+			storageString += inputArray[i];
+			storageString += "^";
+		}
+		storageString += inputArray[inputArray.length - 1];
 	}
-	storageString += inputArray[inputArray.length - 1];
 	return storageString;
 }
 

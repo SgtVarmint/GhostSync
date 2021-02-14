@@ -70,8 +70,17 @@ function sendReaction(emoji)
 			}
 		}
 		favoriteEmojis = tempArray;
-		localStorage.setItem("favoriteEmojis", convertEmojiArrayToStorageFormat(favoriteEmojis));
+		if (favoriteEmojis.length == 0)
+		{
+			localStorage.removeItem("favoriteEmojis");
+		}
+		else
+		{
+			localStorage.setItem("favoriteEmojis", convertEmojiArrayToStorageFormat(favoriteEmojis));
+		}
 		toast("Emoji removed from favorites");
+		
+		
 		refreshFavorites();
 	}
 	else //Send emoji to server
@@ -180,7 +189,7 @@ function refreshFavorites()
 	//Clear the favorites page
 	document.getElementById("reactionMenuFavorites").innerHTML = "";
 	
-	if (favoriteEmojis.length != 1) //1 means empty
+	if (favoriteEmojis.length != 0)
 	{
 		var removeFavoriteButton = document.createElement("a");
 		removeFavoriteButton.innerHTML = "&#x2D;";
