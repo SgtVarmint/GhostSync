@@ -31,6 +31,7 @@ function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop 
 		toastDiv.style.top = styleTop;
 		toastDiv.style.zIndex = "1000";
 		toastDiv.style.border = "1px solid white";
+		toastDiv.style.pointerEvents = "none";
 	}
 	else
 	{
@@ -50,6 +51,7 @@ function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop 
 		toastDiv.style.top = "500";
 		toastDiv.style.zIndex = "1000";
 		toastDiv.style.border = "1px solid white";
+		toastDiv.style.pointerEvents = "none";
 	}
 	
 	document.querySelector(elementToAppendTo).appendChild(toastDiv);

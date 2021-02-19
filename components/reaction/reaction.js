@@ -22,7 +22,7 @@ function processIncomingReaction(username, emojiIndex)
 		var reactionElement = document.createElement("div");
 		reactionElement.className = "reactionElement";
 		reactionElement.id = randomId;
-		reactionElement.innerHTML = emoji + " - " + username;
+		reactionElement.innerHTML = "<span class='emojiText'>" + emoji + "</span>" + "<span style='visibility: hidden;'>" + emoji + "</span>" + " - " + username;
 		document.getElementById("reactionPanel").appendChild(reactionElement);
 		setTimeout(function(){
 			document.getElementById(reactionElement.id).parentNode.removeChild(document.getElementById(reactionElement.id));

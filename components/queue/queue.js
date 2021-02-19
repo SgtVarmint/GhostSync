@@ -161,7 +161,32 @@ function updateQueueDOM()
 
 function queueVideoClicked(video, index)
 {	
-	var message = video.split("/")[video.split("/").length - 1].replace(/\.[^/.]+$/, "");
+	var message;
+	if (video.includes("www.youtube.com"))
+	{
+		var titleIndex = -1;
+		for (var i = 0; i < youtubeLookupTable.length; j++)
+		{
+			if (youtubeLookupTable[i][0] == video)
+			{
+				titleIndex = i;
+				break;
+			}
+		}
+		if (titleIndex != -1)
+		{
+			message = youtubeLookupTable[titleIndex][1];
+		}
+		else
+		{
+			message = video;
+		}
+	}
+	else
+	{
+		message = video.split("/")[video.split("/").length - 1].replace(/\.[^/.]+$/, "");
+	}
+
 	customQueuePopup(message, index);
 }
 

@@ -4,6 +4,23 @@
 	font-size: 2em;
 }
 
+@keyframes emoji-wiggle
+{
+	0%   	{margin-top:0px;}
+	25%		{margin-top:5px;}
+	50%  	{margin-top:0px;}
+	75%  	{margin-top:5px;}
+	100% 	{margin-top:0px;}
+}
+
+.emojiText
+{
+	position: absolute;
+	display: inline-block;
+	animation-name: emoji-wiggle;
+	animation-duration: 3s;
+}
+
 #reactionPanel
 {
 	display: block;
