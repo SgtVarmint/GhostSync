@@ -17,12 +17,15 @@ function processIncomingReaction(username, emojiIndex)
 {
 	if (reactionsAreActive())
 	{
+		//Format username for reactions so it is limited to 10
+		var formattedUsername = username.length > 10 ? username.substring(0, 10) + ".." : username;
+		
 		var emoji = emojiList[emojiIndex];
 		var randomId = Math.floor(Math.random() * 1000);
 		var reactionElement = document.createElement("div");
 		reactionElement.className = "reactionElement";
 		reactionElement.id = randomId;
-		reactionElement.innerHTML = "<span class='emojiText'>" + emoji + "</span>" + "<span style='visibility: hidden;'>" + emoji + "</span>" + " - " + username;
+		reactionElement.innerHTML = "<span class='emojiText'>" + emoji + "</span>" + "<span style='visibility: hidden;'>" + emoji + "</span>" + " - " + formattedUsername;
 		document.getElementById("reactionPanel").appendChild(reactionElement);
 		setTimeout(function(){
 			document.getElementById(reactionElement.id).parentNode.removeChild(document.getElementById(reactionElement.id));

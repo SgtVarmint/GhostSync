@@ -22,7 +22,7 @@ window.onload = function(){
 	document.getElementById("toleranceValue").innerHTML = TOLERANCE;
 
 	document.getElementById("changeUsernameButton").onclick = function(){
-		localStorage.setItem("userName", document.getElementById("userNameInput").value);
+		localStorage.setItem("userName", formatUsername(document.getElementById("userNameInput").value));
 		toast("Username Changed");
 		};
 	document.getElementById("toleranceSlider").oninput = function(){ 

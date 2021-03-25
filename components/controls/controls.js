@@ -99,7 +99,7 @@ function fullscreenButtonClicked()
 		document.getElementById("reactionPanel").style.left = "60%"
 		document.getElementById("reactionPanel").style.height = "500px";
 		document.getElementById("reactionPanel").style.width = "400px";
-		document.getElementById("reactionPanel").style.fontSize = "3em";
+		document.getElementById("reactionPanel").style.fontSize = "2em";
 		
 		document.getElementById("playButton").style.position = "relative";
 		document.getElementById("playButton").style.top = "0%";
@@ -158,7 +158,7 @@ function fullscreenButtonClicked()
 		document.getElementById("reactionPanel").style.left = "70%"
 		document.getElementById("reactionPanel").style.height = "800px";
 		document.getElementById("reactionPanel").style.width = "550px";
-		document.getElementById("reactionPanel").style.fontSize = "4em";
+		document.getElementById("reactionPanel").style.fontSize = "3em";
 		
 		document.getElementById("playButton").style.position = "absolute";
 		document.getElementById("playButton").style.top = "92%";
