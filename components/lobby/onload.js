@@ -18,7 +18,7 @@ window.onload = function(){
 	initYoutube();
 	
 	document.getElementById("userNameInput").value = localStorage.getItem("userName");
-	document.getElementById("toleranceSlider").value = TOLERANCE * 100;
+	document.getElementById("toleranceSlider").value = (TOLERANCE / 5) * 100;
 	document.getElementById("toleranceValue").innerHTML = TOLERANCE;
 
 	document.getElementById("changeUsernameButton").onclick = function(){
@@ -26,9 +26,10 @@ window.onload = function(){
 		toast("Username Changed");
 		};
 	document.getElementById("toleranceSlider").oninput = function(){ 
-		TOLERANCE = parseFloat(document.getElementById("toleranceSlider").value) / 100.0;
+		TOLERANCE = (parseFloat(document.getElementById("toleranceSlider").value) / 100.0) * 5;
 		localStorage.setItem("tolerance", TOLERANCE);
-		document.getElementById("toleranceValue").innerHTML = TOLERANCE;
+		var toleranceString = "" + TOLERANCE;
+		document.getElementById("toleranceValue").innerHTML = toleranceString.substring(0,3);
 		};
 
 	PRELOAD = localStorage.getItem("preload");
