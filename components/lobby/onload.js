@@ -51,11 +51,13 @@ window.onload = function(){
 		{
 			PRELOAD = "on";
 			document.getElementById("preloadProgress").className = "error";
+			window.location.reload();
 		}
 		else
 		{
 			PRELOAD = "off";
 			document.getElementById("preloadProgress").className = "hidden";
+			window.location.reload();
 		}
 		localStorage.setItem("preload", PRELOAD);
 	};

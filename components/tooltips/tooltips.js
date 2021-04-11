@@ -35,7 +35,7 @@ function getToolTipMessage(id)
 			return "YouTube may cause issues with some browsers and settings.  If YouTube isn't working and/or the videos being played from server are not syncing properly, disabling YouTube may fix the issue";
 			break;
 		case "preloadTip":
-			return "Enabling will allow GhostSync to buffer the entire video.  Useful if you are having trouble watching a video without buffering";
+			return "Toggling will refresh the page.  Enabling will allow GhostSync to download the entire video.  Useful if you are having trouble watching a video without buffering, but this will also use more bandwidth and might cause more bufferring until the video is fully downloaded (video is fully downloaded when the orange dot turns green)";
 			break;
 		case "reactionsTip":
 			return "Disabling this will prevent reactions from appearing on your screen";
