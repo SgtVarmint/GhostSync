@@ -165,7 +165,7 @@ function queueVideoClicked(video, index)
 	if (video.includes("www.youtube.com"))
 	{
 		var titleIndex = -1;
-		for (var i = 0; i < youtubeLookupTable.length; j++)
+		for (var i = 0; i < youtubeLookupTable.length; i++)
 		{
 			if (youtubeLookupTable[i][0] == video)
 			{
