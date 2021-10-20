@@ -47,7 +47,7 @@
 	transform: scale(1.5);
 }
 
-#lobbySoundsToggle, #youtubeDisabledToggle
+#lobbySoundsToggle, #youtubeDisabledToggle, #preloadToggle
 {
 	margin-top: 0;
 	margin-bottom: 20px;

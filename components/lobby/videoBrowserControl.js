@@ -31,19 +31,31 @@ function videoBrowserButton()
 	updateTracking();
 	if (document.getElementById("browser").style.display == "block")
 	{
-		setTimeout(function(){ document.getElementById("browser").style.display = "none"; }, 200);
+		setTimeout(function(){
+			document.getElementById("browser").style.display = "none"; 
+			enablePointerEventsInMenus();
+			}, 200);
 		document.getElementById("browser").className = "popupWindow_out";
+		
+		disablePointerEventsInMenus();
+		resetNavButtons();
 	}
 	else
 	{
 		setTimeout(function(){
 			document.getElementById("settings").style.display = "none";
 			document.getElementById("youtubeMenu").style.display = "none";
+			enablePointerEventsInMenus();
 		}, 200);
 		document.getElementById("youtubeMenu").className = "popupWindow_out";
 		document.getElementById("settings").className = "popupWindow_out";
 		document.getElementById("browser").style.display = "block";
 		document.getElementById("browser").className = "popupWindow_in";
+		
+		disablePointerEventsInMenus();
+		resetNavButtons();
+		document.getElementById("videoBrowserButton").innerHTML = "Close";
+		document.getElementById("videoBrowserButton").style.color = "blue";
 	}
 	
 	//Update tracking color info without needing to go up a directory and then back in
@@ -100,6 +112,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		newInput.onchange = function(e){
 		e.preventDefault();
 		document.getElementById("browser").style.display = "none";
+		resetNavButtons();
 		if (this.files.length > 0)
 			uploadFile();
 		else
@@ -143,16 +156,15 @@ function updateVideoBrowser(file, uploadsFolder = false)
 			var addToQueue = document.createElement("a");
 			addToQueue.innerHTML = "+";
 			var tempFileLocation = rootDir() + document.getElementById("currentDirectory").value + contents[i];
+			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
 			if (!isAlreadyInQueue)
 			{
-				addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
-				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"};
+				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"; this.onclick = function(){ toast("This video is already in the queue"); return false; }; };
 			}
 			else
 			{
 				addToQueue.style.backgroundColor = "#1e3949";
-				addToQueue.href = 'javascript:return null;';
-				addToQueue.onclick = function(){ toast("This video is already in the queue"); };
+				addToQueue.onclick = function(){ toast("This video is already in the queue"); return false; };
 			}
 			addToQueue.className = "addToQueue";
 			
@@ -239,11 +251,13 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	//var temp = inputVideo.split(".");
 	//document.getElementById("videoSource").type = "video/" + temp[temp.length - 1] == "mkv" || temp[temp.length - 1] == "mov" ? "mp4" : temp[temp.length - 1];
 	document.getElementById("video").load();
+	if (checkPreload())
+		preloadVideo(document.getElementById("filePath").value);
 	document.getElementById("browser").style.display = "none";
 	document.getElementById("video").style.display = "block";
 	document.getElementById("youtubePlayer").style.display = "none";
 	
-	
+	resetNavButtons();
 	
 	if (timestamp != 0)
 	{

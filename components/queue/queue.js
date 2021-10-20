@@ -161,7 +161,32 @@ function updateQueueDOM()
 
 function queueVideoClicked(video, index)
 {	
-	var message = video.split("/")[video.split("/").length - 1].replace(/\.[^/.]+$/, "");
+	var message;
+	if (video.includes("www.youtube.com"))
+	{
+		var titleIndex = -1;
+		for (var i = 0; i < youtubeLookupTable.length; i++)
+		{
+			if (youtubeLookupTable[i][0] == video)
+			{
+				titleIndex = i;
+				break;
+			}
+		}
+		if (titleIndex != -1)
+		{
+			message = youtubeLookupTable[titleIndex][1];
+		}
+		else
+		{
+			message = video;
+		}
+	}
+	else
+	{
+		message = video.split("/")[video.split("/").length - 1].replace(/\.[^/.]+$/, "");
+	}
+
 	customQueuePopup(message, index);
 }
 
@@ -225,11 +250,16 @@ function addYoutubeVideoToQueue()
 	pushQueue(document.getElementById("youtubeInput").value);
 	document.getElementById("youtubeInput").value = "";
 	document.getElementById("youtubeMenu").style.display = "none";
+	
+	resetNavButtons();
+	
 	toast("Video added to queue");
 }
 
 function customQueuePopup(message, index, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
 {
+	removeCustomQueuePopup();
+	
 	var confirmDiv = document.createElement("div");
 
 	var messageDiv = document.createElement("div");
@@ -300,5 +330,6 @@ function customQueuePopup(message, index, elementToAppendTo = "body", margTop = 
 
 function removeCustomQueuePopup()
 {
-	document.getElementById("confirmDiv").parentNode.removeChild(document.getElementById("confirmDiv"));
+	if (document.getElementById("confirmDiv") != null)
+		document.getElementById("confirmDiv").parentNode.removeChild(document.getElementById("confirmDiv"));
 }
