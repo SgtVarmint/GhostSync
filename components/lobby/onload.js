@@ -1,5 +1,5 @@
 window.onload = function(){
-	authenticate();
+	if(!auth()){ location.href = "/index.html"; }
 	
 	TOLERANCE = localStorage.getItem("tolerance");
 	if (TOLERANCE == null)
