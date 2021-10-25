@@ -1,7 +1,5 @@
 function ghostConfirm(message, methodToRun, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
 {
-	removeGhostConfirm();
-	
 	var confirmDiv = document.createElement("div");
 
 	var messageDiv = document.createElement("div");
@@ -65,6 +63,5 @@ function ghostConfirm(message, methodToRun, elementToAppendTo = "body", margTop 
 
 function removeGhostConfirm()
 {
-	if (document.getElementById("confirmDiv") != null)
-		document.getElementById("confirmDiv").parentNode.removeChild(document.getElementById("confirmDiv"));
+	document.getElementById("confirmDiv").parentNode.removeChild(document.getElementById("confirmDiv"));
 }

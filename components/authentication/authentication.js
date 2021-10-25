@@ -32,7 +32,7 @@ function homeAuth()
 		{
 			if (this.responseText != "granted")
 			{
-				document.getElementById("lobbyButton").onclick = function(){ toastMessage("You are not authenticated for access to this site", 2, "body", "5%", "13%", "13%", "0"); };
+				document.getElementById("lobbyButton").onclick = function(){ toast("You are not authenticated for access to this site", 2, "body", "5%", "13%", "13%", "0"); };
 				console.log("User does not have access to site");
 			}
 			else
@@ -48,7 +48,5 @@ function homeAuth()
 function authButtonClick()
 {
 	localStorage.setItem("access", document.getElementById("authText").value);
-	localStorage.setItem("lobbyName", document.getElementById("lobbyInput").value.toUpperCase());
-	localStorage.setItem("userName", document.getElementById("userInput").value);
 	location.reload();
 }

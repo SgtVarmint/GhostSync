@@ -8,11 +8,6 @@ video::-webkit-media-controls-fullscreen-button
     display: none;
 }
 
-video::-webkit-media-controls-timeline
-{
-	display: none;
-}
-
 .controls
 {
 	height: 5%;

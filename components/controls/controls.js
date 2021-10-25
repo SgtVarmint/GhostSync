@@ -1,7 +1,6 @@
-//For reactions button, see reactions.js
-
 function skipButtonClicked()
 {
+	updateTracking();
 	if (queue.length > 0 && queue[0] != "undefined" && queue[0] != undefined)
 	{
 		if (queue[0].includes("watch?v="))
@@ -27,8 +26,6 @@ function skipButtonClicked()
 		videoElement.load();
 		document.getElementById("nowPlaying").innerHTML = "Nothing Is Playing Yet..";
 	}
-	
-	updateTracking();
 }
 
 function playButtonClicked(pause = false)
@@ -89,18 +86,6 @@ function fullscreenButtonClicked()
 	{
 		document.exitFullscreen();
 		fullscreenEnabled = false;
-		
-		document.getElementById("reactionButton").style.position = "relative";
-		document.getElementById("reactionButton").style.top = "0%";
-		document.getElementById("reactionButton").style.left = "0%";
-		document.getElementById("reactionButton").style.display = "inline";
-		document.getElementById("reactionMenuContainer").style.top = "60%";
-		document.getElementById("reactionPanel").style.top = "15%"
-		document.getElementById("reactionPanel").style.left = "60%"
-		document.getElementById("reactionPanel").style.height = "500px";
-		document.getElementById("reactionPanel").style.width = "400px";
-		document.getElementById("reactionPanel").style.fontSize = "2em";
-		
 		document.getElementById("playButton").style.position = "relative";
 		document.getElementById("playButton").style.top = "0%";
 		document.getElementById("playButton").style.left = "0%";
@@ -115,14 +100,13 @@ function fullscreenButtonClicked()
 		document.getElementById("seekSlider").style.top = "0%";
 		document.getElementById("seekSlider").style.left = "0%";
 		document.getElementById("seekSlider").style.display = "block";
-		document.getElementById("seekSlider").style.opacity = "1";
 		
 		document.getElementById("skipButton").style.position = "relative";
 		document.getElementById("skipButton").style.top = "0%";
 		document.getElementById("skipButton").style.left = "0%";
 		document.getElementById("skipButton").style.display = "inline";
 
-		/*	
+				
 		if (aspectRatio > 2.0)
 		{
 			document.getElementById("video").className = "widescreenVideo";
@@ -135,9 +119,6 @@ function fullscreenButtonClicked()
 		{
 			document.getElementById("video").className = "standardVideo";
 		}
-		*/
-		
-		document.getElementById("video").className = "standardVideo";
 		
 		//if (isYoutubeVideo())
 		{
@@ -148,18 +129,6 @@ function fullscreenButtonClicked()
 	{
 		document.getElementById("player").requestFullscreen();
 		fullscreenEnabled = true;
-		
-		document.getElementById("reactionButton").style.position = "absolute";
-		document.getElementById("reactionButton").style.top = "92%";
-		document.getElementById("reactionButton").style.left = "40%";
-		document.getElementById("reactionButton").style.display = "none";
-		document.getElementById("reactionMenuContainer").style.top = "55%";
-		document.getElementById("reactionPanel").style.top = "15%"
-		document.getElementById("reactionPanel").style.left = "70%"
-		document.getElementById("reactionPanel").style.height = "800px";
-		document.getElementById("reactionPanel").style.width = "550px";
-		document.getElementById("reactionPanel").style.fontSize = "3em";
-		
 		document.getElementById("playButton").style.position = "absolute";
 		document.getElementById("playButton").style.top = "92%";
 		document.getElementById("playButton").style.left = "45%";
@@ -170,16 +139,12 @@ function fullscreenButtonClicked()
 		document.getElementById("fullscreenButton").style.left = "50%";
 		document.getElementById("fullscreenButton").style.display = "none";
 		
-		document.getElementById("skipButton").style.position = "absolute";
-		document.getElementById("skipButton").style.top = "92%";
-		document.getElementById("skipButton").style.left = "54%";
-		document.getElementById("skipButton").style.display = "none";
-		
 		document.getElementById("seekSlider").style.position = "absolute";
 		document.getElementById("seekSlider").style.top = "97%";
 		document.getElementById("seekSlider").style.left = "0";
 		document.getElementById("seekSlider").style.display = "none";
-		document.getElementById("seekSlider").style.opacity = "0.4";
+		
+		document.getElementById("skipButton").style.display = "none";
 
 		
 		if (isYoutubeVideo())
@@ -187,7 +152,6 @@ function fullscreenButtonClicked()
 			document.getElementById("youtubePlayer").className = "youtubeFull";
 		}
 		
-		/*
 		//Detect if video is widescreen
 		var videoPlayer = document.getElementById("video");
 		var aspectRatio = parseFloat(videoPlayer.videoWidth) / parseFloat(videoPlayer.videoHeight);
@@ -204,9 +168,6 @@ function fullscreenButtonClicked()
 		{
 			document.getElementById("video").className = "standardVideo_fullscreen";
 		}
-		*/
-		
-		document.getElementById("video").className = "standardVideo_fullscreen";
 	}
 		
 }
@@ -216,20 +177,18 @@ function mouseHovered()
 	if (fullscreenEnabled)
 	{
 		window.clearTimeout(controlsTimeout);
-		document.getElementById("reactionButton").style.display = "inline";
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
-		document.getElementById("skipButton").style.display = "inline";
-		document.getElementById("seekSlider").style.display = "inline";
+		if (isYoutubeVideo())
+			document.getElementById("seekSlider").style.display = "inline";
 		controlsTimeout = setTimeout(hideControls, FULLSCREEN_CONTROLS_TIMEOUT * 1000);
 	}
 	else
 	{
-		document.getElementById("reactionButton").style.display = "inline";
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
-		document.getElementById("skipButton").style.display = "inline";
-		document.getElementById("seekSlider").style.display = "inline";
+		if (isYoutubeVideo())
+			document.getElementById("seekSlider").style.display = "inline";
 	}
 }
 
@@ -237,29 +196,25 @@ function hideControls()
 {
 	if (fullscreenEnabled)
 	{
-		document.getElementById("reactionButton").style.display = "none";
 		document.getElementById("playButton").style.display = "none";
 		document.getElementById("fullscreenButton").style.display = "none";
-		document.getElementById("skipButton").style.display = "none";
 		document.getElementById("seekSlider").style.display = "none";
 	}
 	else
 	{
-		document.getElementById("reactionButton").style.display = "inline";
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
-		document.getElementById("skipButton").style.display = "inline";
-		document.getElementById("seekSlider").style.display = "inline";
+		//if (isYoutubeVideo())
+			document.getElementById("seekSlider").style.display = "inline";
 	}
 }
 
 function showControlsNotFullscreen()
 {
-	document.getElementById("reactionButton").style.display = "inline";
 	document.getElementById("playButton").style.display = "inline";
 	document.getElementById("fullscreenButton").style.display = "inline";
-	document.getElementById("skipButton").style.display = "inline";
-	document.getElementById("seekSlider").style.display = "inline";
+	//if (isYoutubeVideo())
+		document.getElementById("seekSlider").style.display = "inline";
 }
 
 document.onkeypress = function(evt) {
@@ -282,13 +237,12 @@ function seekSliderSeeked()
 		document.getElementById("video").currentTime = newTimeStamp;
 	}
 	updateServerTimeStamp(newTimeStamp);
-	updateTracking();
 }
 
 function setPlayButtonImage(playing)
 {
-	//if playing is false, sets the button to the 'pause' button
-	//if playing is true, sets the button to the 'play' button
+	//if playing is false, set the button to the 'pause' button
+	//if playing is true, set the button to the 'play' button
 	if (playing)
 	{
 		document.getElementById("playButton").innerHTML = "&#x23f8;";

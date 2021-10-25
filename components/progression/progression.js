@@ -1,16 +1,8 @@
 //This method handles updating tracking on the client, but ends with a call to server to update server file
 function updateTracking()
 {
-	//Don't try updating tracking info if tracking info was never pulled - will cause overwrite
-	if (initialTrackingInfoPulled == false)
-		return;
-	
 	//No tracking for YouTube videos
 	if (isYoutubeVideo())
-		return;
-	
-	//Don't try updating tracking info if no video is selected
-	if (document.getElementById("filePath").value == "null")
 		return;
 
 	var titleAlreadyTrackedIndex = -1;
@@ -27,12 +19,12 @@ function updateTracking()
 	var percentageFinished = parseFloat(currentTime) / parseFloat(duration);
 	var progressNumber = "-1";
 
-	if (percentageFinished >= 0.0 && percentageFinished <= 0.05)
+	if (percentageFinished >= 0.0 && percentageFinished <= 0.25)
 	{
 		progressNumber = "0";
 		videoEnded = false;
 	}
-	else if(percentageFinished > 0.05 && percentageFinished <= 0.50)
+	else if(percentageFinished > 0.25 && percentageFinished <= 0.50)
 	{
 		progressNumber = "1";
 		videoEnded = false;
@@ -130,5 +122,4 @@ function pullTrackingInfoAction(file)
 	{
 		trackingInfo[i] = fileInfo[i].split("^");
 	}
-	initialTrackingInfoPulled = true;
 }

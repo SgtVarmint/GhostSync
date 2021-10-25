@@ -29,33 +29,21 @@ function youtubeButton()
 {
 	if (document.getElementById("youtubeMenu").style.display == "block")
 	{
-		setTimeout(function(){ 
-			document.getElementById("youtubeMenu").style.display = "none";
-			enablePointerEventsInMenus();
-			}, 200);
+		setTimeout(function(){ document.getElementById("youtubeMenu").style.display = "none"; }, 200);
 		document.getElementById("youtubeMenu").className = "popupWindow_out";
 		document.getElementById("youtubeInput").value = "";
-		
-		disablePointerEventsInMenus();
-		resetNavButtons();
 	}
 	else
 	{
 		setTimeout(function(){
 			document.getElementById("settings").style.display = "none";
 			document.getElementById("browser").style.display = "none";
-			enablePointerEventsInMenus();
 		}, 200);
 		document.getElementById("settings").className = "popupWindow_out";
 		document.getElementById("browser").className = "popupWindow_out";
 		document.getElementById("youtubeMenu").className = "popupWindow_in";
 		document.getElementById("youtubeMenu").style.display = "block";
 		document.getElementById("youtubeInput").focus();
-		
-		disablePointerEventsInMenus();
-		resetNavButtons();
-		document.getElementById("youtubeButton").innerHTML = "Close";
-		document.getElementById("youtubeButton").style.color = "blue";
 	}
 }
 
@@ -100,8 +88,6 @@ function playYoutubeVideo(urlOverride = "", overridePlaystateToPlay = false)
 		document.getElementById("video").style.display = "none";
 		document.getElementById("playButton").innerHTML = "&#x23f8;";
 		document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
-		
-		resetNavButtons();
 		
 		updateServerTimeStamp(.01);
 	}

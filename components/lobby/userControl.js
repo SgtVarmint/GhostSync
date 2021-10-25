@@ -1,9 +1,8 @@
 function userUpdate()
 {
 	var timeStamp = isYoutubeVideo() ? youtubePlayer.getCurrentTime() : document.getElementById("video").currentTime;
-	var activity = userActive ? "1" : "0";
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","/components/user/userUpdate.php",false);
+	xhttp.open("POST","userUpdate.php",false);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.onreadystatechange = function()
 	{
@@ -12,8 +11,7 @@ function userUpdate()
 			userUpdateAction(this);
 		}
 	}
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&userName=" + localStorage.getItem("userName") + "&timeStamp=" + timeStamp + "&activity=" + activity + "&queuedReaction=" + queuedReaction);
-	queuedReaction = "none";
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&userName=" + localStorage.getItem("userName") + "&timeStamp=" + timeStamp);
 }
 
 function userUpdateAction(file)
@@ -28,11 +26,6 @@ function userUpdateAction(file)
 		{
 			var info = userInfo[i].split("^");
 			if (info[0] != currentUsers[i].innerHTML)
-			{
-				userListNeedsUpdated = true;
-				break;
-			}
-			else if (info[4] != "none")
 			{
 				userListNeedsUpdated = true;
 				break;
@@ -64,14 +57,8 @@ function userUpdateAction(file)
 			if (seconds < 10)
 				seconds = "0" + seconds;
 			var hrTimeStamp = parseInt(minutes) + ":" + seconds;
-			var statusColor = info[3] == "1" ? "green" : "orange";
 			
-			//This line builds the individual user li innerHTML
-			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + info[0] + " - " + hrTimeStamp;
-			if (info[4] != "none" && info[4] != "")
-			{
-				processIncomingReaction(info[0], info[4]);
-			}
+			li.innerHTML = info[0] + " - " + hrTimeStamp;
 			document.getElementById("userList").appendChild(li);
 		}
 	}

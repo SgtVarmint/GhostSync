@@ -134,8 +134,6 @@ function syncVideoAction(file)
 			{
 				document.getElementById("videoSource").src = info[3];
 				document.getElementById("video").load();
-				if (checkPreload())
-					preloadVideo(document.getElementById("filePath").value);
 			}
 			document.getElementById("playState").value = "paused";
 			toast(info[4] + " Chose A New Video");
@@ -143,7 +141,6 @@ function syncVideoAction(file)
 			videoEnded = false;
 		}
 
-		/*
 		//Detect aspect ratio of video and set css class
 		if (aspectRatio > 2.0)
 		{
@@ -157,8 +154,6 @@ function syncVideoAction(file)
 		{
 			document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
 		}
-		*/
-		document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
 		
 		//Setting variables based on whether current video is on server or through YouTube
 		
