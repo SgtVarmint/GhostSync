@@ -3,8 +3,8 @@
 $accessCode = $_POST["accessCode"];
 $accessCode = trim($accessCode);
 
-$myfile = fopen("/var/www/html/components/authentication/access.txt", "r") or die("Unable to open file!");
-$keyFile = fread($myfile, filesize("/var/www/html/components/authentication/access.txt"));
+$myfile = fopen("access.txt", "r") or die("Unable to open file!");
+$keyFile = fread($myfile, filesize("access.txt"));
 fclose($myfile);
 
 $granted = false;
