@@ -47,7 +47,7 @@ if ($userFound == false)
 	$newFileContents .= $userName . "^" . $currentTime . "^" . $timeStamp . "#";
 }
 
-$myfile = fopen($lobbyUserFile);
+$myfile = fopen($lobbyUserFile, "w");
 fwrite($myfile, $newFileContents);
 fclose($myfile);
 
