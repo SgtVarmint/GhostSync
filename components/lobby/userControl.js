@@ -25,7 +25,7 @@ function userUpdateAction(file)
 		for (var i = 0; i < userInfo.length - 1; i++)
 		{
 			var info = userInfo[i].split("^");
-			if (info[0] != currentUsers[i].innerHTML)
+			if (info[0] != currentUsers[i].innerHTML || info[4] != "none")
 			{
 				userListNeedsUpdated = true;
 				break;
