@@ -335,6 +335,8 @@ function playVideo(video = "pullFromDOM", timestamp = 0, overridePlaystateToPlay
 function goBack()
 {
 	var currDir = document.getElementById("currentDirectory").value;
+	if (currDir == "/")
+		videoBrowserButton();
 	var newDir = "/";
 	var temp = currDir.split("/");
 	for (var i = 1; i < temp.length-2; i++)
