@@ -28,6 +28,7 @@ function parseMetadata(file)
 
 function videoBrowserButton()
 {
+	bindBackgroundFadeClick("videoBrowserButton()");
 	removeToastMessage();
 	updateTracking();
 	if (document.getElementById("browser").style.display == "block")

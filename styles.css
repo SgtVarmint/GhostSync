@@ -55,6 +55,7 @@
 	height: 100%;
 	width: 100%;
 	background-color: black;
+	z-index: 99;
 }
 
 @keyframes fade-in
@@ -378,9 +379,11 @@ body{
 }
 
 #topNav{
+	position: relative;
     background-color: #333333;
     overflow: hidden;
     height: 50px;
+	z-index: 1000;
 }
 
 #topNav a{

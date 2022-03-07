@@ -38,6 +38,11 @@ function disablePointerEventsInMenus()
 	document.getElementById("settings").style.pointerEvents = "none";
 }
 
+function bindBackgroundFadeClick(functionName)
+{
+	document.getElementById("backgroundFade").setAttribute("onclick", "javascript:" + functionName + ";");
+}
+
 function enableBackgroundFade()
 {
 	document.getElementById("backgroundFade").className = "fade_in";

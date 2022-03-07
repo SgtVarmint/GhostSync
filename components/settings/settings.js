@@ -1,5 +1,6 @@
 function settingsButton()
 {
+	bindBackgroundFadeClick("settingsButton()");
 	if (document.getElementById("settings").style.display == "block")
 	{
 		disableBackgroundFade();

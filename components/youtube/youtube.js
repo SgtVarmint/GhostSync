@@ -27,6 +27,7 @@ function onYouTubeIframeAPIReady()
 
 function youtubeButton()
 {
+	bindBackgroundFadeClick("youtubeButton()");
 	removeToastMessage();
 	if (document.getElementById("youtubeMenu").style.display == "block")
 	{
