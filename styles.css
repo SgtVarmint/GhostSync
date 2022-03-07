@@ -5,7 +5,8 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #333333; 
+	background: #29293d; 
+  /*background: #333333; */
 }
  
 /* Handle */
@@ -44,6 +45,51 @@
 		opacity: 0;
 		top: 0px;
 	}
+}
+
+#backgroundFade
+{
+	opacity: .4;
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: black;
+}
+
+@keyframes fade-in
+{
+	from
+	{
+		opacity: 0;
+	}
+	to
+	{
+		opacity: .4;
+	}
+}
+
+@keyframes fade-out
+{
+	from
+	{
+		opacity: .4;
+	}
+	to
+	{
+		opacity: 0;
+	}
+}
+
+.fade_in
+{
+	animation-name: fade-in;
+	animation-duration: .2s;
+}
+.fade_out
+{
+	animation-name: fade-out;
+	animation-duration: .2s;
 }
 
 .popupWindow_in
@@ -174,7 +220,7 @@ h3
 	float: left;
 	width: 34%;
 	height: 45%;
-	overflow: auto;
+	overflow: hidden;
 }
 
 #users ul
@@ -183,6 +229,12 @@ h3
 	margin: 0;
 	padding: 0;
 	color: #d3d3d3;
+}
+
+#userListContainer
+{
+	height: 100%;
+	overflow: auto;
 }
 
 #userList li
@@ -201,7 +253,7 @@ h3
 {
 	display: none;
 	position: fixed;
-	background: rgba(79, 79, 79, 0.85);
+	background: rgba(79, 79, 79, 0.99);
 	border-radius: 5px;
 	border: 1px solid white;
 	padding: 5px;
@@ -217,9 +269,54 @@ h3
 
 #videoBrowser
 {
+	float: left;
 	overflow: auto;
 	height: 90%;
 	padding: 5px;
+	width: 60%;
+	border-right: solid white 3px;
+	border-radius: 5px;
+}
+
+#videoBrowserSidePanel
+{
+	float: left;
+	overflow: auto;
+	height: 90%;
+	padding: 5px;
+	/*border: 1px solid black;*/
+	width: 36%;
+	color: white;
+}
+#videoBrowserSidePanel p
+{
+	padding: 10px;
+	font-size: 1.2em;
+}
+
+#videoBrowserSidePanel.infoDiv
+{
+	display: block;
+	padding: 10px;
+	padding-bottom: 4px;
+	padding-top: 2px;
+	font-size: .7em;
+}
+
+.videoInfoButton
+{
+	color: white;
+	background-color: #326785;
+	transition: .25s;
+	border: 1px solid white;
+	border-radius: 5px;
+	margin-left: 25%;
+	margin-top: 10px;
+}
+
+.videoInfoButton:hover
+{
+	background-color: gray;
 }
 
 .videoBrowserVideo

@@ -12,12 +12,19 @@ function userUpdate()
 			userUpdateAction(this);
 		}
 	}
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&userName=" + localStorage.getItem("userName") + "&timeStamp=" + timeStamp + "&activity=" + activity + "&queuedReaction=" + queuedReaction);
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&userName=" + localStorage.getItem("userName") + "&timeStamp=" + timeStamp + "&activity=" + activity + "&queuedReaction=" + queuedReaction + "&userId=" + localStorage.getItem("userId"));
 	queuedReaction = "none";
 }
 
 function userUpdateAction(file)
 {
+	//info[0] is the current user's username
+	//info[1] is the current user's timestamp of when they last updated their status
+	//info[2] is the current user's timestamp of their video
+	//info[3] is the current state of the user (active or away)
+	//info[4] is the current user's reaction (if sent) to be shown to the lobby
+	//info[5] is the current user's id
+	
 	var userInfo = file.responseText.split("#");
 	var currentUsers = document.getElementsByClassName("user");
 	var userListNeedsUpdated = false;
@@ -53,6 +60,7 @@ function userUpdateAction(file)
 	if (userListNeedsUpdated)
 	{
 		document.getElementById("userList").innerHTML = "";
+						
 		for (var i = 0; i < userInfo.length - 1; i++)
 		{
 			var info = userInfo[i].split("^");
@@ -63,19 +71,45 @@ function userUpdateAction(file)
 			var seconds = temp % 60;
 			if (seconds < 10)
 				seconds = "0" + seconds;
-			var hrTimeStamp = parseInt(minutes) + ":" + seconds;
+			
+			let userName = info[0];
+			
+			var hrTimeStamp = convertMinutesToHours(parseInt(minutes)) + "<span style='font-size: .7em'>:" + seconds + "</span>";
 			var statusColor = info[3] == "1" ? "green" : "orange";
 			
 			//This line builds the individual user li innerHTML
-			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + info[0] + " - " + hrTimeStamp;
+			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + " - " + hrTimeStamp;
 			if (info[4] != "none" && info[4] != "")
 			{
 				processIncomingReaction(info[0], info[4]);
 			}
 			document.getElementById("userList").appendChild(li);
 		}
+		
+		/*Uncomment this portion of code to add test users to user list
+		for (var i = 0; i < 10; i++)
+		{
+			var li = document.createElement("li");
+			li.innerHTML = "<span style='font-style: bolder; color: " + "green" + "'>&#8226;</span> " + "Test User" + " - " + "0:00";
+			document.getElementById("userList").appendChild(li);
+		}
+		*/
 	}
 	closeLoader();
+}
+
+function getUserIdList()
+{
+	let fileText = "";
+	let fileLocation = "/data/userIdList.txt";
+	let xhttp = new XMLHttpRequest();
+	xhttp.onload = function(){
+		fileText = this.responseText;
+	}
+	xhttp.open("GET", "" + fileLocation, false);
+	xhttp.send();
+		
+	return fileText.split("\n");
 }
 
 function playSound(fileName)

@@ -3,8 +3,11 @@ normalMoviesFolder="/Movies"
 lowResMoviesFolder="/_LowRes/Movies"
 normalTVFolder="/TV"
 lowResTVFolder="/_LowRes/TV"
+normalUploadsFolder="/Uploads"
+lowResUploadsFolder="/_LowRes/Uploads"
 IFS=$'\n'
 
+echo Started \- `date` >> /home/jon/logs/compression.log
 
 for i in `find "$rootFolder$normalTVFolder" -name "*.mp4"`
 do
@@ -25,12 +28,21 @@ do
 		echo "$rootFolder$lowResTVFolder/$currentShow/Season $currentSeason"
 		mkdir -p "$rootFolder$lowResTVFolder/$currentShow/Season $currentSeason"
 	fi
-	ffmpeg -n -i $i -b:v 1000k $outputFile
+	ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
 done
 
 for i in `find "$rootFolder$normalMoviesFolder" -name "*.mp4"`
 do
-	outputFile=`echo $i | sed s:"$normalMovieFolder":"$lowResMovieFolder":`
+	outputFile=`echo $i | sed s:"$normalMoviesFolder":"$lowResMoviesFolder":`
 
-	ffmpeg -n -i $i -b:v 1000k $outputFile
+	ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
 done
+
+for i in `find "$rootFolder$normalUploadsFolder" -name "*.mp4"`
+do
+	outputFile=`echo $i | sed s:"$normalUploadsFolder":"$lowResUploadsFolder":`
+
+	ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
+done
+
+echo Completed \- `date` >> /home/jon/logs/compression.log

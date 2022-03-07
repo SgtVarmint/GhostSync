@@ -26,7 +26,7 @@ function getToolTipMessage(id)
 			return "This toggles whether you will hear lobby sounds when someone leaves or joins the lobby";
 			break;
 		case "toleranceTip":
-			return "Adjust this slider to suit your connection.  The lower the number, the more 'in-sync' with the lobby you will be, but it may cause issues if your network is slow.  Increase this value if you are having sync-buffering issues";
+			return "Adjust this slider to suit your connection.  The lower the number, the more 'in-sync' with the lobby you will be, but it may cause issues if your network latency is high.  Increase this value if you are having sync-buffering issues";
 			break;
 		case "authTip":
 			return "An authentication key is required to access this site.  If you think you should have access to this site but do not, contact Ghostmij17#4572 through Discord";
@@ -39,6 +39,9 @@ function getToolTipMessage(id)
 			break;
 		case "reactionsTip":
 			return "Disabling this will prevent reactions from appearing on your screen";
+			break;
+		case "slowConnectionTip":
+			return "With this setting enabled, videos will always load their lower-quality versions (when available) to ensure a smooth experience on slow connections.  This setting is useful if your connection consistently has trouble playing videos  (Note:  Lower quality versions of videos are automatically loaded, even with this setting off, if your connection has trouble loading a video.  Enabling this setting will ensure the lower quality version of the video is always loaded)";
 			break;
 		default:
 			return "This is the default tooltip text, meaning the developer was too dumb to remember to add a tooltip :)  Make sure to give them shit";

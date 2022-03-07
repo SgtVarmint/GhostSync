@@ -18,3 +18,18 @@ function convertStorageFormatToEmojiArray(inputString)
 	if (inputString != null)
 		favoriteEmojis = inputString.split("^");
 }
+
+function getVideoNameFromPath(path = "empty")
+{
+	var fullPath;
+	if (path == "empty")
+		fullPath = document.getElementById("filePath").value;
+	else
+		fullPath = path;
+	
+	var splitPath = fullPath.split("/");
+	var titleWithExtension = splitPath[splitPath.length - 1];
+	var videoName = titleWithExtension.replace(/\.[^/.]+$/, "");
+	
+	return videoName;
+}

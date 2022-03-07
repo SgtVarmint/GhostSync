@@ -5,9 +5,11 @@ $USER_TIMEOUT = 7.0;
 
 $lobbyName = $_POST["lobbyName"];
 $userName = $_POST["userName"];
+$userId = $_POST["userId"];
 $timeStamp = $_POST["timeStamp"];
 $activity = $_POST["activity"];
 $queuedReaction = $_POST["queuedReaction"];
+$userId = $_POST["userId"];
 
 $file = file_get_contents("/var/www/html/lobbies/" . $lobbyName . "_USERS.txt");
 
@@ -24,6 +26,8 @@ $newFileContents = "";
 
 $userFound = false;
 
+$duplicates = -1;
+
 foreach ($userInfo as $user)
 {
 	$info = explode("^", $user);
@@ -32,13 +36,14 @@ foreach ($userInfo as $user)
 	//$info[2] is the current user's timestamp of their video
 	//$info[3] is the current state of the user (active or away)
 	//$info[4] is the current user's reaction (if sent) to be shown to the lobby
+	//$info[5] is the current user's id
 	
 	$difference = (float)$currentTime - (float)$info[1];
-	
+		
 	if ($info[0] == $userName)
 	{
 		$userFound = true;
-		$newFileContents .= $info[0] . "^" . $currentTime . "^" . $timeStamp . "^" . $activity . "^" . $queuedReaction . "#";
+		$newFileContents .= $info[0] . "^" . $currentTime . "^" . $timeStamp . "^" . $activity . "^" . $queuedReaction . "^" . $userId . "#";
 	}
 	else if($difference < $USER_TIMEOUT)
 	{
@@ -48,7 +53,7 @@ foreach ($userInfo as $user)
 
 if ($userFound == false)
 {
-	$newFileContents .= $userName . "^" . $currentTime . "^" . $timeStamp . "^" . $activity . "^" . $queuedReaction . "#";
+	$newFileContents .= $userName . "^" . $currentTime . "^" . $timeStamp . "^" . $activity . "^" . $queuedReaction . "^" . $userId . "#";
 }
 
 $myfile = fopen("/var/www/html/lobbies/" . $lobbyName . "_USERS.txt", "w") or die("Unable to open file!");

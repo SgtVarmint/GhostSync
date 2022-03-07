@@ -1,5 +1,37 @@
 //For reactions button, see reactions.js
 
+function lockButtonClicked()
+{
+	if (!controlsLocked)
+	{
+		lockControls();
+		controlsLocked = true;
+	}
+	else
+	{
+		unlockControls();
+		controlsLocked = false;
+	}
+}
+
+function lockControls()
+{
+	document.getElementById("playButton").disabled = true;
+	document.getElementById("playButton").className = "controlsDisabled";
+	document.getElementById("skipButton").className = "controlsDisabled";
+	document.getElementById("skipButton").disabled = true;
+	document.getElementById("seekSlider").disabled = true;
+}
+
+function unlockControls()
+{
+	document.getElementById("playButton").disabled = false;
+	document.getElementById("playButton").className = "controls";
+	document.getElementById("skipButton").className = "controls";
+	document.getElementById("skipButton").disabled = false;
+	document.getElementById("seekSlider").disabled = false;
+}
+
 function skipButtonClicked()
 {
 	if (queue.length > 0 && queue[0] != "undefined" && queue[0] != undefined)
@@ -7,7 +39,7 @@ function skipButtonClicked()
 		if (queue[0].includes("watch?v="))
 			playYoutubeVideo(queue[0], true);
 		else
-			videoBrowserVideoClick(queue[0], 0, true, true);
+			playVideo(queue[0], 0, true, true);
 		shiftQueue();
 		updateQueueDOM();
 	}
@@ -121,6 +153,11 @@ function fullscreenButtonClicked()
 		document.getElementById("skipButton").style.top = "0%";
 		document.getElementById("skipButton").style.left = "0%";
 		document.getElementById("skipButton").style.display = "inline";
+		
+		document.getElementById("lockButton").style.position = "relative";
+		document.getElementById("lockButton").style.top = "0%";
+		document.getElementById("lockButton").style.left = "0%";
+		document.getElementById("lockButton").style.display = "inline";
 
 		/*	
 		if (aspectRatio > 2.0)
@@ -162,6 +199,7 @@ function fullscreenButtonClicked()
 		
 		document.getElementById("playButton").style.position = "absolute";
 		document.getElementById("playButton").style.top = "92%";
+		document.getElementById("playButton").style.marginTop = "5px";
 		document.getElementById("playButton").style.left = "45%";
 		document.getElementById("playButton").style.display = "none";
 		
@@ -174,6 +212,11 @@ function fullscreenButtonClicked()
 		document.getElementById("skipButton").style.top = "92%";
 		document.getElementById("skipButton").style.left = "54%";
 		document.getElementById("skipButton").style.display = "none";
+		
+		document.getElementById("lockButton").style.position = "absolute";
+		document.getElementById("lockButton").style.top = "92%";
+		document.getElementById("lockButton").style.left = "59%";
+		document.getElementById("lockButton").style.display = "none";
 		
 		document.getElementById("seekSlider").style.position = "absolute";
 		document.getElementById("seekSlider").style.top = "97%";
@@ -220,6 +263,7 @@ function mouseHovered()
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
+		document.getElementById("lockButton").style.display = "inline";
 		document.getElementById("seekSlider").style.display = "inline";
 		controlsTimeout = setTimeout(hideControls, FULLSCREEN_CONTROLS_TIMEOUT * 1000);
 	}
@@ -229,6 +273,7 @@ function mouseHovered()
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
+		document.getElementById("lockButton").style.display = "inline";
 		document.getElementById("seekSlider").style.display = "inline";
 	}
 }
@@ -241,6 +286,7 @@ function hideControls()
 		document.getElementById("playButton").style.display = "none";
 		document.getElementById("fullscreenButton").style.display = "none";
 		document.getElementById("skipButton").style.display = "none";
+		document.getElementById("lockButton").style.display = "none";
 		document.getElementById("seekSlider").style.display = "none";
 	}
 	else
@@ -249,6 +295,7 @@ function hideControls()
 		document.getElementById("playButton").style.display = "inline";
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
+		document.getElementById("lockButton").style.display = "inline";
 		document.getElementById("seekSlider").style.display = "inline";
 	}
 }
@@ -259,6 +306,7 @@ function showControlsNotFullscreen()
 	document.getElementById("playButton").style.display = "inline";
 	document.getElementById("fullscreenButton").style.display = "inline";
 	document.getElementById("skipButton").style.display = "inline";
+	document.getElementById("lockButton").style.display = "inline";
 	document.getElementById("seekSlider").style.display = "inline";
 }
 

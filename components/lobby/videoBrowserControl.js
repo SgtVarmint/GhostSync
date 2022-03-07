@@ -28,9 +28,11 @@ function parseMetadata(file)
 
 function videoBrowserButton()
 {
+	removeToastMessage();
 	updateTracking();
 	if (document.getElementById("browser").style.display == "block")
 	{
+		disableBackgroundFade();
 		setTimeout(function(){
 			document.getElementById("browser").style.display = "none"; 
 			enablePointerEventsInMenus();
@@ -42,6 +44,9 @@ function videoBrowserButton()
 	}
 	else
 	{
+		if (!document.getElementById("thumbnail"))
+			serveMissingVideoInfo();
+		enableBackgroundFade();
 		setTimeout(function(){
 			document.getElementById("settings").style.display = "none";
 			document.getElementById("youtubeMenu").style.display = "none";
@@ -151,6 +156,8 @@ function updateVideoBrowser(file, uploadsFolder = false)
 			var newVideo = document.createElement("a");
 			newVideo.innerHTML = contents[i].replace(/\.[^/.]+$/, "");
 			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
+			//Contents[i] is not getting passed correctly to playVideo right here..
+			newVideo.ondblclick = function(){ playVideo(); };
 			newVideo.className = "videoBrowserVideo";
 			
 			var addToQueue = document.createElement("a");
@@ -179,22 +186,22 @@ function updateVideoBrowser(file, uploadsFolder = false)
 					if (trackingInfo[j][2] == "0")
 					{
 						newVideo.style.color = progressColor0;
-						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
 					}
 					else if (trackingInfo[j][2] == "1")
 					{
 						newVideo.style.color = progressColor1;
-						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
 					}
 					else if (trackingInfo[j][2] == "2")
 					{
 						newVideo.style.color = progressColor2;
-						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
 					}
 					else if (trackingInfo[j][2] == "3")
 					{
 						newVideo.style.color = progressColor3;
-						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
 					}
 					else if (trackingInfo[j][2] == "4")
 					{
@@ -202,6 +209,8 @@ function updateVideoBrowser(file, uploadsFolder = false)
 					}
 					
 					newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+
+					newVideo.ondblclick = function(){ playVideo(); };
 				}
 			}
 			
@@ -210,6 +219,9 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		}
 		else
 		{
+			if (contents[i].includes("_LowRes") ||
+				contents[i].includes("_metadata"))
+				continue;
 			var newDir = document.createElement("a");
 			newDir.innerHTML = contents[i];
 			newDir.href = 'javascript:videoBrowserDirClick("' + contents[i] + '");';
@@ -239,10 +251,36 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 		fileLocation = rootDir() + document.getElementById("currentDirectory").value + inputVideo;
 	else
 		fileLocation = inputVideo;
-	document.getElementById("filePath").value = fileLocation;
+	
+	document.getElementById("selectedVideoTimestamp").value = timestamp;
+	
+	document.getElementById("selectedVideoTitle").value = inputVideo;
+			
+	serveVideoInfo(fileLocation, timestamp = timestamp, overridePlaystateToPlay = overridePlaystateToPlay);
+}
+
+function playVideo(video = "pullFromDOM", timestamp = 0, overridePlaystateToPlay = "paused")
+{
+	jimmyNet = false;
+	
+	var fileLocation = "";
+	
+	if (video == "pullFromDOM")
+	{
+		video = document.getElementById("selectedVideoTitle").value;
+		timestamp = parseInt(document.getElementById("selectedVideoTimestamp").value);
+	}
+	
+	//Format video file path if input was only title
+	if (!video.includes("/"))
+		fileLocation = rootDir() + document.getElementById("currentDirectory").value + video;
+	else
+		fileLocation = video;
+		
+	document.getElementById("filePath").value = serveVideoPath(fileLocation);
 	document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
-	document.getElementById("videoSource").src = fileLocation;
+	document.getElementById("videoSource").src = serveVideoPath(fileLocation);
 	///////////////
 	//This gets the file extension and sets the video source type
 	//For mov and mkv files, the type seems to have to be set to video/mp4 regardless
@@ -251,13 +289,14 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	//var temp = inputVideo.split(".");
 	//document.getElementById("videoSource").type = "video/" + temp[temp.length - 1] == "mkv" || temp[temp.length - 1] == "mov" ? "mp4" : temp[temp.length - 1];
 	document.getElementById("video").load();
-	if (checkPreload())
-		preloadVideo(document.getElementById("filePath").value);
+	/*if (checkPreload())
+		preloadVideo(document.getElementById("filePath").value);*/
 	document.getElementById("browser").style.display = "none";
 	document.getElementById("video").style.display = "block";
 	document.getElementById("youtubePlayer").style.display = "none";
 	
 	resetNavButtons();
+	disableBackgroundFade();
 	
 	if (timestamp != 0)
 	{
@@ -305,4 +344,5 @@ function goBack()
 	}
 	document.getElementById("currentDirectory").value = newDir;
 	getDirectoryInfo();
+	serveMissingVideoInfo();
 }

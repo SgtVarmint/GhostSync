@@ -55,6 +55,7 @@ function pullQueue()
 }
 
 var queueDOMNeedsUpdate = true;
+var initialQueueLoaded = false;
 function pullQueueInfo(file)
 {
 	//Get queue and load it into memory
@@ -83,7 +84,10 @@ function pullQueueInfo(file)
 		
 	if (queueDOMNeedsUpdate)
 	{
-		toast("Queue updated..");
+		if (initialQueueLoaded)
+			toast("Queue updated..");
+		else
+			initialQueueLoaded = true;
 		updateQueueDOM();
 		queueDOMNeedsUpdate = false;
 	}
@@ -211,7 +215,7 @@ function pushToFrontOfQueue(indexToPush)
 
 function clearButtonClicked()
 {
-	ghostConfirm("This will COMPLETELY wipe the current queue.&nbsp;&nbsp;Are you sure you want to do this?", "clearQueue");
+	ghostConfirm("This will completely wipe the current queue.&nbsp;&nbsp;Are you sure you want to do this?", "clearQueue");
 }
 
 function clearQueue(confirm)

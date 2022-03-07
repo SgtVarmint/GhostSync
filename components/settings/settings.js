@@ -2,6 +2,7 @@ function settingsButton()
 {
 	if (document.getElementById("settings").style.display == "block")
 	{
+		disableBackgroundFade();
 		setTimeout(function(){ 
 			document.getElementById("settings").style.display = "none";
 			enablePointerEventsInMenus();
@@ -13,6 +14,8 @@ function settingsButton()
 	}
 	else
 	{
+		enableBackgroundFade();
+		removeToastMessage();
 		setTimeout(function(){
 			document.getElementById("browser").style.display = "none";
 			document.getElementById("youtubeMenu").style.display = "none";

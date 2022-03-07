@@ -1,5 +1,40 @@
 window.onload = function(){
 	authenticate();
+	serveInteractPrompt();
+	
+	getUserIdList();
+	
+	document.getElementById("playButton").onclick = playButtonClicked;
+	document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;
+	document.getElementById("skipButton").onclick = skipButtonClicked;
+	document.getElementById("seekSlider").oninput = seekSliderSeeked;
+	document.getElementById("lockButton").onclick = lockButtonClicked;
+	
+	PLAYER_VOLUME = localStorage.getItem("playerVolume");
+	if (PLAYER_VOLUME == null)
+	{
+		PLAYER_VOLUME = 1;
+		localStorage.setItem("playerVolume", PLAYER_VOLUME);
+	}
+	document.getElementById("video").volume = PLAYER_VOLUME;
+	
+	let jimmyNetSettingValue = localStorage.getItem("jimmyNet");
+	if (jimmyNetSettingValue == null)
+	{
+		JIMMYNET_SETTING_TOGGLED = false;
+		localStorage.setItem("jimmyNet", "off");
+	}
+	else
+	{
+		JIMMYNET_SETTING_TOGGLED = jimmyNetSettingValue == "on" ? true : false;
+		document.getElementById("jimmyToggle").checked = JIMMYNET_SETTING_TOGGLED;
+	}
+	document.getElementById("jimmyToggle").oninput = function(){ 
+		JIMMYNET_SETTING_TOGGLED = document.getElementById("jimmyToggle").checked;
+		localStorage.setItem("jimmyNet", JIMMYNET_SETTING_TOGGLED ? "on" : "off");
+		};
+
+	document.getElementById("video").volume = PLAYER_VOLUME;
 	
 	TOLERANCE = localStorage.getItem("tolerance");
 	if (TOLERANCE == null)
@@ -32,6 +67,7 @@ window.onload = function(){
 		document.getElementById("toleranceValue").innerHTML = toleranceString.substring(0,3);
 		};
 
+	/*
 	PRELOAD = localStorage.getItem("preload");
 	if (PRELOAD == null)
 	{
@@ -61,6 +97,7 @@ window.onload = function(){
 		}
 		localStorage.setItem("preload", PRELOAD);
 	};
+	*/
 
 	document.getElementById("userNameInput").addEventListener("keyup", function(event)
 	{
@@ -117,16 +154,17 @@ window.onload = function(){
 		localStorage.setItem("lobbyReactionsSetting", LOBBY_REACTIONS_SETTING);
 	};
 	
+	document.getElementById("video").onvolumechange = function(){
+		PLAYER_VOLUME = document.getElementById("video").volume;
+		localStorage.setItem("playerVolume", PLAYER_VOLUME);
+	}
+	
 	//document.getElementById("video").onseeked = function(){ document.getElementById("video").pause(); document.getElementById("playState").value = "paused"; };//updateServerTimeStamp(); };
-	document.getElementById("playButton").onclick = playButtonClicked;
-	document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;
-	document.getElementById("skipButton").onclick = skipButtonClicked;
-	document.getElementById("seekSlider").oninput = seekSliderSeeked;
 	document.getElementById("player").onmousemove = mouseHovered;
 	document.getElementById("youtubePlayer").onmousemove = mouseHovered;
 	document.getElementById("youtubePlayButton").onclick = playYoutubeVideo;
 	document.getElementById("youtubeAddToQueueButton").onclick = addYoutubeVideoToQueue;
-	document.getElementById("video").onclick = function(){ document.getElementById("playButton").click(); };
+	//document.getElementById("video").onclick = function(){ document.getElementById("playButton").click(); };
 	document.getElementById("reactionButton").onclick = reactionButtonClicked;
 	document.getElementById("closeReactionMenuButton").onclick = function(){ document.getElementById("reactionButton").click(); };
 	document.getElementById("reactionMenuFavoritesButton").onclick = showFavoriteEmojis;

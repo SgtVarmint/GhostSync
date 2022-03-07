@@ -21,6 +21,18 @@ video::-webkit-media-controls-timeline
 	border: none;
 	outline: none;
 	font-size: 1.5em;
+	opacity: 1;
+}
+
+.controlsDisabled
+{
+	height: 5%;
+	background: rgb(0, 0, 0, 0);
+	color: white;
+	border: none;
+	outline: none;
+	font-size: 1.5em;
+	opacity: .4;
 }
 
 .controls:hover
@@ -34,5 +46,5 @@ video::-webkit-media-controls-timeline
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	transform: scale(1);
+	/*transform: scale(1);*/
 }

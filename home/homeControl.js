@@ -2,6 +2,24 @@ function lobbyButtonClick()
 {
 	localStorage.setItem("lobbyName", document.getElementById("lobbyInput").value.toUpperCase());
 	localStorage.setItem("userName", formatUsername(document.getElementById("userInput").value));
+	
+	//Check if user already has Id
+	let userId = localStorage.getItem("userId");
+	if (userId == null)
+	{
+		let userIdList = getUserIdList();
+		let newId = "";
+		while(true)
+		{
+			//Give user new Id
+			newId = "" + getRandomNumber(10);
+			if (!userIdList.includes(newId))
+				break;
+		}
+		localStorage.setItem("userId", newId);
+
+	}
+		
 	document.location.href = "/components/lobby/lobby.html"
 }
 

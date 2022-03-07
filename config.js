@@ -5,6 +5,10 @@ FULLSCREEN_CONTROLS_TIMEOUT = 3;
 LOBBY_SOUNDS_SETTING = "on";
 REACTION_STAY_TIME = 3;
 LOBBY_REACTIONS_SETTING = "on";
+OUT_OF_SYNCS_BEFORE_JIMMY = 4
+OUT_OF_SYNCS_BUILD_BUFFER = 2;
+PLAYER_VOLUME = 1;
+JIMMYNET_SETTING_TOGGLED = false;
 
 //On the fly globals:  do not change
 var fullscreenEnabled = false;
@@ -24,3 +28,12 @@ var removeFavoriteModeActive = false;
 var favoriteEmojis = new Array();
 var activeReactions = new Array();
 var queuedReaction = "none";
+var jimmyNet = false;
+var videoInfoActive = false;
+var controlsLocked = false;
+
+//Graphics
+DEFAULT_THUMBNAIL = "/graphics/ThumbnailUnavailable.png";
+
+//Text
+DEFAULT_BROWSER_MESSAGE = "\"Hey, it's me, GhostStink.  Find a video to play off to the left\"";

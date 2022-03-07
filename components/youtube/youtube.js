@@ -27,8 +27,10 @@ function onYouTubeIframeAPIReady()
 
 function youtubeButton()
 {
+	removeToastMessage();
 	if (document.getElementById("youtubeMenu").style.display == "block")
 	{
+		disableBackgroundFade();
 		setTimeout(function(){ 
 			document.getElementById("youtubeMenu").style.display = "none";
 			enablePointerEventsInMenus();
@@ -41,6 +43,7 @@ function youtubeButton()
 	}
 	else
 	{
+		enableBackgroundFade();
 		setTimeout(function(){
 			document.getElementById("settings").style.display = "none";
 			document.getElementById("browser").style.display = "none";
@@ -127,7 +130,10 @@ function isYoutubeVideo()
 {
 	if (youtubeDisabled || !youtubeReady)
 		return false;
-	if (document.getElementById("filePath").value.charAt(0) == "/" || document.getElementById("filePath").value == "" || document.getElementById("filePath").value == "null")
+	if (document.getElementById("filePath").value.charAt(0) == "/" ||
+		document.getElementById("filePath").value == "" ||
+		document.getElementById("filePath").value == "null" ||
+		document.getElementById("filePath").value == "undefined")
 		return false;
 	else
 		return true;

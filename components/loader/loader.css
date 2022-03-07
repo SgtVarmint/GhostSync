@@ -9,6 +9,13 @@
 	margin-right: auto;
 }
 
+#loaderSidePanel
+{
+	position: relative;
+	background-color: rgba(79, 79, 79);
+	top: 200px;
+}
+
 /*
 Pulled from:
 https://loading.io/css/
