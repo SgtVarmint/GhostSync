@@ -1,3 +1,6 @@
+var desktopModeActive = false;
+var mobileModeActive = false;
+
 function checkForMobile()
 {
 	document.getElementById("topNav").style.visibility = "visible";
@@ -38,7 +41,13 @@ function checkForMobile()
 		
 		document.getElementById("hideButton").src = "/graphics/HideButtonOpen.png";
 		
-		disableBackgroundFade();
+		if (!mobileModeActive)
+		{
+			disableBackgroundFade();
+		}
+		
+		mobileModeActive = true;
+		desktopModeActive = false;
 		
 		//Fullscreen button
 		//document.getElementById("fullscreenButton").onclick = function(){ toast("Fullscreen not supported on mobile") };
@@ -75,7 +84,14 @@ function checkForMobile()
 		document.getElementById("player").style.width = "65%";
 		
 		document.getElementById("hideButton").src = "/graphics/HideButton.png";
-		disableBackgroundFade();
+
+		if (!desktopModeActive)
+		{
+			disableBackgroundFade();
+		}
+		
+		mobileModeActive = false;
+		desktopModeActive = true;
 		
 		//Fullscreen button
 		//document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;

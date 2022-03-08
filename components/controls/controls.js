@@ -2,6 +2,7 @@
 
 function hideButtonClicked()
 {
+	bindBackgroundFadeClick("return null;");
 	enableBackgroundFade();
 	if (theaterMode)
 	{
