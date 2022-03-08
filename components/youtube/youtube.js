@@ -85,7 +85,7 @@ function playYoutubeVideo(urlOverride = "", overridePlaystateToPlay = false)
 		}
 		else
 		{
-			if (fullUrl != undefined && fullUrl.length == 11) //WARNING:  This number is 11 because it is how long video IDs are right now in 2020.  If this is ever changed, this won't work
+			if (fullUrl != undefined)// && fullUrl.length == 11) //WARNING:  This number is 11 because it is how long video IDs are right now in 2020.  If this is ever changed, this won't work
 			{
 				youtubeVideoId = document.getElementById("youtubeInput").value.split("watch?v=")[1];
 			}

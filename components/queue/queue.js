@@ -256,6 +256,7 @@ function addYoutubeVideoToQueue()
 	document.getElementById("youtubeMenu").style.display = "none";
 	
 	resetNavButtons();
+	disableBackgroundFade();
 	
 	toast("Video added to queue");
 }
