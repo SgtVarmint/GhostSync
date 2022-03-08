@@ -9,6 +9,7 @@ window.onload = function(){
 	document.getElementById("skipButton").onclick = skipButtonClicked;
 	document.getElementById("seekSlider").oninput = seekSliderSeeked;
 	document.getElementById("lockButton").onclick = lockButtonClicked;
+	document.getElementById("hideButton").onclick = hideButtonClicked;
 	
 	PLAYER_VOLUME = localStorage.getItem("playerVolume");
 	if (PLAYER_VOLUME == null)

@@ -295,7 +295,8 @@ function customQueuePopup(message, index, elementToAppendTo = "body", margTop = 
 	
 	confirmDiv.appendChild(buttonDiv);
 
-	if (!mobile)
+	//if (!mobile) --deprecated
+	if (true)
 	{
 		confirmDiv.id = "confirmDiv";
 		confirmDiv.style.position = "fixed";

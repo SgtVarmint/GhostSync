@@ -4,7 +4,7 @@
 		<!--<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />-->
 		<title>GhostSync Lobby</title>
 		<!--Dependencies-->
-		<!--Phone Styles-->
+		<!--Phone Styles
 		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/styles_mobile.css"/>
 		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/loader/loader_mobile.css"/>
 		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/controls/controls_mobile.css"/>
@@ -14,20 +14,21 @@
 		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/queue/queue_mobile.css"/>
 		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/upload/upload_mobile.css"/>
 		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/toast/toast_mobile.css"/>
+		-->
 		<!--Desktop Styles-->
 		<!--Old min-width: 992px-->
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/styles.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/loader/loader.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/controls/controls.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/settings/settings.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/youtube/youtube.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/tooltips/tooltips.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/queue/queue.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/upload/upload.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/toast/toast.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/preload/preload.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/reaction/reaction.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/ui/interactCheck.css"/>
+		<link rel="stylesheet" href="/styles.css"/>
+		<link rel="stylesheet" href="/components/loader/loader.css"/>
+		<link rel="stylesheet" href="/components/controls/controls.css"/>
+		<link rel="stylesheet" href="/components/settings/settings.css"/>
+		<link rel="stylesheet" href="/components/youtube/youtube.css"/>
+		<link rel="stylesheet" href="/components/tooltips/tooltips.css"/>
+		<link rel="stylesheet" href="/components/queue/queue.css"/>
+		<link rel="stylesheet" href="/components/upload/upload.css"/>
+		<link rel="stylesheet" href="/components/toast/toast.css"/>
+		<link rel="stylesheet" href="/components/preload/preload.css"/>
+		<link rel="stylesheet" href="/components/reaction/reaction.css"/>
+		<link rel="stylesheet" href="/components/ui/interactCheck.css"/>
 		<!--Javascript Files-->
 		<script src="/config.js"></script>
 		<script src="/libraryRoot.js"></script>
@@ -69,6 +70,9 @@
 		<input type="hidden" id="selectedVideoTimestamp" value=""></input>
 		<input type="hidden" id="selectedVideoTitle" value=""></input>
 		<input type="hidden" id="pushUpdate" value="0"></input>
+		<span id="hideButtonContainer">
+			<img id="hideButton" src="/graphics/HideButton.png">
+		</span>
 		<div id="backgroundFade"></div>
 		<div id="topNav">
 			<a class="navButton" href="/index.html" id="home">GhostSync</a>

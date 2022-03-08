@@ -1,5 +1,18 @@
 //For reactions button, see reactions.js
 
+function hideButtonClicked()
+{
+	enableBackgroundFade();
+	if (theaterMode)
+	{
+		theaterMode = false;
+	}
+	else
+	{
+		theaterMode = true;
+	}
+}
+
 function lockButtonClicked()
 {
 	if (!controlsLocked)

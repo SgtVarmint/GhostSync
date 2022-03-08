@@ -31,6 +31,7 @@ var queuedReaction = "none";
 var jimmyNet = false;
 var videoInfoActive = false;
 var controlsLocked = false;
+var theaterMode = false;
 
 //Graphics
 DEFAULT_THUMBNAIL = "/graphics/ThumbnailUnavailable.png";
