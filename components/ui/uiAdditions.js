@@ -14,7 +14,7 @@ function serveInteractPrompt()
 
 function resetNavButtons()
 {
-	if (!mobile)
+	if (!mobile || theaterMode)
 	{
 		document.getElementById("videoBrowserButton").innerHTML = "Video Browser";
 		document.getElementById("videoBrowserButton").style.color = "white";
