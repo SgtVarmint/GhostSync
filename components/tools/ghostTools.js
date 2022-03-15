@@ -1,5 +1,7 @@
 function convertMinutesToHours(minutes)
 {
+	minutes = parseInt(minutes);
+	
 	var hours = 0;
 	
 	while (minutes > 59)

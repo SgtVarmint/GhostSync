@@ -32,7 +32,7 @@ function shiftQueue()
 
 function pushQueue(title)
 {
-	queue.push(title);
+	queue.push(title);// + "^" + timestamp);
 	updateQueue();
 	updateQueueDOM();
 }
@@ -117,10 +117,12 @@ function updateQueueDOM()
 	{
 		for (var i = 0; i < queue.length; i++)
 		{
+			let queueItem = queue[i].split(", ")[0];
+			let videoTimestamp = queue[i].split(", ")[1] == null ? 0 : queue[i].split(", ")[1];
 			var video = document.createElement("a");
-			if (!queue[i].includes("watch?v="))
+			if (!queueItem.includes("watch?v="))
 			{
-				video.innerHTML += queue[i] != "undefined" ? queue[i].split("/")[queue[i].split("/").length - 1].replace(/\.[^/.]+$/, "") : "Queue is empty";
+				video.innerHTML += queueItem != "undefined" ? queueItem.split("/")[queueItem.split("/").length - 1].replace(/\.[^/.]+$/, "") : "Queue is empty";
 			}
 			else
 			{
@@ -128,7 +130,7 @@ function updateQueueDOM()
 				var titleIndex = -1;
 				for (var j = 0; j < youtubeLookupTable.length; j++)
 				{
-					if (youtubeLookupTable[j][0] == queue[i])
+					if (youtubeLookupTable[j][0] == queueItem)
 					{
 						titleIndex = j;
 						break;
@@ -136,10 +138,10 @@ function updateQueueDOM()
 				}
 				if (titleIndex == -1)
 				{
-					var fetchedTitle = getYoutubeVideoTitle(queue[i]);
+					var fetchedTitle = getYoutubeVideoTitle(queueItem);
 					video.innerHTML = "(YT) " + fetchedTitle;
 					var newArray = new Array();
-					newArray.push(queue[i]);
+					newArray.push(queueItem);
 					newArray.push(fetchedTitle);
 					youtubeLookupTable.push(newArray);
 				}
@@ -149,7 +151,7 @@ function updateQueueDOM()
 				}
 			}
 			video.innerHTML = "- " + video.innerHTML;
-			video.href = queue[i] != "undefined" ? 'javascript:queueVideoClicked("' + queue[i] + '", ' + i + ');' : "javascript:return null;";
+			video.href = queueItem != "undefined" ? 'javascript:queueVideoClicked("' + queueItem + '", ' + i + ', ' + videoTimestamp + ');' : "javascript:return null;";
 			document.getElementById("queue").appendChild(video);
 			document.getElementById("queue").appendChild(document.createElement("br"));
 		}
@@ -163,8 +165,8 @@ function updateQueueDOM()
 	}
 }
 
-function queueVideoClicked(video, index)
-{	
+function queueVideoClicked(video, index, timestamp = 0)
+{
 	var message;
 	if (video.includes("www.youtube.com"))
 	{
@@ -191,7 +193,7 @@ function queueVideoClicked(video, index)
 		message = video.split("/")[video.split("/").length - 1].replace(/\.[^/.]+$/, "");
 	}
 
-	customQueuePopup(message, index);
+	customQueuePopup(message, index, timestamp);
 }
 
 function removeQueueVideo(indexToRemove)
@@ -261,14 +263,21 @@ function addYoutubeVideoToQueue()
 	toast("Video added to queue");
 }
 
-function customQueuePopup(message, index, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
+function customQueuePopup(message, index, timestamp, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
 {
 	removeCustomQueuePopup();
+	
+	let seconds = parseInt(timestamp);
+	let minutes = seconds / 60;
+	let remainingSeconds = seconds % 60;
+	if (remainingSeconds < 10)
+		remainingSeconds = "0" + remainingSeconds;
+	let hoursMinutes = convertMinutesToHours(minutes);
 	
 	var confirmDiv = document.createElement("div");
 
 	var messageDiv = document.createElement("div");
-	messageDiv.innerHTML = message;
+	messageDiv.innerHTML = "<h3>" + message + "</h3><p>" + hoursMinutes + "<span style='font-size: .9em'>:" + remainingSeconds + "</span></p>";
 	confirmDiv.appendChild(messageDiv);
 	
 	var buttonDiv = document.createElement("div");

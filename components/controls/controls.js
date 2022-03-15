@@ -48,12 +48,14 @@ function unlockControls()
 
 function skipButtonClicked()
 {
-	if (queue.length > 0 && queue[0] != "undefined" && queue[0] != undefined)
+	queueItem = queue[0].split(", ")[0];
+	videoTimestamp = queue[0].split(", ")[1];
+	if (queue.length > 0 && queueItem != "undefined" && queueItem != undefined)
 	{
-		if (queue[0].includes("watch?v="))
-			playYoutubeVideo(queue[0], true);
+		if (queueItem.includes("watch?v="))
+			playYoutubeVideo(queueItem, true);
 		else
-			playVideo(queue[0], 0, true, true);
+			playVideo(queueItem, videoTimestamp, true, true);
 		shiftQueue();
 		updateQueueDOM();
 	}

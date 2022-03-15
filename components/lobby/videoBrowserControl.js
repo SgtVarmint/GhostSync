@@ -157,14 +157,12 @@ function updateVideoBrowser(file, uploadsFolder = false)
 			var newVideo = document.createElement("a");
 			newVideo.innerHTML = contents[i].replace(/\.[^/.]+$/, "");
 			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
-			//Contents[i] is not getting passed correctly to playVideo right here..
 			newVideo.ondblclick = function(){ playVideo(); };
 			newVideo.className = "videoBrowserVideo";
 			
 			var addToQueue = document.createElement("a");
 			addToQueue.innerHTML = "+";
 			var tempFileLocation = rootDir() + document.getElementById("currentDirectory").value + contents[i];
-			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
 			if (!isAlreadyInQueue)
 			{
 				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"; this.onclick = function(){ toast("This video is already in the queue"); return false; }; };
@@ -175,6 +173,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 				addToQueue.onclick = function(){ toast("This video is already in the queue"); return false; };
 			}
 			addToQueue.className = "addToQueue";
+			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
 			
 			//This section handles updating the tracking info for each video
 			var fullPath = rootDir() + document.getElementById("currentDirectory").value + contents[i];
@@ -210,7 +209,8 @@ function updateVideoBrowser(file, uploadsFolder = false)
 					}
 					
 					newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-
+					addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + ', ' + trackingInfo[j][1] + '");';
+					
 					newVideo.ondblclick = function(){ playVideo(); };
 				}
 			}
