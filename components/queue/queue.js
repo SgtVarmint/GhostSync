@@ -24,6 +24,22 @@ function updateQueue()
 	xhttp.send("queueString=" + queueString + "&lobbyName=" + localStorage.getItem("lobbyName"));
 }
 
+function addCurrentVideoToQueue()
+{
+	let videoPath = formatVideoPathForServer(document.getElementById("filePath").value);
+	let timestamp = document.getElementById("video").currentTime;
+	let newQueueItem = videoPath + ", " + timestamp;
+	if (queue[0].includes(videoPath))
+	{
+		toast("The current video is already queued to play next!")
+		return;
+	}
+	queue.unshift(newQueueItem);
+	updateQueue();
+	toast("Current video added to the front of the queue");
+	updateQueueDOM();
+}
+
 function shiftQueue()
 {
 	queue.shift();
@@ -32,7 +48,7 @@ function shiftQueue()
 
 function pushQueue(title)
 {
-	queue.push(title);// + "^" + timestamp);
+	queue.push(title);
 	updateQueue();
 	updateQueueDOM();
 }
@@ -100,18 +116,18 @@ function updateQueueDOM()
 	document.getElementById("queue").style.display = "block";
 	document.getElementById("queue").innerHTML = "";
 	
-	var newText = document.createElement("span");
-	newText.innerHTML = "Next Up..";
-	document.getElementById("queue").appendChild(newText);
+	//var newText = document.createElement("span");
+	//newText.innerHTML = "Next Up..";
+	//document.getElementById("queue").appendChild(newText);
 	
-	document.getElementById("queue").appendChild(document.createElement("hr"));
+	//document.getElementById("queue").appendChild(document.createElement("hr"));
 	
-	var clearButton = document.createElement("a");
-	clearButton.innerHTML = "Clear Queue";
-	clearButton.href = "javascript:clearButtonClicked();";
-	document.getElementById("queue").appendChild(clearButton);
+	//var clearButton = document.createElement("a");
+	//clearButton.innerHTML = "Clear Queue";
+	//clearButton.href = "javascript:clearButtonClicked();";
+	//document.getElementById("queue").appendChild(clearButton);
 	
-	document.getElementById("queue").appendChild(document.createElement("hr"));
+	//document.getElementById("queue").appendChild(document.createElement("hr"));
 	
 	if (queue.length > 0)
 	{
@@ -215,6 +231,14 @@ function pushToFrontOfQueue(indexToPush)
 	updateQueueDOM();
 }
 
+function pushToBackOfQueue(indexToPush)
+{
+	var tempVideo = queue[indexToPush];
+	queue.splice(indexToPush, 1);
+	pushQueue(tempVideo);
+	toast("Video moved to back of queue");
+}
+
 function clearButtonClicked()
 {
 	ghostConfirm("This will completely wipe the current queue.&nbsp;&nbsp;Are you sure you want to do this?", "clearQueue");
@@ -283,11 +307,18 @@ function customQueuePopup(message, index, timestamp, elementToAppendTo = "body",
 	var buttonDiv = document.createElement("div");
 	
 	var moveToFrontButton = document.createElement("a");
-	moveToFrontButton.innerHTML = "Play Next";
+	moveToFrontButton.innerHTML = "Move To Front";
 	moveToFrontButton.href = "javascript:pushToFrontOfQueue(" + index + "); removeCustomQueuePopup();";
 	moveToFrontButton.className = "defaultButton";
 	moveToFrontButton.style.margin = "10px";
 	buttonDiv.appendChild(moveToFrontButton);
+	
+	var moveToBackButton = document.createElement("a");
+	moveToBackButton.innerHTML = "Move To Back";
+	moveToBackButton.href = "javascript:pushToBackOfQueue(" + index + "); removeCustomQueuePopup();";
+	moveToBackButton.className = "defaultButton";
+	moveToBackButton.style.margin = "10px";
+	buttonDiv.appendChild(moveToBackButton);
 	
 	var removeButton = document.createElement("a");
 	removeButton.innerHTML = "Remove";
