@@ -28,7 +28,7 @@ function addCurrentVideoToQueue()
 {
 	let videoPath = formatVideoPathForServer(document.getElementById("filePath").value);
 	let timestamp = document.getElementById("video").currentTime;
-	let newQueueItem = videoPath + ", " + timestamp;
+	let newQueueItem = videoPath + "^" + timestamp;
 	if (queue[0].includes(videoPath))
 	{
 		toast("The current video is already queued to play next!")
@@ -133,8 +133,8 @@ function updateQueueDOM()
 	{
 		for (var i = 0; i < queue.length; i++)
 		{
-			let queueItem = queue[i].split(", ")[0];
-			let videoTimestamp = queue[i].split(", ")[1] == null ? 0 : queue[i].split(", ")[1];
+			let queueItem = queue[i].split("^")[0];
+			let videoTimestamp = queue[i].split("^")[1] == null ? 0 : queue[i].split("^")[1];
 			var video = document.createElement("a");
 			if (!queueItem.includes("watch?v="))
 			{

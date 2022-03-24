@@ -209,7 +209,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 					}
 					
 					newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + ', ' + trackingInfo[j][1] + '");';
+					addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '^' + trackingInfo[j][1] + '");';
 					
 					newVideo.ondblclick = function(){ playVideo(); };
 				}
