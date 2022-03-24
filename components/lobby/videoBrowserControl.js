@@ -145,7 +145,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		var isAlreadyInQueue = false;
 		for (var j = 0; j < queue.length; j++)
 		{
-			if (queue[j].split("/")[queue[j].split("/").length - 1] == contents[i])
+			if (queue[j].split("/")[queue[j].split("/").length - 1].includes(contents[i]))
 			{
 				isAlreadyInQueue = true;
 				break;

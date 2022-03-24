@@ -8,6 +8,7 @@ function triggerCompressionForUploadsFolder()
 function uploadFile()
 {
 	toast("Keep window open while uploading file(s)");
+	disableBackgroundFade();
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","/components/upload/upload.php",true);
 	xhttp.onreadystatechange = function()
@@ -24,7 +25,6 @@ function uploadFile()
 		//When upload is finished, clean up..
 		toast("Upload Done!");
 		triggerCompressionForUploadsFolder();
-		disableBackgroundFade();
 		document.getElementById("uploadProgress").parentNode.removeChild(document.getElementById("uploadProgress"));
 		if (document.getElementById("currentDirectory").value.includes("/Uploads/"))
 		{

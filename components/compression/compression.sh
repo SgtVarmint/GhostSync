@@ -6,8 +6,16 @@ lowResTVFolder="/_LowRes/TV"
 normalUploadsFolder="/Uploads"
 lowResUploadsFolder="/_LowRes/Uploads"
 IFS=$'\n'
+count=0
+failedCount=0
 
-echo Started \- `date` >> /home/jon/logs/compression.log
+echo `date` \- Started >> /home/jon/logs/compression.log
+
+echo --------------------
+echo `date` \- Started
+
+for r in 1 2
+do
 
 for i in `find "$rootFolder$normalTVFolder" -name "*.mp4"`
 do
@@ -28,21 +36,73 @@ do
 		echo "$rootFolder$lowResTVFolder/$currentShow/Season $currentSeason"
 		mkdir -p "$rootFolder$lowResTVFolder/$currentShow/Season $currentSeason"
 	fi
-	ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
+
+	if [ ! -f $outputFile ]
+	then
+		ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
+		if (( $r == 1 ))
+		then
+			count=$(expr $count + 1)
+		else
+			echo Failed - $outputFile
+                        echo Failed - $outputFile >> /home/jon/logs/compression.log
+			failedCount=$(expr $failedCount + 1)
+		fi
+	fi
 done
 
 for i in `find "$rootFolder$normalMoviesFolder" -name "*.mp4"`
 do
 	outputFile=`echo $i | sed s:"$normalMoviesFolder":"$lowResMoviesFolder":`
 
-	ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
+
+	if [ ! -f $outputFile ]
+        then
+                ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
+                if (( $r == 1 ))
+		then
+                        count=$(expr $count + 1)
+                else
+			echo Failed - $outputFile
+                        echo Failed - $outputFile >> /home/jon/logs/compression.log
+                        failedCount=$(expr $failedCount + 1)
+                fi
+        fi
 done
 
 for i in `find "$rootFolder$normalUploadsFolder" -name "*.mp4"`
 do
 	outputFile=`echo $i | sed s:"$normalUploadsFolder":"$lowResUploadsFolder":`
 
-	ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
+	if [ ! -f $outputFile ]
+        then
+                ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
+                if (( $r == 1 ))
+		then
+                        count=$(expr $count + 1)
+                else
+			echo Failed - $outputFile
+			echo Failed - $outputFile >> /home/jon/logs/compression.log
+                        failedCount=$(expr $failedCount + 1)
+                fi
+        fi
+done
 done
 
-echo Completed \- `date` >> /home/jon/logs/compression.log
+echo `date` \- Completed >> /home/jon/logs/compression.log
+echo Processed $count Files >> /home/jon/logs/compression.log
+if (( $failedCount > 0 ))
+then
+        echo $failedCount Files Failed To Process >> /home/jon/logs/compression.log
+fi
+echo -------------------- >> /home/jon/logs/compression.log
+
+
+
+echo `date` \- Completed
+echo Processed $count Files
+if (( $failedCount > 0 ))
+then
+	echo $failedCount Files Failed To Process
+fi
+echo --------------------
