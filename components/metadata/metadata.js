@@ -5,10 +5,25 @@ function getVideoInfo(videoPath)
 	var thumbnailMetadata = getMetadataValue(detailsArray, "Thumbnailurl").replace(/\\/g, "");
     var videoInfo = {
 		details:  getMetadataValue(detailsArray, "comment"),
-		thumbnailUrl: thumbnailMetadata == "" ? DEFAULT_THUMBNAIL : thumbnailMetadata
+		thumbnailUrl: thumbnailMetadata == "" ? DEFAULT_THUMBNAIL : thumbnailMetadata,
+		adBlocks: getAdBlockData(detailsArray)
 		};
 		
 	return videoInfo;
+}
+
+function getAdBlockData(array)
+{
+	var returnArray = new Array();
+	for (var i = 0; i < array.length; i++)
+	{
+		if (array[i].includes("title=Advertisement"))
+		{
+			returnArray.push([parseFloat(array[i-2].split("=")[1]) / 1000, parseFloat(array[i-1].split("=")[1]) / 1000]); 
+		}
+	}
+	
+	return returnArray;
 }
 
 function getMetadataValue(array, key)

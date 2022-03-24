@@ -1,14 +1,24 @@
 function syncPull()
-{
+{	
+	let isYoutube = isYoutubeVideo();
 	//Figure out in what files these functions are defined. Please.
 	pullTrackingInfo(); // defined in progression.js
 	pullQueue();
 	checkForMobile();
 	var timestamp;
 	var duration;
-	
-	if (!isYoutubeVideo())
+
+	//Pull current video info
+	if (videoFileData_loadedVideo != formatVideoPathForServer(document.getElementById("filePath").value))
 	{
+		videoFileData_loadedVideo = formatVideoPathForServer(document.getElementById("filePath").value);
+		videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
+	}
+	
+	if (!isYoutube)
+	{
+		if (!document.getElementById("video").paused)
+			checkForAndSkipAd();
 		timestamp = document.getElementById("video").currentTime;
 		duration = document.getElementById("video").duration;
 	}
