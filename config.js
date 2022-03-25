@@ -1,3 +1,4 @@
+//User Settings
 TOLERANCE = .3;
 SYNC_INTERVAL = 1;
 USER_UPDATE_INTERVAL = 1;
@@ -9,6 +10,9 @@ OUT_OF_SYNCS_BEFORE_JIMMY = 4
 OUT_OF_SYNCS_BUILD_BUFFER = 2;
 PLAYER_VOLUME = 1;
 JIMMYNET_SETTING_TOGGLED = false;
+
+//Lobby settings
+ADSKIP_ENABLED = true;
 
 //On the fly globals:  do not change
 var fullscreenEnabled = false;
@@ -32,6 +36,8 @@ var jimmyNet = false;
 var videoInfoActive = false;
 var controlsLocked = false;
 var theaterMode = false;
+var videoFileData;
+var videoFileData_loadedVideo;
 
 //Graphics
 DEFAULT_THUMBNAIL = "/graphics/ThumbnailUnavailable.png";

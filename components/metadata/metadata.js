@@ -1,11 +1,21 @@
 function getVideoInfo(videoPath)
 {
 	var metadata = getMetadata(videoPath);
+	
+	if (metadata == null)
+		return {
+			details: "",
+			thumbnailUrl: "",
+			releaseDate: "",
+			adBlocks: new Array()
+		};
+	
 	var detailsArray = metadata.split("\n");
 	var thumbnailMetadata = getMetadataValue(detailsArray, "Thumbnailurl").replace(/\\/g, "");
     var videoInfo = {
 		details:  getMetadataValue(detailsArray, "comment"),
 		thumbnailUrl: thumbnailMetadata == "" ? DEFAULT_THUMBNAIL : thumbnailMetadata,
+		releaseDate: getMetadataValue(detailsArray, "Date").split("-")[0],
 		adBlocks: getAdBlockData(detailsArray)
 		};
 		
@@ -40,6 +50,8 @@ function getMetadataValue(array, key)
 
 function getMetadata(videoPath)
 {
+	if (videoPath.includes("/Uploads/"))
+		return null;
 	var metadataFileLocation = videoPath.replace("/Videos", "/Videos/_metadata");
 	var metadataFileLocation = metadataFileLocation.replace(".mp4", ".txt");
 	var metadata;

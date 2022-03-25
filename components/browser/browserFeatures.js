@@ -12,9 +12,15 @@ function serveVideoInfo(videoPath, timestamp, overridePlaystateToPlay)
 	thumbnailElement.id = "thumbnail";
 	thumbnailElement.onerror = function(){ thumbnailElement.src = DEFAULT_THUMBNAIL; };
 	thumbnailElement.onload = function(){ stopSidePanelLoader(); };
+	
 	var videoNameElement = document.createElement("span");
 	videoNameElement.style.width = "100%";
 	videoNameElement.innerHTML = getVideoNameFromPath(videoPath);
+	
+	var videoDateElement = document.createElement("span");
+	videoDateElement.style.width = "100%";
+	videoDateElement.style.fontSize = ".8em";
+	videoDateElement.innerHTML = "Released in " + videoInfo.releaseDate;
 	
 	var buttonDiv = document.createElement("div");
 	buttonDiv.className = "infoDiv";
@@ -36,6 +42,11 @@ function serveVideoInfo(videoPath, timestamp, overridePlaystateToPlay)
 	
 	videoInfoSpan.appendChild(thumbnailElement);
 	videoInfoSpan.appendChild(videoNameElement);
+	if (videoInfo.releaseDate != "")
+	{
+		videoInfoSpan.appendChild(document.createElement("br"));
+		videoInfoSpan.appendChild(videoDateElement);
+	}
 	videoInfoSpan.appendChild(buttonDiv);
 	videoInfoSpan.appendChild(hrElement);
 	videoInfoSpan.appendChild(descriptionElement);

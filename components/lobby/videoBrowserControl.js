@@ -139,6 +139,12 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		
 		videoBrowser.appendChild(newSection);
 	}
+	
+	//Check if this folder contains Season folders and sort them
+	if (contents.length >= 10 && (contents[0].includes("Season ") || contents[1].includes("Season ")))
+	{
+		contents = sortSeasons(contents);
+	}
 
 	for (var i = 0; i < contents.length - 1; i++)
 	{
@@ -348,4 +354,31 @@ function goBack()
 	document.getElementById("currentDirectory").value = newDir;
 	getDirectoryInfo();
 	serveMissingVideoInfo();
+}
+
+function sortSeasons(folders, desc = false)
+{
+	let sortedFolders = new Array();
+	sortedFolders = folders;
+	if (desc)
+	{
+		for (let i = 0; i < folders.length - 1; i++)
+		{
+			for (let j = 0; j < folders.length - 1; j++)
+			{
+				
+			}
+		}
+	}
+	else
+	{
+		for (let i = 0; i < folders.length - 1; i++)
+		{
+			for (let j = 0; j < folders.length - 1; j++)
+			{
+				
+			}
+		}
+	}
+	return sortedFolders;
 }
