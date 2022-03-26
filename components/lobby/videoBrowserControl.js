@@ -356,17 +356,20 @@ function goBack()
 	serveMissingVideoInfo();
 }
 
-function sortSeasons(folders, desc = false)
+function sortSeasons(folders, desc = true)
 {
 	let sortedFolders = new Array();
-	sortedFolders = folders;
+	//sortedFolders = folders;
 	if (desc)
 	{
-		for (let i = 0; i < folders.length - 1; i++)
+		for (let i = folders.length - 2; i >= 0; i--)
 		{
 			for (let j = 0; j < folders.length - 1; j++)
 			{
-				
+				if (folders[i] == "Season " + i)
+				{
+					sortedFolders.push(folders[i]);
+				}
 			}
 		}
 	}

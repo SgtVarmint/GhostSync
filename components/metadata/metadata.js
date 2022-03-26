@@ -50,7 +50,7 @@ function getMetadataValue(array, key)
 
 function getMetadata(videoPath)
 {
-	if (videoPath.includes("/Uploads/"))
+	if (videoPath.includes("/Uploads/") || isYoutubeVideo())
 		return null;
 	var metadataFileLocation = videoPath.replace("/Videos", "/Videos/_metadata");
 	var metadataFileLocation = metadataFileLocation.replace(".mp4", ".txt");

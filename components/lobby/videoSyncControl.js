@@ -1,6 +1,7 @@
 function syncPull()
 {	
 	let isYoutube = isYoutubeVideo();
+	console.log(isYoutube);
 	//Figure out in what files these functions are defined. Please.
 	pullTrackingInfo(); // defined in progression.js
 	pullQueue();
@@ -15,26 +16,6 @@ function syncPull()
 		videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
 	}
 	
-	if (!isYoutube)
-	{
-		if (!document.getElementById("video").paused)
-			checkForAndSkipAd();
-		timestamp = document.getElementById("video").currentTime;
-		duration = document.getElementById("video").duration;
-	}
-	else
-	{
-		if (youtubePlayer.getPlayerState() == 0) //getPlayerState() will return 0 if youtube video is ended
-			timestamp = 1;
-		else
-			timestamp = 0
-		duration = 1
-	}
-	
-	if (duration <= timestamp)
-	{
-		skipButtonClicked();
-	}
 	syncVideo();
 }
 
@@ -98,7 +79,7 @@ function syncVideoAction(file)
 	//UNCOMMENT TO ENABLE DEBUGGING//
 	/////////////////////////////////
 	
-	//d.style.display = "block";
+	d.style.display = "block";
 	
 	
 	var info = file.responseText.split("^");
@@ -359,7 +340,7 @@ function syncVideoAction(file)
 		}
 		
 		//Set the title above video player
-		if (isYoutubeVideo())
+		if (youtube)
 		{
 			var nowPlaying = youtubePlayer.getVideoData().title;
 		}	
@@ -368,6 +349,34 @@ function syncVideoAction(file)
 			var nowPlaying = getVideoNameFromPath();
 		}
 		document.getElementById("nowPlaying").innerHTML = nowPlaying;
+		
+		if (!youtube)
+		{
+			if (!document.getElementById("video").paused)
+				checkForAndSkipAd();
+		}
+		
+		if (!youtube)
+		{
+			if (paused)
+				checkForAndSkipAd();
+			timestamp = document.getElementById("video").currentTime;
+			duration = document.getElementById("video").duration;
+		}
+		else
+		{
+			if (youtubePlayer.getPlayerState() == 0) //getPlayerState() will return 0 if youtube video is ended
+				timestamp = 1;
+			else
+				timestamp = 0
+			duration = 1
+		}
+		
+		if (duration <= timestamp && !serverPaused)
+		{
+			skipButtonClicked();
+		}
+			
 		d.innerHTML += "<br> End of sync method";
 	}
 }
