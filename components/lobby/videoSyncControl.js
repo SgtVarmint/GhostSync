@@ -15,26 +15,6 @@ function syncPull()
 		videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
 	}
 	
-	if (!isYoutube)
-	{
-		if (!document.getElementById("video").paused)
-			checkForAndSkipAd();
-		timestamp = document.getElementById("video").currentTime;
-		duration = document.getElementById("video").duration;
-	}
-	else
-	{
-		if (youtubePlayer.getPlayerState() == 0) //getPlayerState() will return 0 if youtube video is ended
-			timestamp = 1;
-		else
-			timestamp = 0
-		duration = 1
-	}
-	
-	if (duration <= timestamp)
-	{
-		skipButtonClicked();
-	}
 	syncVideo();
 }
 
@@ -356,6 +336,29 @@ function syncVideoAction(file)
 					toast("Syncing..")
 				}
 			}
+		}
+		
+		let timestamp;
+		let duration;
+		if (!youtube)
+		{
+			if (!document.getElementById("video").paused)
+				checkForAndSkipAd();
+			timestamp = document.getElementById("video").currentTime;
+			duration = document.getElementById("video").duration;
+		}
+		else
+		{
+			if (youtubePlayer.getPlayerState() == 0) //getPlayerState() will return 0 if youtube video is ended
+				timestamp = 1;
+			else
+				timestamp = 0
+			duration = 1
+		}
+	
+		if (duration <= timestamp && !serverPaused)
+		{
+			skipButtonClicked();
 		}
 		
 		//Set the title above video player

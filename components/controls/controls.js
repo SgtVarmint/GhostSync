@@ -48,8 +48,13 @@ function unlockControls()
 
 function skipButtonClicked()
 {
-	queueItem = queue[0].split("^")[0];
-	videoTimestamp = queue[0].split("^")[1];
+	let queueItem = new Array();
+	let videoTimestamp = new Array();
+	if (queue.length > 0)
+	{
+		queueItem = queue[0].split("^")[0];
+		videoTimestamp = queue[0].split("^")[1];
+	}
 	if (queue.length > 0 && queueItem != "undefined" && queueItem != undefined)
 	{
 		if (queueItem.includes("watch?v="))
