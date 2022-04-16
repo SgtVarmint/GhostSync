@@ -29,9 +29,13 @@ function addCurrentVideoToQueue()
 	let videoPath = formatVideoPathForServer(document.getElementById("filePath").value);
 	let timestamp = document.getElementById("video").currentTime;
 	let newQueueItem = videoPath + "^" + timestamp;
-	if (queue[0].includes(videoPath))
+	if (queue.length > 0 && queue[0].includes(videoPath))
 	{
 		toast("The current video is already queued to play next!")
+		return;
+	}
+	else if (queue.length == 0)
+	{
 		return;
 	}
 	queue.unshift(newQueueItem);

@@ -12,7 +12,8 @@ function syncPull()
 	if (videoFileData_loadedVideo != formatVideoPathForServer(document.getElementById("filePath").value))
 	{
 		videoFileData_loadedVideo = formatVideoPathForServer(document.getElementById("filePath").value);
-		videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
+		if (!isYoutube)
+			videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
 	}
 	
 	syncVideo();

@@ -15,7 +15,11 @@ function uploadFile()
 	{
 		if(this.readyState == 4 && this.status == 200)
 		{
-			console.log(this.responseText);
+			toast(this.responseText);
+		}
+		else
+		{
+			toast("Error uploading file");
 		}
 	}
 	
@@ -23,7 +27,6 @@ function uploadFile()
 	xhttp.addEventListener('progress', function(e)
 	{
 		//When upload is finished, clean up..
-		toast("Upload Done!");
 		triggerCompressionForUploadsFolder();
 		document.getElementById("uploadProgress").parentNode.removeChild(document.getElementById("uploadProgress"));
 		if (document.getElementById("currentDirectory").value.includes("/Uploads/"))
@@ -45,7 +48,7 @@ function uploadFile()
 		}
 		var progressValue = (Math.floor(done/total*1000)/10);
 		document.getElementById("uploadProgress").value = progressValue;
-        console.log('Upload progress: ' + done + ' / ' + total + ' = ' + progressValue + '%');
+        //console.log('Upload progress: ' + done + ' / ' + total + ' = ' + progressValue + '%');
     };
     }
 	

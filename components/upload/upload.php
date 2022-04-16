@@ -20,17 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 			 
 			$file = $_SERVER["DOCUMENT_ROOT"] . $path . $file_name;
 			
-			echo "Video: " . $file_name . "\n";
+			echo "Video: " . $file_name . "<br>";
 			
 			if (!in_array($file_type, $extensions))
 			{
-					echo "File type " . $file_type . " not allowed!\n";
-					echo "Video was not moved to Uploads folder\n";
+					echo "File type " . $file_type . " not allowed!<br>";
+					echo "Video was not moved to Uploads folder";
 			}
 			else
 			{
 				move_uploaded_file($file_tmp_name, $file);
-				echo "File Uploaded!\n";
+				echo "File Uploaded!";
 			}
 		}
     } 

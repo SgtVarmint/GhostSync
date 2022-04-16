@@ -359,26 +359,35 @@ function goBack()
 function sortSeasons(folders, desc = false)
 {
 	let sortedFolders = new Array();
-	sortedFolders = folders;
+	//sortedFolders = folders;
 	if (desc)
 	{
-		for (let i = 0; i < folders.length - 1; i++)
+		for (let i = folders.length - 1; i >= 0; i--)
 		{
 			for (let j = 0; j < folders.length - 1; j++)
 			{
-				
+				if (folders[j] == "Season " + i)
+				{
+					sortedFolders.push(folders[j]);
+					break;
+				}
 			}
 		}
 	}
 	else
 	{
-		for (let i = 0; i < folders.length - 1; i++)
+		for (let i = 0; i < folders.length; i++)
 		{
 			for (let j = 0; j < folders.length - 1; j++)
 			{
-				
+				if (folders[j] == "Season " + i)
+				{
+					sortedFolders.push(folders[j]);
+					break;
+				}
 			}
 		}
 	}
+	sortedFolders.push(""); //Push empty last index to match what server gets
 	return sortedFolders;
 }
