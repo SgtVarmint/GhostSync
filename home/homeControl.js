@@ -16,6 +16,7 @@ function lobbyButtonClick()
 			if (!userIdList.includes(newId))
 				break;
 		}
+		addNewUserIdToList(newId);
 		localStorage.setItem("userId", newId);
 
 	}

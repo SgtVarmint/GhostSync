@@ -260,16 +260,35 @@ h3
 	overflow: auto;
 }
 
-#userList li
+.user
 {
 	padding: 10px;
 	font-size: 1.5em;
+	color: white;
 	background: rgb(0, 0, 0, .1);
 	border-radius: 10px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 10px;
 	width: 80%;
+}
+
+.activeUser
+{
+	padding: 10px;
+	font-size: 1.5em;
+	color: #8db1ef;
+	background: rgb(0, 0, 0, .1);
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	width: 80%;
+}
+
+.activeUser span
+{
+	color: #8db1ef;
 }
 
 #browser

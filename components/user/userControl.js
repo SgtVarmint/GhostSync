@@ -29,17 +29,25 @@ function userUpdateAction(file)
 	var currentUsers = document.getElementsByClassName("user");
 	var userListNeedsUpdated = false;
 	
+	console.log(userInfo.length + "    " + currentUsers.length);
+	
 	if (userInfo.length - 1 == currentUsers.length)
 	{
 		for (var i = 0; i < userInfo.length - 1; i++)
 		{
-			var info = userInfo[i].split("^");
-			if (info[0] != currentUsers[i].innerHTML)
+			let info = userInfo[i].split("^");
+			let currentUserFound = false;
+			for (let j = 0; j < currentUsers.length; j++)
 			{
-				userListNeedsUpdated = true;
-				break;
+				console.log(info[5] + "     " + currentUsers[j].id);
+				if (info[5] == currentUsers[j].id)
+				{
+					currentUserFound = true;
+					break;
+				}
 			}
-			else if (info[4] != "none")
+			
+			if (!currentUserFound)
 			{
 				userListNeedsUpdated = true;
 				break;
@@ -63,9 +71,17 @@ function userUpdateAction(file)
 						
 		for (var i = 0; i < userInfo.length - 1; i++)
 		{
+			let usersAlreadyInDOM = document.getElementsByClassName("user");
+			
 			var info = userInfo[i].split("^");
 			var li = document.createElement("li");
-			li.className = "user";
+			
+			if (info[5] == localStorage.getItem("userId"))
+				li.className = "user activeUser";
+			else
+				li.className = "user";
+			li.id = info[5];
+			li.name = info[0];
 			var temp = parseInt(info[2]);
 			var minutes = temp / 60;
 			var seconds = temp % 60;
@@ -77,8 +93,20 @@ function userUpdateAction(file)
 			var hrTimeStamp = convertMinutesToHours(parseInt(minutes)) + "<span style='font-size: .7em'>:" + seconds + "</span>";
 			var statusColor = info[3] == "1" ? "green" : "orange";
 			
+			let duplicateUserCount = 0;
+			let duplicateDesignation = "";
+			
+			for (let j = 0; j < usersAlreadyInDOM.length; j++)
+			{
+				if (usersAlreadyInDOM[j].name == userName)
+					duplicateUserCount++;
+			}
+			
+			if (duplicateUserCount > 0)
+				duplicateDesignation = "(" + duplicateUserCount + ")"
+			
 			//This line builds the individual user li innerHTML
-			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + " - " + hrTimeStamp;
+			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + duplicateDesignation + " - " + hrTimeStamp;
 			if (info[4] != "none" && info[4] != "")
 			{
 				processIncomingReaction(info[0], info[4]);
@@ -110,6 +138,14 @@ function getUserIdList()
 	xhttp.send();
 		
 	return fileText.split("\n");
+}
+
+function addNewUserIdToList(newUserId)
+{
+	let xhttp = new XMLHttpRequest();
+	xhttp.open("POST","/components/user/addNewUserId.php",false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("newUserId=" + newUserId);
 }
 
 function playSound(fileName)

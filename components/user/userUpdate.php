@@ -40,10 +40,10 @@ foreach ($userInfo as $user)
 	
 	$difference = (float)$currentTime - (float)$info[1];
 		
-	if ($info[0] == $userName)
+	if ($info[5] == $userId)
 	{
 		$userFound = true;
-		$newFileContents .= $info[0] . "^" . $currentTime . "^" . $timeStamp . "^" . $activity . "^" . $queuedReaction . "^" . $userId . "#";
+		$newFileContents .= $userName . "^" . $currentTime . "^" . $timeStamp . "^" . $activity . "^" . $queuedReaction . "^" . $userId . "#";
 	}
 	else if($difference < $USER_TIMEOUT)
 	{
