@@ -160,6 +160,8 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		var newSection = document.createElement("div");
 		if (contents[i].includes("."))
 		{	
+			if (contents[i].includes("_AuthTouch"))
+				return;
 			var newVideo = document.createElement("a");
 			newVideo.innerHTML = contents[i].replace(/\.[^/.]+$/, "");
 			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
@@ -226,8 +228,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		}
 		else
 		{
-			if (contents[i].includes("_LowRes") ||
-				contents[i].includes("_metadata"))
+			if (contents[i].includes("_"))
 				continue;
 			var newDir = document.createElement("a");
 			newDir.innerHTML = contents[i];

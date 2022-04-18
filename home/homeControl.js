@@ -20,7 +20,7 @@ function lobbyButtonClick()
 
 	}
 		
-	document.location.href = "/components/lobby/lobby.html"
+	redirect("components/lobby/lobby.html");
 }
 
 function authenticationButton()
