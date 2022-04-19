@@ -4,7 +4,7 @@ window.onload = function(){
 	//Initial page reload for auth to take affect
 	//Only needs to occur one time per session
 	
-	serveInteractPrompt();
+	//serveInteractPrompt();
 	
 	getUserIdList();
 	

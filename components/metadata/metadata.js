@@ -50,7 +50,8 @@ function getMetadataValue(array, key)
 
 function getMetadata(videoPath)
 {
-	if (videoPath.includes("/Uploads/") || 
+	if (videoPath.includes("/Uploads/") ||
+		videoPath.includes("/Gameplay/") ||
 		videoPath.includes("null"))
 		return null;
 	var metadataFileLocation = videoPath.replace("/Videos", "/Videos/_metadata");

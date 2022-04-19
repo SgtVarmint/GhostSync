@@ -28,9 +28,7 @@ function userUpdateAction(file)
 	var userInfo = file.responseText.split("#");
 	var currentUsers = document.getElementsByClassName("user");
 	var userListNeedsUpdated = false;
-	
-	console.log(userInfo.length + "    " + currentUsers.length);
-	
+		
 	if (userInfo.length - 1 == currentUsers.length)
 	{
 		for (var i = 0; i < userInfo.length - 1; i++)
@@ -39,7 +37,6 @@ function userUpdateAction(file)
 			let currentUserFound = false;
 			for (let j = 0; j < currentUsers.length; j++)
 			{
-				console.log(info[5] + "     " + currentUsers[j].id);
 				if (info[5] == currentUsers[j].id)
 				{
 					currentUserFound = true;
@@ -106,7 +103,7 @@ function userUpdateAction(file)
 				duplicateDesignation = "(" + duplicateUserCount + ")"
 			
 			//This line builds the individual user li innerHTML
-			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + duplicateDesignation + " - " + hrTimeStamp;
+			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + duplicateDesignation// + " - " + hrTimeStamp;
 			if (info[4] != "none" && info[4] != "")
 			{
 				processIncomingReaction(info[0], info[4]);

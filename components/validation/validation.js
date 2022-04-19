@@ -1,13 +1,14 @@
 function formatUsername(username)
-{
-	var formattedUsername;
-	if(username.length > 18)
+{	
+	var formattedUsername = username;
+	
+	formattedUsername = formattedUsername.replaceAll("<", "");
+	formattedUsername = formattedUsername.replaceAll(">", "");
+	
+	if(formattedUsername.length > 18)
 	{
-		formattedUsername = username.substring(0, 18);
+		formattedUsername = formattedUsername.substring(0, 18);
 	}
-	else
-	{
-		formattedUsername = username;
-	}
+
 	return formattedUsername;
 }

@@ -145,6 +145,16 @@ function updateVideoBrowser(file, uploadsFolder = false)
 	{
 		contents = sortSeasons(contents);
 	}
+	
+	//Check if this folder contains dated gameplay files and sort them
+	let doSort = false;
+	for (let i = 0; i < contents.length - 1; i++)
+	{
+		if (contents[i].search(/[0-9]\-[0-9]/) != -1)
+			doSort = true;
+	}
+	if (doSort)
+		contents = sortDatedGameplay(contents);
 
 	for (var i = 0; i < contents.length - 1; i++)
 	{
@@ -237,6 +247,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 			newSection.appendChild(newDir);
 		}
 		videoBrowser.appendChild(newSection);
+		videoBrowser.scrollIntoView();
 		//videoBrowser.appendChild(document.createElement("br"));
 	}
 }
@@ -391,4 +402,53 @@ function sortSeasons(folders, desc = false)
 	}
 	sortedFolders.push(""); //Push empty last index to match what server gets
 	return sortedFolders;
+}
+
+function sortDatedGameplay(contents, desc = false)
+{
+	let sortedContents = new Array();
+	
+	let contentDates = new Array();
+	//let indexOrderArray = new Array();
+	
+	for (let i = 0; i < contents.length - 1; i++)
+	{
+		let dateString = contents[i].split(" ")[0];
+		contentDates.push({date: getDateFromGameplayString(dateString), index: i});
+	}
+	
+	contentDates.sort((a, b) => b.date - a.date)
+	
+	if (desc)
+	{
+		for (let i = contents.length - 1; i >= 0; i--)
+		{
+			let newIndex = contentDates[i].index;
+			sortedContents.push(contents[newIndex]);
+		}
+	}
+	else
+	{
+		for (let i = 0; i < contents.length - 1; i++)
+		{
+			let newIndex = contentDates[i].index;
+			sortedContents.push(contents[newIndex]);
+		}
+	}
+	
+	return sortedContents;
+}
+
+function getDateFromGameplayString(dateString)
+{
+	//dateInfo[0] = month
+	//dateInfo[1] = day
+	//dateInfo[2] = year (last two digits)	
+	let dateInfo = dateString.split("-");
+	
+	let year = parseInt("20" + dateInfo[2]);
+	let month = parseInt(dateInfo[0]);
+	let day = parseInt(dateInfo[1]);
+	
+	return new Date(year, month, day);
 }
