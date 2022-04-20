@@ -103,7 +103,11 @@ window.onload = function(){
 		localStorage.setItem("preload", PRELOAD);
 	};
 	*/
+	
 
+	/*
+	*	keycode is depricated 
+	*/
 	document.getElementById("userNameInput").addEventListener("keyup", function(event)
 	{
 		if (event.keyCode === 13)

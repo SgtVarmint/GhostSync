@@ -1,14 +1,14 @@
-
 <html>
-	<head>
-		<meta charset="utf-8">
-		<!--<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />-->
-		<title>GhostSync Lobby</title>
-		<!--Dependencies-->
-		<!--Desktop Styles-->
-		<!--Old min-width: 992px-->
-		<link rel="stylesheet" href="/NewStyles.css"/>
-		<!-- 
+
+<head>
+	<meta charset="utf-8">
+	<!--<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />-->
+	<title>GhostSync Lobby</title>
+	<!--Dependencies-->
+	<!--Desktop Styles-->
+	<!--Old min-width: 992px-->
+	<link rel="stylesheet" href="/NewStyles.css" />
+	<!-- 
 
 		<link rel="stylesheet" href="/components/loader/loader.css"/>
 		<link rel="stylesheet" href="/components/controls/controls.css"/>
@@ -23,44 +23,45 @@
 		<link rel="stylesheet" href="/components/ui/interactCheck.css"/>
 
 		-->
-		<!--Javascript Files-->
-	
-		<script src="/config.js"></script>
-		<script src="/libraryRoot.js"></script>
-		<script src="/components/metadata/metadata.js"></script>
-		<script src="/components/browser/browserFeatures.js"></script>
-		<script src="/components/lobby/videoBrowserControl.js"></script>
-		<script src="/components/lobby/onload.js"></script>
-		<script src="/components/lobby/videoSyncControl.js"></script>
-		<script src="/components/user/userControl.js"></script>
-		<script src="/components/loader/loader.js"></script>
-		<script src="/components/toast/toast.js"></script>
-		<script src="/components/controls/controls.js"></script>
-		<script src="/components/settings/settings.js"></script>
-		<script src="/components/youtube/youtube.js"></script>
-		<script src="/components/tooltips/tooltips.js"></script>
-		<script src="/components/authentication/authentication.js"></script>
-		<script src="/components/progression/progression.js"></script>
-		<script src="/components/confirm/confirm.js"></script>
-		<script src="/components/queue/queue.js"></script>
-		<script src="/components/mobile/mobile.js"></script>
-		<script src="/components/upload/upload.js"></script>
-		<!--<script src="/components/preload/preload.js"></script>-->
-		<script src="/components/ui/uiAdditions.js"></script>
-		<script src="/components/activity/activity.js"></script>
-		<script src="/components/reaction/reaction.js"></script>
-		<script src="/components/tools/stringStorage.js"></script>
-		<script src="/components/tools/ghostTools.js"></script>
-		<script src="/components/validation/validation.js"></script>
-		<script src="/components/compression/slowNetwork.js"></script>
-		<script src="/components/adskip/adskip.js"></script>
-		<!--<script src="/components/lobby/whoami.js"></script>-->
-		
-	</head>
-	<body>
-		<div class = "main_wrapper">
+	<!--Javascript Files-->
 
-		
+	<script src="/config.js"></script>
+	<script src="/libraryRoot.js"></script>
+	<script src="/components/metadata/metadata.js"></script>
+	<script src="/components/browser/browserFeatures.js"></script>
+	<script src="/components/lobby/videoBrowserControl.js"></script>
+	<script src="/components/lobby/onload.js"></script>
+	<script src="/components/lobby/videoSyncControl.js"></script>
+	<script src="/components/user/userControl.js"></script>
+	<script src="/components/loader/loader.js"></script>
+	<script src="/components/toast/toast.js"></script>
+	<script src="/components/controls/controls.js"></script>
+	<script src="/components/settings/settings.js"></script>
+	<script src="/components/youtube/youtube.js"></script>
+	<script src="/components/tooltips/tooltips.js"></script>
+	<script src="/components/authentication/authentication.js"></script>
+	<script src="/components/progression/progression.js"></script>
+	<script src="/components/confirm/confirm.js"></script>
+	<script src="/components/queue/queue.js"></script>
+	<script src="/components/mobile/mobile.js"></script>
+	<script src="/components/upload/upload.js"></script>
+	<!--<script src="/components/preload/preload.js"></script>-->
+	<script src="/components/ui/uiAdditions.js"></script>
+	<script src="/components/activity/activity.js"></script>
+	<script src="/components/reaction/reaction.js"></script>
+	<script src="/components/tools/stringStorage.js"></script>
+	<script src="/components/tools/ghostTools.js"></script>
+	<script src="/components/validation/validation.js"></script>
+	<script src="/components/compression/slowNetwork.js"></script>
+	<script src="/components/adskip/adskip.js"></script>
+	<!--<script src="/components/lobby/whoami.js"></script>-->
+
+</head>
+
+<body>
+	<div class="main_wrapper">
+
+
 		<input type="hidden" id="currentDirectory" value="/"></input>
 		<input type="hidden" id="lobbyName" value="DefaultLobby"></input>
 		<input type="hidden" id="serverTime" value=""></input>
@@ -72,8 +73,8 @@
 		<span id="hideButtonContainer">
 			<img id="hideButton" src="/graphics/HideButton.png">
 		</span>
-		
-		
+
+
 
 		<div id="backgroundFade"></div>
 
@@ -92,14 +93,14 @@
 		<div id="player">
 			<div id="reactionMenuContainer">
 				<div id="reactionMenuTop">
-				<div id="reactionMenuTop_Left">
-					<button id="reactionMenuFavoritesButton">Favorites</span>
-					<button id="reactionMenuAllButton">All Emojis</span>
-				</div>
-				<div id="reactionMenuTop_Right">
-					<button id="closeReactionMenuButton">X</button>
-				</div>
-				<hr>
+					<div id="reactionMenuTop_Left">
+						<button id="reactionMenuFavoritesButton">Favorites</span>
+							<button id="reactionMenuAllButton">All Emojis</span>
+					</div>
+					<div id="reactionMenuTop_Right">
+						<button id="closeReactionMenuButton">X</button>
+					</div>
+					<hr>
 				</div>
 				<div id="reactionMenuFavorites"></div>
 				<div id="reactionMenuAll"></div>
@@ -109,9 +110,9 @@
 				<source id="videoSource">
 			</video>
 			<div id="youtubePlayer" class="youtubeNormal">
-			
+
 			</div>
-			<div class = "reaction_wrapper">
+			<div class="reaction_wrapper">
 				<button id="reactionButton" class="controls">&#x1F636;</button>
 				<button id="playButton" class="controls">&#x25b6;</button>
 				<button id="fullscreenButton" class="controls">&#x26F6;</button>
@@ -119,17 +120,30 @@
 				<button id="lockButton" class="controls">&#x1f512;</button>
 				<span id="preloadProgress" class="hidden">&#8226;</span>
 			</div>
-			
+
 			<br>
 			<input id="seekSlider" type="range" step=".1" class="controls"></input>
 		</div>
 
 		<div id="users_wrapper">
 			<h3 id="user_title">Users In Lobby</h3>
-			<div id="loader"><div id="loader"><div id='spinner'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></div>
+			<div id="loader">
+				<div id="loader">
+					<div id='spinner'>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
+				</div>
+			</div>
 			<div id="userListContainer">
 				<ul id="userList">
-				
+
 				</ul>
 			</div>
 		</div>
@@ -142,68 +156,52 @@
 			<div id="videoBrowserSidePanel"></div>
 		</div>
 		<div id="youtubeMenu">
-			<br><br><br><br><br> <!--Temporary solution to spacing issue in youtube dropdown.  (CSS is hard)-->
-			<span>YouTube Link:</span><input id="youtubeInput" type="text"></input>
+			<!--Temporary solution to spacing issue in youtube dropdown.  (CSS is hard)-->
+			<span class="text_title">YouTube Link:</span><input id="youtubeInput" type="text"></input>
 			<button class="defaultButton" id="youtubeAddToQueueButton">Add To Queue</button>
 			<button class="defaultButton" id="youtubePlayButton">Play</button>
 		</div>
 		<div id="settings">
-			<h3>Username&nbsp;<span id="usernameTip" class="toolTip">&#63;</span></h3>
-			<input type="text" id="userNameInput"></input><button id="changeUsernameButton" class="defaultButton">Change Username</button>
-			<br>
+			<div class="setting_section">
+				<h3>Username&nbsp;<span id="usernameTip" class="toolTip">&#63;</span></h3>
+				<input type="text" id="userNameInput"></input><button id="changeUsernameButton" class="defaultButton">Change
+					Username</button>
+
+			</div>
+			
+
 			<hr>
-			<br>
-			<h3>Lobby Sounds&nbsp;<span id="soundsTip" class="toolTip">&#63;</span></h3>
-			<input type="checkbox" id="lobbySoundsToggle"></input>
-			<br>
+
+			<div class="setting_section">
+				<h3>Lobby Sounds&nbsp;<span id="soundsTip" class="toolTip">&#63;</span></h3>
+				<input type="checkbox" id="lobbySoundsToggle"></input>
+			</div>
+
 			<hr>
-			<br>
-			<h3>Reactions&nbsp;<span id="reactionsTip" class="toolTip">&#63;</span></h3>
-			<input type="checkbox" id="reactionsToggle"></input>
-			<br>
+
+			<div class="setting_section">
+				<h3>Reactions&nbsp;<span id="reactionsTip" class="toolTip">&#63;</span></h3>
+				<input type="checkbox" id="reactionsToggle"></input>
+			</div>
 			<hr>
-			<br>
-			<h3>Sync Tolerance&nbsp;<span id="toleranceTip" class="toolTip">&#63;</span></h3>
-			<span id="toleranceValue"></span><span class="label"> second(s)</span>
-			<br>
-			<input type="range" id="toleranceSlider"></input>
-			<br>
+
+			<div class="setting_section">
+				<h3>Sync Tolerance&nbsp;<span id="toleranceTip" class="toolTip">&#63;</span></h3>
+				<span id="toleranceValue"></span><span class="label"> second(s)</span>
+				<input type="range" id="toleranceSlider"></input>
+			</div>
+
 			<hr>
-			<br>
-			<h3>Slow Connection&nbsp;<span id="slowConnectionTip" class="toolTip">&#63;</span></h3>
-			<input type="checkbox" id="jimmyToggle"></input>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<!--
-			<hr>
-			<br>
-			<h3>Allow Preloading&nbsp;<span id="preloadTip" class="toolTip">&#63;</span></h3>
-			<input type="checkbox" id="preloadToggle"></input>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			-->
+
+			<div class="setting_section">
+				<h3>Slow Connection&nbsp;<span id="slowConnectionTip" class="toolTip">&#63;</span></h3>
+				<input type="checkbox" id="jimmyToggle"></input>
+			</div>
+
 		</div>
 		<div id="queueArea">
 			<div id="queueHeader">
-				<h3 id = "queue_title">Next Up...</h3>
+				<h3 id="queue_title">Next Up...</h3>
 				<hr>
 				<a href="javascript:clearButtonClicked();">Clear Queue</a>
 				<hr style="width: 15%; display: inline-block">
@@ -214,5 +212,6 @@
 		</div>
 		<div id="debug" style="display:none"></div>
 	</div>
-	</body>
+</body>
+
 </html>

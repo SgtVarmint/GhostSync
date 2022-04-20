@@ -4,6 +4,7 @@
 *                                    Base Styles                                                         |
 *________________________________________________________________________________________________________|
 */
+
 * {
     margin: 0;
     padding: 0;
@@ -25,7 +26,13 @@ h3 {
     font-size: 1em;
 }
 
+.text_title {
+    color: var(--white)
+}
 
+input {
+    border: black solid 1.5px;
+}
 
 .divider {
     float: left;
@@ -264,9 +271,7 @@ h3 {
     margin: 10px;
 }
 
-#joinArea input {
-    border: 1px solid black;
-}
+
 
 
 /* 
@@ -342,7 +347,7 @@ h3 {
     background: rgba(79, 79, 79, 0.85);
     border-radius: 5px;
     border: 1px solid white;
-    padding: 5px;
+    padding: 4% 2% 1% 1%;
     text-align: center;
     width: 80%;
     margin-left: 10%;
@@ -357,7 +362,6 @@ h3 {
 #youtubeMenu input,
 #youtubeMenu button {
     font-size: 2em;
-
     display: inline-block;
     clear: none;
     margin-left: auto;
@@ -406,8 +410,16 @@ h3 {
 *                                   Settings                                                  |
 *________________________________________________________________________________________________________|
 */
+.setting_section {
+    margin: 2%;
+}
+
 #settings h3 {
     font-size: 1.5em;
+}
+
+#changeUsernameButton {
+    margin: 0 2%;
 }
 
 #settings {
@@ -452,9 +464,9 @@ h3 {
 #lobbySoundsToggle,
 #youtubeDisabledToggle,
 #preloadToggle,
-#jimmyToggle {
-    margin-top: 0;
-    margin-bottom: 20px;
+#jimmyToggle,
+#reactionsToggle {
+    margin: 15px;
     transform: scale(2.5);
 }
 
@@ -463,17 +475,17 @@ h3 {
 }
 
 
-
 /* 
 *________________________________________________________________________________________________________
 *                                                                                                      |
 *                                  reactions                                                |
 *________________________________________________________________________________________________________|
 */
-.reaction_wrapper{
+.reaction_wrapper {
     display: flex;
     justify-content: center;
 }
+
 .emojiElement {
     text-decoration: none;
     font-size: 2em;
@@ -550,11 +562,7 @@ h3 {
     }
 }
 
-#reactionsToggle {
-    margin-top: 0;
-    margin-bottom: 20px;
-    transform: scale(2.5);
-}
+
 
 #addFavoriteButton {
     padding-left: 8px;
@@ -711,8 +719,7 @@ h3 {
     width: 80%;
 }
 
-#user_title
-{
+#user_title {
     font-size: 1.25em;
     margin-left: 25%;
 }
@@ -792,11 +799,14 @@ h3 {
     border-radius: 5px;
     margin-left: 25%;
     margin-top: 10px;
+    width: 50%;
+    
 }
 
 .videoInfoButton:hover {
     background-color: gray;
 }
+
 
 .videoBrowserVideo {
     text-decoration: none;
@@ -859,55 +869,48 @@ h3 {
 *________________________________________________________________________________________________________|
 */
 
-video::-webkit-media-controls-play-button
-{
-	display: none;
-}
-
-video::-webkit-media-controls-fullscreen-button
-{
+video::-webkit-media-controls-play-button {
     display: none;
 }
 
-video::-webkit-media-controls-timeline
-{
-	display: none;
+video::-webkit-media-controls-fullscreen-button {
+    display: none;
 }
 
-.controls
-{
-	height: 5%;
-	background: rgb(0, 0, 0, 0);
-	color: white;
-	border: none;
-	outline: none;
-	font-size: 1.5em;
-	opacity: 1;
+video::-webkit-media-controls-timeline {
+    display: none;
 }
 
-.controlsDisabled
-{
-	height: 5%;
-	background: rgb(0, 0, 0, 0);
-	color: white;
-	border: none;
-	outline: none;
-	font-size: 1.5em;
-	opacity: .4;
+.controls {
+    height: 5%;
+    background: rgb(0, 0, 0, 0);
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+    opacity: 1;
 }
 
-.controls:hover
-{
-	color: green;
+.controlsDisabled {
+    height: 5%;
+    background: rgb(0, 0, 0, 0);
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+    opacity: .4;
 }
 
-#seekSlider
-{
-	display: "none";
-	width: 100%;
-	padding: 0;
-	margin: 0;
-	/*transform: scale(1);*/
+.controls:hover {
+    color: green;
+}
+
+#seekSlider {
+    display: "none";
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    /*transform: scale(1);*/
 }
 
 
@@ -917,84 +920,136 @@ video::-webkit-media-controls-timeline
 *                                  Queue                                            |
 *________________________________________________________________________________________________________|
 */
-#queue_title{
+#queue_title {
     margin: 1%;
 }
 
-#queueArea span
-{
-	color: white;
-	font-size: 1.2em;
-	padding: 5px;
-	z-index: -1;
+#queueArea span {
+    color: white;
+    font-size: 1.2em;
+    padding: 5px;
+    z-index: -1;
 }
 
-#queueArea hr
-{
-	height: 2px;
-	background-color: gray;
-	border: none;
+#queueArea hr {
+    height: 2px;
+    background-color: gray;
+    border: none;
 }
 
-#queueArea
-{
-	
-	display: block;
-	float: right;
-	position: relative;
-	border-top: 1px solid gray;
-	border-bottom: 1px solid gray;
-	border-left: none;
-	border-right: none;
-	border-radius: 10px;
-	text-align: left;
-	width: 34%;
-	height: 20%;
-	padding: 5px;
-	overflow: hidden;
-	margin-left: 0;
-	margin-bottom: 0;
+#queueArea {
+
+    display: block;
+    float: right;
+    position: relative;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-left: none;
+    border-right: none;
+    border-radius: 10px;
+    text-align: left;
+    width: 34%;
+    height: 20%;
+    padding: 5px;
+    overflow: hidden;
+    margin-left: 0;
+    margin-bottom: 0;
 }
 
-#queue
-{
-	position: relative;
-	display: block;
-	overflow: auto;
-	height: 60%;
+#queue {
+    position: relative;
+    display: block;
+    overflow: auto;
+    height: 60%;
 }
 
-#queueArea a
-{
+#queueArea a {
     margin: 5%;
-	text-decoration: none;
-	color: gray;
-	font-size: 1em;
-	padding: 3px;
-	border-radius: 5px;
-	transition: .25s;
+    text-decoration: none;
+    color: gray;
+    font-size: 1em;
+    padding: 3px;
+    border-radius: 5px;
+    transition: .25s;
 }
 
-.addToQueue
-{
-	text-decoration: none;
-	color: white;
-	font-size: 1.5em;
-	background-color: #326785;
-	padding: 0px;
-	margin: 0px;
-	border: 1px solid white;
-	border-radius: 5px;
-	transition: .25s;
-	padding-left: 10px;
-	padding-right: 10px;
+.addToQueue {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    background-color: #326785;
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid white;
+    border-radius: 5px;
+    transition: .25s;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-#queueArea a:hover
-{
-	background-color: gray;
-	color: white;
+#queueArea a:hover {
+    background-color: gray;
+    color: white;
 }
-hr{
-margin: 1%;
+
+hr {
+    margin: 1%;
+}
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Preload Progress                                          |
+*________________________________________________________________________________________________________|
+*/
+#preloadProgress
+{
+	font-style: bolder;
+}
+
+#preloadProgress.hidden
+{
+	visibility: hidden;
+}
+
+#preloadProgress.error
+{
+	visibility: visible;
+	color: red;
+}
+#preloadProgress.inProgress
+{
+	visibility: visible;
+	color: orange;
+}
+
+#preloadProgress.done
+{
+	visibility: visible;
+	color: green;
+}
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  server video info JS                                          |
+*________________________________________________________________________________________________________|
+*/
+#thumbnail{
+    width: 100%;
+}
+.wide{
+    width: 100%;
+}
+#videoDate{
+    width: 100%; 
+    font-size: .8em;
+}
+#videoInfoSpan{
+    display:block;
+}
+#sidePanelLoader{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: var(--gray);
+    color: var(--white);
 }
