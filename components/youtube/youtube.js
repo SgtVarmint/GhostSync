@@ -40,7 +40,7 @@ function youtubeButton()
 		document.getElementById("youtubeInput").value = "";
 		
 		disablePointerEventsInMenus();
-		resetNavButtons();
+		resetnavButtons();
 	}
 	else
 	{
@@ -57,7 +57,7 @@ function youtubeButton()
 		document.getElementById("youtubeInput").focus();
 		
 		disablePointerEventsInMenus();
-		resetNavButtons();
+		resetnavButtons();
 		document.getElementById("youtubeButton").innerHTML = "Close";
 		document.getElementById("youtubeButton").style.color = "blue";
 	}
@@ -107,7 +107,7 @@ function playYoutubeVideo(urlOverride = "", overridePlaystateToPlay = false)
 		document.getElementById("playButton").innerHTML = "&#x23f8;";
 		document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
-		resetNavButtons();
+		resetnavButtons();
 		
 		updateServerTimeStamp(.01);
 	}

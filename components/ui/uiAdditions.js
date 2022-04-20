@@ -12,31 +12,31 @@ function serveInteractPrompt()
 	document.body.appendChild(interactCheck);
 }
 
-function resetNavButtons()
-{
-	if (!mobile || theaterMode)
-	{
-		document.getElementById("videoBrowserButton").innerHTML = "Video Browser";
+ function resetNavButtons()
+ {
+ 	if (!mobile || theaterMode)
+ 	{
+ 		document.getElementById("videoBrowserButton").innerHTML = "Video Browser";
 		document.getElementById("videoBrowserButton").style.color = "white";
 		
-		document.getElementById("youtubeButton").innerHTML = "Youtube";
+ 		document.getElementById("youtubeButton").innerHTML = "Youtube";
+ 		document.getElementById("youtubeButton").style.color = "white";
+		
+ 		document.getElementById("settingsButton").innerHTML = "Settings";
+ 		document.getElementById("settingsButton").style.color = "white";
+ 	}
+ 	else
+ 	{
+ 		document.getElementById("videoBrowserButton").innerHTML = "&#x2630;";
+ 		document.getElementById("videoBrowserButton").style.color = "white";
+		
+ 		document.getElementById("youtubeButton").innerHTML = "&#x25b6;";
 		document.getElementById("youtubeButton").style.color = "white";
 		
-		document.getElementById("settingsButton").innerHTML = "Settings";
-		document.getElementById("settingsButton").style.color = "white";
-	}
-	else
-	{
-		document.getElementById("videoBrowserButton").innerHTML = "&#x2630;";
-		document.getElementById("videoBrowserButton").style.color = "white";
-		
-		document.getElementById("youtubeButton").innerHTML = "&#x25b6;";
-		document.getElementById("youtubeButton").style.color = "white";
-		
-		document.getElementById("settingsButton").innerHTML = "&#9881;";
-		document.getElementById("settingsButton").style.color = "white";
-	}
-}
+ 		document.getElementById("settingsButton").innerHTML = "&#9881;";
+ 		document.getElementById("settingsButton").style.color = "white";
+ 	}
+ }
 
 function enablePointerEventsInMenus()
 {

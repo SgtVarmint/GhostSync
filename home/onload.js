@@ -14,7 +14,7 @@ window.onload = function(){
 			document.getElementById("userInput").focus();
 		}
 	});
-	
+	// KeyboardEvent.key is the newer version of keycode
 	document.getElementById("userInput").addEventListener("keyup", function(event)
 	{
 		if (event.keyCode === 13)

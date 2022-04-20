@@ -5,20 +5,11 @@
 		<!--<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />-->
 		<title>GhostSync Lobby</title>
 		<!--Dependencies-->
-		<!--Phone Styles
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/styles_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/loader/loader_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/controls/controls_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/settings/settings_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/youtube/youtube_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/tooltips/tooltips_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/queue/queue_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/upload/upload_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/toast/toast_mobile.css"/>
-		-->
 		<!--Desktop Styles-->
 		<!--Old min-width: 992px-->
-		<link rel="stylesheet" href="/styles.css"/>
+		<link rel="stylesheet" href="/NewStyles.css"/>
+		<!-- 
+
 		<link rel="stylesheet" href="/components/loader/loader.css"/>
 		<link rel="stylesheet" href="/components/controls/controls.css"/>
 		<link rel="stylesheet" href="/components/settings/settings.css"/>
@@ -30,7 +21,10 @@
 		<link rel="stylesheet" href="/components/preload/preload.css"/>
 		<link rel="stylesheet" href="/components/reaction/reaction.css"/>
 		<link rel="stylesheet" href="/components/ui/interactCheck.css"/>
+
+		-->
 		<!--Javascript Files-->
+	
 		<script src="/config.js"></script>
 		<script src="/libraryRoot.js"></script>
 		<script src="/components/metadata/metadata.js"></script>
@@ -64,6 +58,9 @@
 		
 	</head>
 	<body>
+		<div class = "main_wrapper">
+
+		
 		<input type="hidden" id="currentDirectory" value="/"></input>
 		<input type="hidden" id="lobbyName" value="DefaultLobby"></input>
 		<input type="hidden" id="serverTime" value=""></input>
@@ -75,7 +72,11 @@
 		<span id="hideButtonContainer">
 			<img id="hideButton" src="/graphics/HideButton.png">
 		</span>
+		
+		
+
 		<div id="backgroundFade"></div>
+
 		<div id="topNav">
 			<a class="navButton" href="/index.html" id="home">GhostSync</a>
 			<span class="divider"></span>
@@ -85,7 +86,9 @@
 			<span class="divider"></span>
 			<a id="settingsButton" class="navButton" href="javascript:settingsButton();">Settings</a>
 		</div>
+
 		<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
+
 		<div id="player">
 			<div id="reactionMenuContainer">
 				<div id="reactionMenuTop">
@@ -108,17 +111,21 @@
 			<div id="youtubePlayer" class="youtubeNormal">
 			
 			</div>
-			<button id="reactionButton" class="controls">&#x1F636;</button>
-			<button id="playButton" class="controls">&#x25b6;</button>
-			<button id="fullscreenButton" class="controls">&#x26F6;</button>
-			<button id="skipButton" class="controls">&#x23e9;</button>
-			<button id="lockButton" class="controls">&#x1f512;</button>
-			<span id="preloadProgress" class="hidden">&#8226;</span>
+			<div class = "reaction_wrapper">
+				<button id="reactionButton" class="controls">&#x1F636;</button>
+				<button id="playButton" class="controls">&#x25b6;</button>
+				<button id="fullscreenButton" class="controls">&#x26F6;</button>
+				<button id="skipButton" class="controls">&#x23e9;</button>
+				<button id="lockButton" class="controls">&#x1f512;</button>
+				<span id="preloadProgress" class="hidden">&#8226;</span>
+			</div>
+			
 			<br>
 			<input id="seekSlider" type="range" step=".1" class="controls"></input>
 		</div>
-		<div id="users">
-			<h3>Users In Lobby</h3>
+
+		<div id="users_wrapper">
+			<h3 id="user_title">Users In Lobby</h3>
 			<div id="loader"><div id="loader"><div id='spinner'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></div>
 			<div id="userListContainer">
 				<ul id="userList">
@@ -126,16 +133,13 @@
 				</ul>
 			</div>
 		</div>
+
 		<div id="browser">
 			<div id="videoBrowserTopSection">
 				<button class="defaultButton" onclick="goBack()">Up</button>
 			</div>
-			<div id="videoBrowser">
-			
-			</div>
-			<div id="videoBrowserSidePanel">
-			
-			</div>
+			<div id="videoBrowser"></div>
+			<div id="videoBrowserSidePanel"></div>
 		</div>
 		<div id="youtubeMenu">
 			<br><br><br><br><br> <!--Temporary solution to spacing issue in youtube dropdown.  (CSS is hard)-->
@@ -199,7 +203,7 @@
 		</div>
 		<div id="queueArea">
 			<div id="queueHeader">
-				<span>Next Up...</span>
+				<h3 id = "queue_title">Next Up...</h3>
 				<hr>
 				<a href="javascript:clearButtonClicked();">Clear Queue</a>
 				<hr style="width: 15%; display: inline-block">
@@ -209,5 +213,6 @@
 			<div id="queue"></div>
 		</div>
 		<div id="debug" style="display:none"></div>
+	</div>
 	</body>
 </html>

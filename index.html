@@ -5,11 +5,10 @@
 		<title>GhostSync: Synchronize Video Watching</title>
 		<!--Dependencies-->
 		<!--Phone Styles-->
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/styles_mobile.css"/>
-		<link rel="stylesheet" media='screen and (min-width: 300px)' href="/components/tooltips/tooltips_mobile.css"/>
+		
 		<!--Desktop Styles-->
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/styles.css"/>
-		<link rel="stylesheet" media='only screen and (min-width: 992px)' href="/components/tooltips/tooltips.css"/>
+		<link rel="stylesheet" ' href="/NewStyles.css"/>
+		<link rel="stylesheet"  href="/components/tooltips/tooltips.css"/>
 		<!--Javascript Files-->
 		<script src="/libraryRoot.js"></script>
 		<script src="/home/onload.js"></script>
@@ -25,29 +24,33 @@
 
 	</head>
 	<body>
-		<div id="topNav">
-			<a class="navButton" href="index.html" id="home">GhostSync</a>
-			<span class="divider"></span>
-			<a class="navButton" href="javascript: authenticationButton();">Authentication</a>
-		</div>
-		
-		<div id="auth">
-			<span>Authentication Key&nbsp;<span id="authTip" class="toolTip">&#63;</span></span>&nbsp;<input id="authText" type="text"></input><button class="defaultButton" id="authButton">Set</button>
-		</div>
-		
-		<div id="joinArea">
-			<div id="joinBox">
-				<br>
-				<span>Lobby: <input type="text" id="lobbyInput"></span>
-				<br>
-				<span>Username: <input type="text" id="userInput"></span>
-				<br>
-				<button id="lobbyButton" class="defaultButton">Create/Join</button>
+		<div class = "main_wrapper">
+			<div id="topNav">
+				<a class="navButton" href="index.html" id="home">GhostSync</a>
+				<span class="divider"></span>
+				<a class="navButton" href="javascript: authenticationButton();">Authentication</a>
 			</div>
+			
+			<div id="auth" class = "hidden">
+				<span>Authentication Key&nbsp;<span id="authTip" class="toolTip">&#63;</span></span>&nbsp;<input id="authText" type="text"></input><button class="defaultButton" id="authButton">Set</button>
+			</div>
+			
+			<div id="joinArea">
+				<div id="joinBox">
+					<br>
+					<span>Lobby: <input type="text" id="lobbyInput"></span>
+					<br>
+					<span>Username: <input type="text" id="userInput"></span>
+					<br>
+					<button id="lobbyButton" class="defaultButton">Create/Join</button>
+				</div>
+			</div>
+			
+			<div id="buildInfo">
+				<span class="label">GhostSync Version <span class="label" id="versionNumber">XXX</span><!--&nbsp;deployed on <span id="buildDate">XXX</span>-->
+			</div>
+
 		</div>
-		
-		<div id="buildInfo">
-			<span class="label">GhostSync Version <span class="label" id="versionNumber">XXX</span><!--&nbsp;deployed on <span id="buildDate">XXX</span>-->
-		</div>
+	
 	</body>
 </html>
