@@ -294,7 +294,7 @@ input {
 /* 
 *________________________________________________________________________________________________________
 *                                                                                                      |
-*                                    Loby                                                    |
+*                                    Lobby                                                    |
 *________________________________________________________________________________________________________|
 */
 
@@ -1052,4 +1052,99 @@ hr {
     position: relative;
     background-color: var(--gray);
     color: var(--white);
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  ghostConfirm Popups                                          |
+*________________________________________________________________________________________________________|
+*/
+
+#confirmDiv
+{
+    width: 74%;
+    position: fixed;
+    background-color: var(--gray);
+    opacity: 0.8;
+    border: 2px solid var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 15%;
+    margin-left: 13%;
+    margin-right: 13%;
+    top: 100;
+    color: var(--white);
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Fullscreen                                           |
+*________________________________________________________________________________________________________|
+*/
+
+#reactionButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 40%;
+    display: none;
+}
+
+#reactionMenuContainer_fullscreen
+{
+    top: 55%
+}
+
+#reactionPanel_fullscreen
+{
+    top: 15%;
+    left: 70%;
+    height: 800px;
+    width: 550px;
+    font-size: 3em;
+}
+
+#playButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    margin-top: 5px;
+    left: 45%;
+    display: none;
+}
+
+#fullscreenButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 50%;
+    display: none;
+}
+
+#seekSlider_fullscreen
+{
+    position: absolute;
+    top: 97%;
+    left: 0%;
+    display: none;
+    opacity: 0.4;
+}
+
+#skipButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 54%;
+    display: none;
+}
+
+#lockButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 59%;
+    display: inline;
 }

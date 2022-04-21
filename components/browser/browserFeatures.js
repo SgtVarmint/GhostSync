@@ -1,7 +1,4 @@
-/*
-	what does this file do? please comment your code
-*/
-
+//tHiS mEtHoD cReAtEs AnD aPpEnDs ThE vIdEo MeTaDaTa DeTaIlS tO tHe SiDe PaNeL wItHiN vIdEo BrOwSeR
 function serveVideoInfo(videoPath, timestamp, overridePlaystateToPlay) {
 	var sidePanelDiv = document.getElementById("videoBrowserSidePanel");
 	sidePanelDiv.innerHTML = "";
@@ -90,7 +87,6 @@ function serveMissingVideoInfo() {
 //this is the circle side loader
 function startSidePanelLoader() {
 	var sidePanelDiv = document.getElementById("videoBrowserSidePanel");
-	// i hate you jon why on earth do you make an id as the last thing you do,
 	var loaderDiv = document.createElement("div");
 	loaderDiv.id = "sidePanelLoader";
 	loaderDiv.innerHTML = "<div id=\"loaderSidePanel\"><div id='spinner'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></div>";

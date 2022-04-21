@@ -41,7 +41,7 @@ function videoBrowserButton()
 		document.getElementById("browser").className = "popupWindow_out";
 		
 		disablePointerEventsInMenus();
-		resetnavButtons();
+		resetNavButtons();
 	}
 	else
 	{
@@ -59,7 +59,7 @@ function videoBrowserButton()
 		document.getElementById("browser").className = "popupWindow_in";
 		
 		disablePointerEventsInMenus();
-		resetnavButtons();
+		resetNavButtons();
 		document.getElementById("videoBrowserButton").innerHTML = "Close";
 		document.getElementById("videoBrowserButton").style.color = "blue";
 	}
@@ -118,7 +118,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		newInput.onchange = function(e){
 		e.preventDefault();
 		document.getElementById("browser").style.display = "none";
-		resetnavButtons();
+		resetNavButtons();
 		if (this.files.length > 0)
 			uploadFile();
 		else
@@ -314,7 +314,7 @@ function playVideo(video = "pullFromDOM", timestamp = 0, overridePlaystateToPlay
 	document.getElementById("video").style.display = "block";
 	document.getElementById("youtubePlayer").style.display = "none";
 	
-	resetnavButtons();
+	resetNavButtons();
 	disableBackgroundFade();
 	
 	if (timestamp != 0)

@@ -11,7 +11,7 @@ function settingsButton()
 		document.getElementById("settings").className = "popupWindow_out";
 		
 		disablePointerEventsInMenus();
-		resetnavButtons();
+		resetNavButtons();
 	}
 	else
 	{
@@ -28,7 +28,7 @@ function settingsButton()
 		document.getElementById("settings").className = "popupWindow_in";
 		
 		disablePointerEventsInMenus();
-		resetnavButtons();
+		resetNavButtons();
 		document.getElementById("settingsButton").innerHTML = "Close";
 		document.getElementById("settingsButton").style.color = "blue";
 	}
