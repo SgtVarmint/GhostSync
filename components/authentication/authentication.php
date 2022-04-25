@@ -1,31 +1,18 @@
 <?php
+	$accessCode = trim($_POST['accessCode']);
+	//figure out a better way to do pathing here
+	$myfile = fopen('D:\Projects\GhostSync\components\authentication\access.txt', 'r') or die('Unable to open access key file!');
+	$keyFile = fread($myfile, filesize('D:\Projects\GhostSync\components\authentication\access.txt'));
+	fclose($myfile);
+	$keys = explode("\r\n", $keyFile);
+	echo checkAuth($accessCode, $keys);
 
-$accessCode = $_POST["accessCode"];
-$accessCode = trim($accessCode);
-
-$myfile = fopen("/var/www/html/components/authentication/access.txt", "r") or die("Unable to open file!");
-$keyFile = fread($myfile, filesize("/var/www/html/components/authentication/access.txt"));
-fclose($myfile);
-
-$granted = false;
-
-$keys = explode("\n", $keyFile);
-
-foreach ($keys as $key)
-{
-	if ($accessCode == trim($key))
-	{
-		$granted = true;
+	function checkAuth($accessCode, $keys){
+		foreach($keys as $key){
+			if($accessCode === $key){
+				return 'gs:YrehJb5njkXW1lm39yiF';
+			}
+		}
+		return 'denied';
 	}
-}
-
-if ($granted)
-{
-	echo "gs:YrehJb5njkXW1lm39yiF@";
-}
-else
-{
-	echo "denied";
-}
-
 ?>
