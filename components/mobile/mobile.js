@@ -31,9 +31,9 @@ function checkForMobile()
 			}
 		}
 		
-		document.getElementById("users").style.clear = "left";
-		document.getElementById("users").style.width = "100%";
-		document.getElementById("users").style.marginTop = "125px";
+		document.getElementById("users_wrapper").style.clear = "left";
+		document.getElementById("users_wrapper").style.width = "100%";
+		document.getElementById("users_wrapper").style.marginTop = "125px";
 		document.getElementById("queueArea").style.clear = "left";
 		document.getElementById("queueArea").style.width = "98%";
 		document.getElementById("queueArea").style.left = "1%";
@@ -75,9 +75,9 @@ function checkForMobile()
 			navButtons[i].style.width = "17%";
 		}
 		
-		document.getElementById("users").style.clear = "none";
-		document.getElementById("users").style.width = "34%";
-		document.getElementById("users").style.marginTop = "0";
+		document.getElementById("users_wrapper").style.clear = "none";
+		document.getElementById("users_wrapper").style.width = "34%";
+		document.getElementById("users_wrapper").style.marginTop = "0";
 		document.getElementById("queueArea").style.clear = "none";
 		document.getElementById("queueArea").style.width = "34%";
 		document.getElementById("queueArea").style.left = "0";

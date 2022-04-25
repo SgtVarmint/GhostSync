@@ -291,7 +291,7 @@ function addYoutubeVideoToQueue()
 	toast("Video added to queue");
 }
 
-function customQueuePopup(message, index, timestamp, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
+function customQueuePopup(message, index, timestamp, elementToAppendTo = "body")
 {
 	removeCustomQueuePopup();
 	
@@ -303,6 +303,7 @@ function customQueuePopup(message, index, timestamp, elementToAppendTo = "body",
 	let hoursMinutes = convertMinutesToHours(minutes);
 	
 	var confirmDiv = document.createElement("div");
+	confirmDiv.id = "confirmDiv";
 
 	var messageDiv = document.createElement("div");
 	messageDiv.innerHTML = "<h3>" + message + "</h3><p>" + hoursMinutes + "<span style='font-size: .9em'>:" + remainingSeconds + "</span></p>";
@@ -314,67 +315,28 @@ function customQueuePopup(message, index, timestamp, elementToAppendTo = "body",
 	moveToFrontButton.innerHTML = "Move To Front";
 	moveToFrontButton.href = "javascript:pushToFrontOfQueue(" + index + "); removeCustomQueuePopup();";
 	moveToFrontButton.className = "defaultButton";
-	moveToFrontButton.style.margin = "10px";
 	buttonDiv.appendChild(moveToFrontButton);
 	
 	var moveToBackButton = document.createElement("a");
 	moveToBackButton.innerHTML = "Move To Back";
 	moveToBackButton.href = "javascript:pushToBackOfQueue(" + index + "); removeCustomQueuePopup();";
 	moveToBackButton.className = "defaultButton";
-	moveToBackButton.style.margin = "10px";
 	buttonDiv.appendChild(moveToBackButton);
 	
 	var removeButton = document.createElement("a");
 	removeButton.innerHTML = "Remove";
 	removeButton.href = "javascript:removeQueueVideo(" + index + ") ; removeCustomQueuePopup();";
 	removeButton.className = "defaultButton";
-	removeButton.style.margin = "10px";
 	buttonDiv.appendChild(removeButton);
 	
 	var cancelButton = document.createElement("a");
 	cancelButton.innerHTML = "Cancel";
 	cancelButton.href = "javascript:removeCustomQueuePopup();";
 	cancelButton.className = "defaultButton";
-	cancelButton.style.margin = "10px";
 	buttonDiv.appendChild(cancelButton);
 	
 	confirmDiv.appendChild(buttonDiv);
 
-	//if (!mobile) --deprecated
-	if (true)
-	{
-		confirmDiv.id = "confirmDiv";
-		confirmDiv.style.position = "fixed";
-		confirmDiv.style.width = "74%";
-		confirmDiv.style.background = "rgba(79, 79, 79, 0.8)";
-		confirmDiv.style.border = "2px solid white";
-		confirmDiv.style.textAlign = "center";
-		confirmDiv.style.marginTop = margTop;
-		confirmDiv.style.marginLeft = margLeft;
-		confirmDiv.style.marginRight = margRight;
-		confirmDiv.style.padding = "20px";
-		confirmDiv.style.borderRadius = "10px";
-		confirmDiv.style.color = "white";
-		confirmDiv.style.top = styleTop;
-	}
-	else
-	{
-		confirmDiv.id = "confirmDiv";
-		confirmDiv.style.position = "fixed";
-		confirmDiv.style.width = "74%";
-		confirmDiv.style.background = "rgba(79, 79, 79, 0.8)";
-		confirmDiv.style.textAlign = "center";
-		confirmDiv.style.marginTop = margTop;
-		confirmDiv.style.marginLeft = margLeft;
-		confirmDiv.style.marginRight = margRight;
-		confirmDiv.style.padding = "20px";
-		confirmDiv.style.borderRadius = "10px";
-		confirmDiv.style.border = "2px solid white";
-		confirmDiv.style.fontSize = "3em";
-		confirmDiv.style.color = "white";
-		confirmDiv.style.top = "500";
-	}
-	
 	document.querySelector(elementToAppendTo).appendChild(confirmDiv);
 }
 

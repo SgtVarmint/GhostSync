@@ -30,6 +30,10 @@ h3 {
     color: var(--white)
 }
 
+.hidden {
+    display: none;
+}
+
 input {
     border: black solid 1.5px;
 }
@@ -73,10 +77,6 @@ input {
 .defaultButton:active {
     position: relative;
     top: 1px;
-}
-
-.hidden {
-    display: none;
 }
 
 /* 
@@ -889,6 +889,7 @@ video::-webkit-media-controls-timeline {
     outline: none;
     font-size: 1.5em;
     opacity: 1;
+    display: inline;
 }
 
 .controlsDisabled {
@@ -899,6 +900,7 @@ video::-webkit-media-controls-timeline {
     outline: none;
     font-size: 1.5em;
     opacity: .4;
+    display: inline;
 }
 
 .controls:hover {
@@ -1066,7 +1068,6 @@ hr {
     width: 74%;
     position: fixed;
     background-color: var(--gray);
-    opacity: 0.8;
     border: 2px solid var(--white);
     border-radius: 10px;
     padding: 20px;
@@ -1085,7 +1086,7 @@ hr {
 *________________________________________________________________________________________________________|
 */
 
-#reactionButton_fullscreen
+.reactionButton_fullscreen
 {
     position: absolute;
     top: 92%;
@@ -1093,12 +1094,12 @@ hr {
     display: none;
 }
 
-#reactionMenuContainer_fullscreen
+.reactionMenuContainer_fullscreen
 {
     top: 55%
 }
 
-#reactionPanel_fullscreen
+.reactionPanel_fullscreen
 {
     top: 15%;
     left: 70%;
@@ -1107,7 +1108,7 @@ hr {
     font-size: 3em;
 }
 
-#playButton_fullscreen
+.playButton_fullscreen
 {
     position: absolute;
     top: 92%;
@@ -1116,7 +1117,7 @@ hr {
     display: none;
 }
 
-#fullscreenButton_fullscreen
+.fullscreenButton_fullscreen
 {
     position: absolute;
     top: 92%;
@@ -1124,7 +1125,7 @@ hr {
     display: none;
 }
 
-#seekSlider_fullscreen
+.seekSlider_fullscreen
 {
     position: absolute;
     top: 97%;
@@ -1133,7 +1134,7 @@ hr {
     opacity: 0.4;
 }
 
-#skipButton_fullscreen
+.skipButton_fullscreen
 {
     position: absolute;
     top: 92%;
@@ -1141,10 +1142,48 @@ hr {
     display: none;
 }
 
-#lockButton_fullscreen
+.lockButton_fullscreen
 {
     position: absolute;
     top: 92%;
     left: 59%;
     display: inline;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Tooltips                                           |
+*________________________________________________________________________________________________________|
+*/
+
+.toolTip
+{
+	display: inline-block;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	border: solid white 1px;
+	background-color: black;
+	font-size: .5em;
+	z-index: 200;
+    padding-left: 1px;
+}
+
+.toolTip:hover
+{
+    cursor: pointer;
+}
+
+#activeToolTip
+{
+	display: div;
+	position: absolute;
+	border: solid black 2px;
+	border-radius: 5px;
+	padding: 8px;
+	font-size: 1.5em;
+	background-color: white;
+	color: black;
+	z-index: 200;
 }

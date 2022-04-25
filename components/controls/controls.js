@@ -143,28 +143,28 @@ function fullscreenButtonClicked()
 		document.exitFullscreen();
 		fullscreenEnabled = false;
 
-		document.getElementById("reactionButton_fullscreen").id = "reactionButton";
-		document.getElementById("reactionMenuContainer_fullscreen").id = "reactionMenuContainer";
-		document.getElementById("reactionPanel_fullscreen").id = "reactionPanel";
-		document.getElementById("playButton_fullscreen").id = "playButton";
-		document.getElementById("fullscreenButton_fullscreen").id = "fullscreenButton";
-		document.getElementById("seekSlider_fullscreen").id = "seekSlider";
-		document.getElementById("skipButton_fullscreen").id = "skipButton";
-		document.getElementById("lockButton_fullscreen").id = "lockButton";
+		document.getElementById("reactionButton").classList.remove("reactionButton_fullscreen");
+		document.getElementById("reactionMenuContainer").classList.remove("reactionMenuContainer_fullscreen");
+		document.getElementById("reactionPanel").classList.remove("reactionPanel_fullscreen");
+		document.getElementById("playButton").classList.remove("playButton_fullscreen");
+		document.getElementById("fullscreenButton").classList.remove("fullscreenButton_fullscreen");
+		document.getElementById("seekSlider").classList.remove("seekSlider_fullscreen");
+		document.getElementById("skipButton").classList.remove("skipButton_fullscreen");
+		document.getElementById("lockButton").classList.remove("lockButton_fullscreen");
 	}
 	else
 	{
 		document.getElementById("player").requestFullscreen();
 		fullscreenEnabled = true;
 		
-		document.getElementById("reactionButton").id = "reactionButton_fullscreen";
-		document.getElementById("reactionMenuContainer").id = "reactionMenuContainer_fullscreen";
-		document.getElementById("reactionPanel").id = "reactionPanel_fullscreen";
-		document.getElementById("playButton").id = "playButton_fullscreen";
-		document.getElementById("fullscreenButton").id = "fullscreenButton_fullscreen";
-		document.getElementById("seekSlider").id = "seekSlider_fullscreen";
-		document.getElementById("skipButton").id = "skipButton_fullscreen";
-		document.getElementById("lockButton").id = "lockButton_fullscreen";
+		document.getElementById("reactionButton").classList.add("reactionButton_fullscreen");
+		document.getElementById("reactionMenuContainer").classList.add("reactionMenuContainer_fullscreen");
+		document.getElementById("reactionPanel").classList.add("reactionPanel_fullscreen");
+		document.getElementById("playButton").classList.add("playButton_fullscreen");
+		document.getElementById("fullscreenButton").classList.add("fullscreenButton_fullscreen");
+		document.getElementById("seekSlider").classList.add("seekSlider_fullscreen");
+		document.getElementById("skipButton").classList.add("skipButton_fullscreen");
+		document.getElementById("lockButton").classList.add("lockButton_fullscreen");
 	}
 		
 }

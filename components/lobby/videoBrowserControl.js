@@ -409,7 +409,6 @@ function sortDatedGameplay(contents, desc = false)
 	let sortedContents = new Array();
 	
 	let contentDates = new Array();
-	//let indexOrderArray = new Array();
 	
 	for (let i = 0; i < contents.length - 1; i++)
 	{
