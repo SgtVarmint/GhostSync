@@ -1,12 +1,10 @@
 <?php
-
 $lobbyName = $_POST["lobbyName"];
 $timeStamp = $_POST["timeStamp"];
 $userUpdated = $_POST["userUpdated"];
 
-$command = "date +%s%3N";
+$serverTime = round(microtime()*1000);
 
-$serverTime = shell_exec($command);
 $playState = $_POST["playState"];
 $filePath = $_POST["filePath"];
 

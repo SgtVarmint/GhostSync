@@ -1,8 +1,8 @@
 <?php
 	$accessCode = trim($_POST['accessCode']);
 	//figure out a better way to do pathing here
-	$myfile = fopen('D:\Projects\GhostSync\components\authentication\access.txt', 'r') or die('Unable to open access key file!');
-	$keyFile = fread($myfile, filesize('D:\Projects\GhostSync\components\authentication\access.txt'));
+	$myfile = fopen('access.txt', 'r') or die('Unable to open access key file!');
+	$keyFile = fread($myfile, filesize('access.txt'));
 	fclose($myfile);
 	$keys = explode("\r\n", $keyFile);
 	echo checkAuth($accessCode, $keys);
