@@ -1,5 +1,5 @@
 window.onload = function(){
-	authenticate();
+	performAJAXCall("authenticate");
 	
 	//Initial page reload for auth to take affect
 	//Only needs to occur one time per session

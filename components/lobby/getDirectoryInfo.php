@@ -1,9 +1,13 @@
 <?php
 
-$command = "ls -1 '/var/www/html/" . $_POST["rootDir"] . $_POST["subDir"] . "' | tr '\n' '|'";
-//$command = "ls -1 " . $_POST["rootDir"] . " | tr '\n' '|'";
+$directory = $_POST['rootDir'] . $_POST['subDir'];
 
-$data = shell_exec($command);
-echo $data;
+$vidString = "";
+$listing = scandir($directory);
 
+foreach($listing as $file){
+    $vidString .= $file . "|";
+}
+
+echo $vidString;
 ?>

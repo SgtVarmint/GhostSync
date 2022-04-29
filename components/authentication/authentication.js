@@ -1,26 +1,19 @@
-function authenticate()
-{
+function performAJAXCall(requester){
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","/components/authentication/authentication.php",false);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = function()
-	{
-		if(this.readyState == 4 && this.status == 200)
-		{
-			if (this.responseText == "denied")
-			{
-				location.href = "/index.html";
-				console.log("User does not have access to site");
-			}
-			else
-			{
-				console.log("Sucessfully Authenticated");
-				let xhttp2 = new XMLHttpRequest();
-				xhttp2.open("GET", "http://" + localStorage.getItem("auth") + document.location.href.split("http://")[1].split("/")[0] + "/Videos/AuthTouch.txt");
-				xhttp2.send();
+	xhttp.open("POST", "/components/authentication/authentication.php", false);
+	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = function(){
+		if(this.readyState === 4 && this.status === 200){
+			switch(requester){
+				case "home":
+					homeAuth(this.responseText);
+					break;
+				case "authenticate":
+					authAuth(this.responseText);
+					break;
 			}
 		}
-	}
+	};
 	xhttp.send("accessCode=" + localStorage.getItem("access"));
 }
 
@@ -46,7 +39,6 @@ function homeAuth()
 			}
 		}
 	}
-	xhttp.send("accessCode=" + localStorage.getItem("access"));
 }
 
 function authButtonClick()

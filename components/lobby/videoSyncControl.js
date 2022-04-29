@@ -373,29 +373,6 @@ function syncVideoAction(file)
 	}
 }
 
-
-function getServerTime()
-{
-	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","getServerTime.php",false);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = function()
-	{
-		if(this.readyState == 4 && this.status == 200)
-		{
-			getServerTimeAction(this);
-		}
-	}
-	xhttp.send();
-}
-
-function getServerTimeAction(file)
-{
-	var temp = file.responseText;
-	var serverTime = temp.slice(0, temp.length - 4) + "." + temp.slice(temp.length - 4, temp.length - 1)
-	document.getElementById("serverTime").value = serverTime;
-}
-
 function checkForOutOfSync(currentTime, newTimeStamp)
 {
 	//If statement is split up for readability (as opposed to using || )
