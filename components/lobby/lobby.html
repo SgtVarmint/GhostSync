@@ -85,68 +85,129 @@
 			<span class="divider"></span>
 			<a id="settingsButton" class="navButton" href="javascript:settingsButton();">Settings</a>
 		</div>
-		<button id="playButton" class="controls">&#x25b6;</button>
-		<button id="fullscreenButton" class="controls">&#x26F6;</button>
-		<button id="skipButton" class="controls">&#x23e9;</button>
-		<br>
-		<input id="seekSlider" type="range" step=".1" class="controls"></input>
-	</div>
-	<div id="users">
-		<h3>Users In Lobby</h3>
-		<div id="loader">
-			<div id="loader">
-				<div id='spinner'>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
+		<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
+		<div id="player">
+			<div id="reactionMenuContainer">
+				<div id="reactionMenuTop">
+				<div id="reactionMenuTop_Left">
+					<button id="reactionMenuFavoritesButton">Favorites</span>
+					<button id="reactionMenuAllButton">All Emojis</span>
 				</div>
+				<div id="reactionMenuTop_Right">
+					<button id="closeReactionMenuButton">X</button>
+				</div>
+				<hr>
+				</div>
+				<div id="reactionMenuFavorites"></div>
+				<div id="reactionMenuAll"></div>
+			</div>
+			<div id="reactionPanel"></div>
+			<video id="video" preload="auto" controls>
+				<source id="videoSource">
+			</video>
+			<div id="youtubePlayer" class="youtubeNormal">
+			
+			</div>
+			<button id="reactionButton" class="controls">&#x1F636;</button>
+			<button id="playButton" class="controls">&#x25b6;</button>
+			<button id="fullscreenButton" class="controls">&#x26F6;</button>
+			<button id="skipButton" class="controls">&#x23e9;</button>
+			<button id="lockButton" class="controls">&#x1f512;</button>
+			<span id="preloadProgress" class="hidden">&#8226;</span>
+			<br>
+			<input id="seekSlider" type="range" step=".1" class="controls"></input>
+		</div>
+		<div id="users">
+			<h3>Users In Lobby</h3>
+			<div id="loader"><div id="loader"><div id='spinner'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></div>
+			<div id="userListContainer">
+				<ul id="userList">
+				
+				</ul>
 			</div>
 		</div>
-		<ul id="userList">
-
-		</ul>
-	</div>
-	<div id="browser">
-		<button class="defaultButton" onclick="goBack()">Up</button>
-		<div id="videoBrowser">
-
+		<div id="browser">
+			<div id="videoBrowserTopSection">
+				<button class="defaultButton" onclick="goBack()">Up</button>
+			</div>
+			<div id="videoBrowser">
+			
+			</div>
+			<div id="videoBrowserSidePanel">
+			
+			</div>
 		</div>
-	</div>
-	<div id="youtubeMenu">
-		<br><br><br><br><br>
-		<!--Temporary solution to spacing issue in youtube dropdown.  (CSS is hard)-->
-		<span>YouTube Link:</span><input id="youtubeInput" type="text"></input>
-		<button class="defaultButton" id="youtubeAddToQueueButton">Add To Queue</button>
-		<button class="defaultButton" id="youtubePlayButton">Play Now</button>
-	</div>
-	<div id="settings">
-		<h3>Username&nbsp;<span id="usernameTip" class="toolTip">&#63;</span></h3>
-		<input type="text" id="userNameInput"></input><button id="changeUsernameButton" class="defaultButton">Change
-			Username</button>
-		<br>
-		<hr>
-		<br>
-		<h3>Lobby Sounds&nbsp;<span id="soundsTip" class="toolTip">&#63;</span></h3>
-		<span id="lobbySoundsValue"></span>
-		<br>
-		<input type="checkbox" id="lobbySoundsToggle"></input>
-		<br>
-		<hr>
-		<br>
-		<h3>Sync Tolerance&nbsp;<span id="toleranceTip" class="toolTip">&#63;</span></h3>
-		<span id="toleranceValue"></span><span class="label"> second(s)</span>
-		<br>
-		<input type="range" id="toleranceSlider"></input>
-	</div>
-	<div id="queueArea">
-		<div id="queue"></div>
-	</div>
-	<div id="debug" style="display:none"></div>
-</body>
-
+		<div id="youtubeMenu">
+			<br><br><br><br><br> <!--Temporary solution to spacing issue in youtube dropdown.  (CSS is hard)-->
+			<span>YouTube Link:</span><input id="youtubeInput" type="text"></input>
+			<button class="defaultButton" id="youtubeAddToQueueButton">Add To Queue</button>
+			<button class="defaultButton" id="youtubePlayButton">Play</button>
+		</div>
+		<div id="settings">
+			<h3>Username&nbsp;<span id="usernameTip" class="toolTip">&#63;</span></h3>
+			<input type="text" id="userNameInput"></input><button id="changeUsernameButton" class="defaultButton">Change Username</button>
+			<br>
+			<hr>
+			<br>
+			<h3>Lobby Sounds&nbsp;<span id="soundsTip" class="toolTip">&#63;</span></h3>
+			<input type="checkbox" id="lobbySoundsToggle"></input>
+			<br>
+			<hr>
+			<br>
+			<h3>Reactions&nbsp;<span id="reactionsTip" class="toolTip">&#63;</span></h3>
+			<input type="checkbox" id="reactionsToggle"></input>
+			<br>
+			<hr>
+			<br>
+			<h3>Sync Tolerance&nbsp;<span id="toleranceTip" class="toolTip">&#63;</span></h3>
+			<span id="toleranceValue"></span><span class="label"> second(s)</span>
+			<br>
+			<input type="range" id="toleranceSlider"></input>
+			<br>
+			<hr>
+			<br>
+			<h3>Slow Connection&nbsp;<span id="slowConnectionTip" class="toolTip">&#63;</span></h3>
+			<input type="checkbox" id="jimmyToggle"></input>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<!--
+			<hr>
+			<br>
+			<h3>Allow Preloading&nbsp;<span id="preloadTip" class="toolTip">&#63;</span></h3>
+			<input type="checkbox" id="preloadToggle"></input>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			-->
+		</div>
+		<div id="queueArea">
+			<div id="queueHeader">
+				<span>Next Up...</span>
+				<hr>
+				<a href="javascript:clearButtonClicked();">Clear Queue</a>
+				<hr style="width: 15%; display: inline-block">
+				<a href="javascript:addCurrentVideoToQueue();">Add Current Video</a>
+				<hr>
+			</div>
+			<div id="queue"></div>
+		</div>
+		<div id="debug" style="display:none"></div>
+	</body>
 </html>

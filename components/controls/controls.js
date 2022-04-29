@@ -1,3 +1,52 @@
+//For reactions button, see reactions.js
+
+function hideButtonClicked()
+{
+	bindBackgroundFadeClick("return null;");
+	enableBackgroundFade();
+	if (theaterMode)
+	{
+		theaterMode = false;
+	}
+	else
+	{
+		theaterMode = true;
+	}
+}
+
+function lockButtonClicked()
+{
+	if (!controlsLocked)
+	{
+		lockControls();
+		controlsLocked = true;
+	}
+	else
+	{
+		unlockControls();
+		controlsLocked = false;
+	}
+}
+
+function lockControls()
+{
+	document.getElementById("playButton").disabled = true;
+	document.getElementById("playButton").className = "controlsDisabled";
+	document.getElementById("skipButton").className = "controlsDisabled";
+	document.getElementById("skipButton").disabled = true;
+	document.getElementById("seekSlider").disabled = true;
+}
+
+function unlockControls()
+{
+	document.getElementById("playButton").disabled = false;
+	document.getElementById("playButton").className = "controls";
+	document.getElementById("skipButton").className = "controls";
+	document.getElementById("skipButton").disabled = false;
+	document.getElementById("seekSlider").disabled = false;
+}
+
+
 function skipButtonClicked()
 {
 	updateTracking();
