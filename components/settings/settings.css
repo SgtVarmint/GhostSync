@@ -47,7 +47,11 @@
 	transform: scale(1.5);
 }
 
+<<<<<<< HEAD
 #lobbySoundsToggle, #youtubeDisabledToggle
+=======
+#lobbySoundsToggle, #youtubeDisabledToggle, #preloadToggle, #jimmyToggle
+>>>>>>> staging
 {
 	margin-top: 0;
 	margin-bottom: 20px;

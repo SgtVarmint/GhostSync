@@ -14,7 +14,8 @@ function toast(message)
 function toastMessage(message, timeout = 3, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
 {
 	var toastDiv = document.createElement("div");
-	if (!mobile)
+	//if (!mobile) deprecated
+	if (true)
 	{
 		toastDiv.id = "toastDiv";
 		toastDiv.style.position = "fixed";

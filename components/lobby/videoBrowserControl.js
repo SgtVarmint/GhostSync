@@ -28,14 +28,23 @@ function parseMetadata(file)
 
 function videoBrowserButton()
 {
+	bindBackgroundFadeClick("videoBrowserButton()");
+	removeToastMessage();
 	updateTracking();
 	if (document.getElementById("browser").style.display == "block")
 	{
-		setTimeout(function(){ document.getElementById("browser").style.display = "none"; }, 200);
+		disableBackgroundFade();
+		setTimeout(function(){
+			document.getElementById("browser").style.display = "none"; 
+			enablePointerEventsInMenus();
+			}, 200);
 		document.getElementById("browser").className = "popupWindow_out";
 	}
 	else
 	{
+		if (!document.getElementById("thumbnail"))
+			serveMissingVideoInfo();
+		enableBackgroundFade();
 		setTimeout(function(){
 			document.getElementById("settings").style.display = "none";
 			document.getElementById("youtubeMenu").style.display = "none";
@@ -120,13 +129,29 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		
 		videoBrowser.appendChild(newSection);
 	}
+	
+	//Check if this folder contains Season folders and sort them
+	if (contents.length >= 10 && (contents[0].includes("Season ") || contents[1].includes("Season ")))
+	{
+		contents = sortSeasons(contents);
+	}
+	
+	//Check if this folder contains dated gameplay files and sort them
+	let doSort = false;
+	for (let i = 0; i < contents.length - 1; i++)
+	{
+		if (contents[i].search(/[0-9]\-[0-9]/) != -1)
+			doSort = true;
+	}
+	if (doSort)
+		contents = sortDatedGameplay(contents);
 
 	for (var i = 0; i < contents.length - 1; i++)
 	{
 		var isAlreadyInQueue = false;
 		for (var j = 0; j < queue.length; j++)
 		{
-			if (queue[j].split("/")[queue[j].split("/").length - 1] == contents[i])
+			if (queue[j].split("/")[queue[j].split("/").length - 1].includes(contents[i]))
 			{
 				isAlreadyInQueue = true;
 				break;
@@ -135,9 +160,12 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		var newSection = document.createElement("div");
 		if (contents[i].includes("."))
 		{	
+			if (contents[i].includes("_AuthTouch"))
+				return;
 			var newVideo = document.createElement("a");
 			newVideo.innerHTML = contents[i].replace(/\.[^/.]+$/, "");
 			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
+			newVideo.ondblclick = function(){ playVideo(); };
 			newVideo.className = "videoBrowserVideo";
 			
 			var addToQueue = document.createElement("a");
@@ -155,6 +183,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 				addToQueue.onclick = function(){ toast("This video is already in the queue"); };
 			}
 			addToQueue.className = "addToQueue";
+			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
 			
 			//This section handles updating the tracking info for each video
 			var fullPath = rootDir() + document.getElementById("currentDirectory").value + contents[i];
@@ -167,22 +196,22 @@ function updateVideoBrowser(file, uploadsFolder = false)
 					if (trackingInfo[j][2] == "0")
 					{
 						newVideo.style.color = progressColor0;
-						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
 					}
 					else if (trackingInfo[j][2] == "1")
 					{
 						newVideo.style.color = progressColor1;
-						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
 					}
 					else if (trackingInfo[j][2] == "2")
 					{
 						newVideo.style.color = progressColor2;
-						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
 					}
 					else if (trackingInfo[j][2] == "3")
 					{
 						newVideo.style.color = progressColor3;
-						newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
 					}
 					else if (trackingInfo[j][2] == "4")
 					{
@@ -190,6 +219,9 @@ function updateVideoBrowser(file, uploadsFolder = false)
 					}
 					
 					newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+					addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '^' + trackingInfo[j][1] + '");';
+					
+					newVideo.ondblclick = function(){ playVideo(); };
 				}
 			}
 			
@@ -198,6 +230,8 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		}
 		else
 		{
+			if (contents[i].includes("_"))
+				continue;
 			var newDir = document.createElement("a");
 			newDir.innerHTML = contents[i];
 			newDir.href = 'javascript:videoBrowserDirClick("' + contents[i] + '");';
@@ -205,6 +239,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 			newSection.appendChild(newDir);
 		}
 		videoBrowser.appendChild(newSection);
+		videoBrowser.scrollIntoView();
 		//videoBrowser.appendChild(document.createElement("br"));
 	}
 }
@@ -227,10 +262,36 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 		fileLocation = rootDir() + document.getElementById("currentDirectory").value + inputVideo;
 	else
 		fileLocation = inputVideo;
-	document.getElementById("filePath").value = fileLocation;
+	
+	document.getElementById("selectedVideoTimestamp").value = timestamp;
+	
+	document.getElementById("selectedVideoTitle").value = inputVideo;
+			
+	serveVideoInfo(fileLocation, timestamp = timestamp, overridePlaystateToPlay = overridePlaystateToPlay);
+}
+
+function playVideo(video = "pullFromDOM", timestamp = 0, overridePlaystateToPlay = "paused")
+{
+	jimmyNet = false;
+	
+	var fileLocation = "";
+	
+	if (video == "pullFromDOM")
+	{
+		video = document.getElementById("selectedVideoTitle").value;
+		timestamp = parseInt(document.getElementById("selectedVideoTimestamp").value);
+	}
+	
+	//Format video file path if input was only title
+	if (!video.includes("/"))
+		fileLocation = rootDir() + document.getElementById("currentDirectory").value + video;
+	else
+		fileLocation = video;
+		
+	document.getElementById("filePath").value = serveVideoPath(fileLocation);
 	document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
-	document.getElementById("videoSource").src = fileLocation;
+	document.getElementById("videoSource").src = serveVideoPath(fileLocation);
 	///////////////
 	//This gets the file extension and sets the video source type
 	//For mov and mkv files, the type seems to have to be set to video/mp4 regardless
@@ -239,11 +300,14 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 	//var temp = inputVideo.split(".");
 	//document.getElementById("videoSource").type = "video/" + temp[temp.length - 1] == "mkv" || temp[temp.length - 1] == "mov" ? "mp4" : temp[temp.length - 1];
 	document.getElementById("video").load();
+	/*if (checkPreload())
+		preloadVideo(document.getElementById("filePath").value);*/
 	document.getElementById("browser").style.display = "none";
 	document.getElementById("video").style.display = "block";
 	document.getElementById("youtubePlayer").style.display = "none";
 	
-	
+	resetNavButtons();
+	disableBackgroundFade();
 	
 	if (timestamp != 0)
 	{
@@ -282,6 +346,8 @@ function videoBrowserVideoClick(inputVideo, timestamp = 0, overrideFileLocationL
 function goBack()
 {
 	var currDir = document.getElementById("currentDirectory").value;
+	if (currDir == "/")
+		videoBrowserButton();
 	var newDir = "/";
 	var temp = currDir.split("/");
 	for (var i = 1; i < temp.length-2; i++)
@@ -291,4 +357,90 @@ function goBack()
 	}
 	document.getElementById("currentDirectory").value = newDir;
 	getDirectoryInfo();
+	serveMissingVideoInfo();
+}
+
+function sortSeasons(folders, desc = false)
+{
+	let sortedFolders = new Array();
+	//sortedFolders = folders;
+	if (desc)
+	{
+		for (let i = folders.length - 1; i >= 0; i--)
+		{
+			for (let j = 0; j < folders.length - 1; j++)
+			{
+				if (folders[j] == "Season " + i)
+				{
+					sortedFolders.push(folders[j]);
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (let i = 0; i < folders.length; i++)
+		{
+			for (let j = 0; j < folders.length - 1; j++)
+			{
+				if (folders[j] == "Season " + i)
+				{
+					sortedFolders.push(folders[j]);
+					break;
+				}
+			}
+		}
+	}
+	sortedFolders.push(""); //Push empty last index to match what server gets
+	return sortedFolders;
+}
+
+function sortDatedGameplay(contents, desc = false)
+{
+	let sortedContents = new Array();
+	
+	let contentDates = new Array();
+	//let indexOrderArray = new Array();
+	
+	for (let i = 0; i < contents.length - 1; i++)
+	{
+		let dateString = contents[i].split(" ")[0];
+		contentDates.push({date: getDateFromGameplayString(dateString), index: i});
+	}
+	
+	contentDates.sort((a, b) => b.date - a.date)
+	
+	if (desc)
+	{
+		for (let i = contents.length - 1; i >= 0; i--)
+		{
+			let newIndex = contentDates[i].index;
+			sortedContents.push(contents[newIndex]);
+		}
+	}
+	else
+	{
+		for (let i = 0; i < contents.length - 1; i++)
+		{
+			let newIndex = contentDates[i].index;
+			sortedContents.push(contents[newIndex]);
+		}
+	}
+	
+	return sortedContents;
+}
+
+function getDateFromGameplayString(dateString)
+{
+	//dateInfo[0] = month
+	//dateInfo[1] = day
+	//dateInfo[2] = year (last two digits)	
+	let dateInfo = dateString.split("-");
+	
+	let year = parseInt("20" + dateInfo[2]);
+	let month = parseInt(dateInfo[0]);
+	let day = parseInt(dateInfo[1]);
+	
+	return new Date(year, month, day);
 }

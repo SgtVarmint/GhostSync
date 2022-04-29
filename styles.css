@@ -5,7 +5,8 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: #333333;
+	background: #29293d; 
+  /*background: #333333; */
 }
 
 /* Handle */
@@ -50,7 +51,76 @@
 	}
 }
 
-.popupWindow_in {
+#hideButtonContainer
+{
+	position: absolute;
+	left: 0;
+	top: 55px;
+	z-index: 10;
+	height: 80px;
+	width: 20px;
+}
+
+#hideButton
+{
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+}
+
+#hideButton:hover
+{
+	opacity: .5;
+}
+
+#backgroundFade
+{
+	opacity: .4;
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	z-index: 99;
+}
+
+@keyframes fade-in
+{
+	from
+	{
+		opacity: 0;
+	}
+	to
+	{
+		opacity: .4;
+	}
+}
+
+@keyframes fade-out
+{
+	from
+	{
+		opacity: .4;
+	}
+	to
+	{
+		opacity: 0;
+	}
+}
+
+.fade_in
+{
+	animation-name: fade-in;
+	animation-duration: .2s;
+}
+.fade_out
+{
+	animation-name: fade-out;
+	animation-duration: .2s;
+}
+
+.popupWindow_in
+{
 	animation-name: popup-in;
 	animation-duration: .2s;
 }
@@ -152,7 +222,7 @@ h3 {
 
 .fullVideo {
 	margin-top: 0px;
-	height: 100%;
+	/*height: 100%;*/
 }
 
 .fullVideo_fullscreen {
@@ -160,8 +230,9 @@ h3 {
 	height: 100%;
 }
 
-.standardVideo {
-	height: 100%;
+.standardVideo
+{
+	height: 110%;
 }
 
 .standardVideo_fullscreen {
@@ -171,8 +242,8 @@ h3 {
 #users {
 	float: left;
 	width: 34%;
-	height: 45%;
-	overflow: auto;
+	height: 60%;
+	overflow: hidden;
 }
 
 #users ul {
@@ -182,9 +253,17 @@ h3 {
 	color: #d3d3d3;
 }
 
-#userList li {
+#userListContainer
+{
+	height: 100%;
+	overflow: auto;
+}
+
+.user
+{
 	padding: 10px;
 	font-size: 1.5em;
+	color: white;
 	background: rgb(0, 0, 0, .1);
 	border-radius: 10px;
 	margin-left: auto;
@@ -193,10 +272,29 @@ h3 {
 	width: 80%;
 }
 
-#browser {
+.activeUser
+{
+	padding: 10px;
+	font-size: 1.5em;
+	color: #8db1ef;
+	background: rgb(0, 0, 0, .1);
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	width: 80%;
+}
+
+.activeUser span
+{
+	color: #8db1ef;
+}
+
+#browser
+{
 	display: none;
 	position: fixed;
-	background: rgba(79, 79, 79, 0.85);
+	background: rgba(79, 79, 79, 0.99);
 	border-radius: 5px;
 	border: 1px solid white;
 	padding: 5px;
@@ -210,7 +308,60 @@ h3 {
 	z-index: 100;
 }
 
-.videoBrowserVideo {
+#videoBrowser
+{
+	float: left;
+	overflow: auto;
+	height: 90%;
+	padding: 5px;
+	width: 60%;
+	border-right: solid white 3px;
+	border-radius: 5px;
+}
+
+#videoBrowserSidePanel
+{
+	float: left;
+	overflow: auto;
+	height: 90%;
+	padding: 5px;
+	/*border: 1px solid black;*/
+	width: 36%;
+	color: white;
+}
+#videoBrowserSidePanel p
+{
+	padding: 10px;
+	font-size: 1.2em;
+}
+
+#videoBrowserSidePanel.infoDiv
+{
+	display: block;
+	padding: 10px;
+	padding-bottom: 4px;
+	padding-top: 2px;
+	font-size: .7em;
+}
+
+.videoInfoButton
+{
+	color: white;
+	background-color: #326785;
+	transition: .25s;
+	border: 1px solid white;
+	border-radius: 5px;
+	margin-left: 25%;
+	margin-top: 10px;
+}
+
+.videoInfoButton:hover
+{
+	background-color: gray;
+}
+
+.videoBrowserVideo
+{
 	text-decoration: none;
 	color: white;
 	font-size: 1.5em;
@@ -241,12 +392,13 @@ h3 {
 	margin-bottom: 10px;
 }
 
-video {
+#video
+{
 	margin-left: auto;
 	margin-right: auto;
-	/*width: 100%;*/
+	width: 100%;
 	outline: none;
-	height: 70%;
+	/*height: 70%;*/
 }
 
 #youtubePlayer {
@@ -262,21 +414,23 @@ body {
 	overflow: auto;
 }
 
-#topNav {
-	padding: 1% 0% 0 6%;
-	background-color: #333333;
-	overflow: hidden;
-	height: 50px;
+#topNav{
+	position: relative;
+    background-color: #333333;
+    overflow: hidden;
+    height: 50px;
+	z-index: 1000;
 }
 
-#topNav a {
-	float: left;
-	display: block;
-	color: #f2f2f2;
-	text-align: center;
-	padding: 10px 20px;
-	text-decoration: none;
-	font-size: 25px;
+#topNav a{
+	width: 17%;
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 25px;
 	transition: .25s;
 	margin-left: 5px;
 	margin-right: 5px;

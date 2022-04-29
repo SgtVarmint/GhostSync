@@ -24,7 +24,8 @@ function ghostConfirm(message, methodToRun, elementToAppendTo = "body", margTop 
 	
 	confirmDiv.appendChild(buttonDiv);
 
-	if (!mobile)
+	//if (!mobile) --deprecated
+	if (true)
 	{
 		confirmDiv.id = "confirmDiv";
 		confirmDiv.style.position = "fixed";

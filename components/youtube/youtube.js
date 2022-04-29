@@ -27,14 +27,25 @@ function onYouTubeIframeAPIReady()
 
 function youtubeButton()
 {
+	bindBackgroundFadeClick("youtubeButton()");
+	removeToastMessage();
 	if (document.getElementById("youtubeMenu").style.display == "block")
 	{
+<<<<<<< HEAD
 		setTimeout(function(){ document.getElementById("youtubeMenu").style.display = "none"; }, 200);
+=======
+		disableBackgroundFade();
+		setTimeout(function(){ 
+			document.getElementById("youtubeMenu").style.display = "none";
+			enablePointerEventsInMenus();
+			}, 200);
+>>>>>>> staging
 		document.getElementById("youtubeMenu").className = "popupWindow_out";
 		document.getElementById("youtubeInput").value = "";
 	}
 	else
 	{
+		enableBackgroundFade();
 		setTimeout(function(){
 			document.getElementById("settings").style.display = "none";
 			document.getElementById("browser").style.display = "none";
@@ -66,12 +77,14 @@ function playYoutubeVideo(urlOverride = "", overridePlaystateToPlay = false)
 		if (urlOverride.length > 0 && urlOverride.split("watch?v=").length == 2)
 		{
 			youtubeVideoId = urlOverride.split("watch?v=")[1];
+			disableBackgroundFade();
 		}
 		else
 		{
-			if (fullUrl != undefined && fullUrl.length == 11) //WARNING:  This number is 11 because it is how long video IDs are right now in 2020.  If this is ever changed, this won't work
+			if (fullUrl != undefined)// && fullUrl.length == 11) //WARNING:  This number is 11 because it is how long video IDs are right now in 2020.  If this is ever changed, this won't work
 			{
 				youtubeVideoId = document.getElementById("youtubeInput").value.split("watch?v=")[1];
+				disableBackgroundFade();
 			}
 			else
 			{
@@ -113,7 +126,10 @@ function isYoutubeVideo()
 {
 	if (youtubeDisabled || !youtubeReady)
 		return false;
-	if (document.getElementById("filePath").value.charAt(0) == "/" || document.getElementById("filePath").value == "" || document.getElementById("filePath").value == "null")
+	if (document.getElementById("filePath").value.charAt(0) == "/" ||
+		document.getElementById("filePath").value == "" ||
+		document.getElementById("filePath").value == "null" ||
+		document.getElementById("filePath").value == "undefined")
 		return false;
 	else
 		return true;

@@ -1,30 +1,21 @@
 function syncPull()
-{
+{	
+	let isYoutube = isYoutubeVideo();
 	//Figure out in what files these functions are defined. Please.
 	pullTrackingInfo(); // defined in progression.js
 	pullQueue();
 	checkForMobile();
 	var timestamp;
 	var duration;
-	
-	if (!isYoutubeVideo())
+
+	//Pull current video info
+	if (videoFileData_loadedVideo != formatVideoPathForServer(document.getElementById("filePath").value))
 	{
-		timestamp = document.getElementById("video").currentTime;
-		duration = document.getElementById("video").duration;
-	}
-	else
-	{
-		if (youtubePlayer.getPlayerState() == 0) //getPlayerState() will return 0 if youtube video is ended
-			timestamp = 1;
-		else
-			timestamp = 0
-		duration = 1
+		videoFileData_loadedVideo = formatVideoPathForServer(document.getElementById("filePath").value);
+		if (!isYoutube)
+			videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
 	}
 	
-	if (duration <= timestamp)
-	{
-		skipButtonClicked();
-	}
 	syncVideo();
 }
 
@@ -45,7 +36,7 @@ function updateServerTimeStamp(overrideTimestamp = 0.0)
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","updateServerTimeStamp.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + timeStamp + "&playState=" + document.getElementById("playState").value + "&filePath=" + document.getElementById("filePath").value + "&userUpdated=" + localStorage.getItem("userName"));
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + timeStamp + "&playState=" + document.getElementById("playState").value + "&filePath=" + formatVideoPathForServer(document.getElementById("filePath").value) + "&userUpdated=" + localStorage.getItem("userName"));
 }
 
 //Ajax portion of sync function
@@ -73,6 +64,8 @@ var paused;
 var videoDuration;
 ////
 
+var consecutiveOutOfSyncs = 0;
+var outOfSyncCount = 0;
 
 //Method stemming from sync video
 function syncVideoAction(file)
@@ -102,7 +95,7 @@ function syncVideoAction(file)
 	
 	var storedServerTime;
 	var currentServerTime;
-	if (info[1] != undefined)
+	if (info[1] != undefined && info[3] != "")
 	{
 		storedServerTime = info[1].slice(0, info[1].length - 4) + "." + info[1].slice(info[1].length - 4, info[1].length - 1);
 		currentServerTime = info[5].slice(0, info[5].length - 4) + "." + info[5].slice(info[5].length - 4, info[5].length - 1);
@@ -122,9 +115,15 @@ function syncVideoAction(file)
 		}
 		
 		//Checks if a new video was chosen for play, and changes it if true
-		if (document.getElementById("filePath").value != serverFilePath)
+		var initialVideoLoaded = false;
+		if (document.getElementById("filePath").value != serveVideoPath(serverFilePath))
 		{
-			document.getElementById("filePath").value = serverFilePath;
+			jimmyNet = false;
+			
+			document.getElementById("filePath").value = serveVideoPath(serverFilePath);
+			
+			if (document.getElementById("filePath").value == "undefined")
+				return;
 			
 			if (isYoutubeVideo())
 			{
@@ -132,11 +131,17 @@ function syncVideoAction(file)
 			}
 			else
 			{
-				document.getElementById("videoSource").src = info[3];
+				document.getElementById("videoSource").src = document.getElementById("filePath").value;
 				document.getElementById("video").load();
+				/*if (checkPreload())
+					preloadVideo(document.getElementById("filePath").value);*/
 			}
 			document.getElementById("playState").value = "paused";
-			toast(info[4] + " Chose A New Video");
+			
+			if (initialVideoLoaded)
+				toast(info[4] + " Chose A New Video");
+			else
+				initialVideoLoaded = true;
 			
 			videoEnded = false;
 		}
@@ -208,10 +213,44 @@ function syncVideoAction(file)
 		
 		//Check if video is out of sync with server
 		var outOfSync = checkForOutOfSync(currentTime, newTimeStamp);
-		d.innerHTML += "Current Time: " + currentTime + "<br>";
-		d.innerHTML += "newTimeStamp: " + (newTimeStamp + TOLERANCE)+ "<br>";
 		
 		var serverPaused = info[2] == "paused";
+		
+		if (!serverPaused && !paused)
+		{
+			//outOfSyncCount++;
+			if (outOfSync && !jimmyNet)
+			{			
+				if (consecutiveOutOfSyncs >= outOfSyncCount - OUT_OF_SYNCS_BUILD_BUFFER)
+				{
+					consecutiveOutOfSyncs++;
+				}
+				
+				if (consecutiveOutOfSyncs >= OUT_OF_SYNCS_BEFORE_JIMMY)
+				{
+					consecutiveOutOfSyncs = 0;
+					outOfSyncCount = 0;
+					jimmyNet = true;
+					document.getElementById("filePath").value = serveVideoPath(document.getElementById("filePath").value);
+					document.getElementById("videoSource").src = document.getElementById("filePath").value;
+					document.getElementById("video").load();
+					
+					console.log("Jimmy mode activated!");
+				}
+			}
+			else if (!jimmyNet)
+			{
+				consecutiveOutOfSyncs = 0;
+				outOfSyncCount = 0;
+			}
+			else
+			{
+				//All is working smoothly
+			}
+		}
+				
+		d.innerHTML += "Current Time: " + currentTime + "<br>";
+		d.innerHTML += "newTimeStamp: " + (newTimeStamp + TOLERANCE)+ "<br>";
 		
 		var youtube = isYoutubeVideo();
 
@@ -240,7 +279,7 @@ function syncVideoAction(file)
 						else
 							youtubePlayer.seekTo(serverTimeStamp, true);
 						
-						toast("Syncing..");
+						//toast("Syncing..");
 					}
 					else
 					{
@@ -297,6 +336,29 @@ function syncVideoAction(file)
 			}
 		}
 		
+		let timestamp;
+		let duration;
+		if (!youtube)
+		{
+			if (!document.getElementById("video").paused)
+				checkForAndSkipAd();
+			timestamp = document.getElementById("video").currentTime;
+			duration = document.getElementById("video").duration;
+		}
+		else
+		{
+			if (youtubePlayer.getPlayerState() == 0) //getPlayerState() will return 0 if youtube video is ended
+				timestamp = 1;
+			else
+				timestamp = 0
+			duration = 1
+		}
+	
+		if (duration <= timestamp && !serverPaused)
+		{
+			skipButtonClicked();
+		}
+		
 		//Set the title above video player
 		if (isYoutubeVideo())
 		{
@@ -304,9 +366,7 @@ function syncVideoAction(file)
 		}	
 		else
 		{
-			var fullPath = document.getElementById("filePath").value.split("/");
-			var titleWithExtension = fullPath[fullPath.length - 1];
-			var nowPlaying = titleWithExtension.replace(/\.[^/.]+$/, "");
+			var nowPlaying = getVideoNameFromPath();
 		}
 		document.getElementById("nowPlaying").innerHTML = nowPlaying;
 		d.innerHTML += "<br> End of sync method";

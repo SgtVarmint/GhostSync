@@ -21,7 +21,7 @@ foreach ($keys as $key)
 
 if ($granted)
 {
-	echo "granted";
+	echo "gs:YrehJb5njkXW1lm39yiF@";
 }
 else
 {
