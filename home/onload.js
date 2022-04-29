@@ -42,6 +42,6 @@ window.onload = function(){
 
 	document.getElementById("authButton").onclick = authButtonClick;
 	document.getElementById("authText").value = localStorage.getItem("access");
-	performAJAXCall("home");
+	homeAuth();
 	updateBuildInfo();
 }

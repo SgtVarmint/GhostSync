@@ -31,15 +31,7 @@ function youtubeButton()
 	removeToastMessage();
 	if (document.getElementById("youtubeMenu").style.display == "block")
 	{
-<<<<<<< HEAD
 		setTimeout(function(){ document.getElementById("youtubeMenu").style.display = "none"; }, 200);
-=======
-		disableBackgroundFade();
-		setTimeout(function(){ 
-			document.getElementById("youtubeMenu").style.display = "none";
-			enablePointerEventsInMenus();
-			}, 200);
->>>>>>> staging
 		document.getElementById("youtubeMenu").className = "popupWindow_out";
 		document.getElementById("youtubeInput").value = "";
 	}

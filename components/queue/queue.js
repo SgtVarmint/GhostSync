@@ -185,42 +185,10 @@ function updateQueueDOM()
 	}
 }
 
-<<<<<<< HEAD
 function queueVideoClicked(video, index)
 {	
 	var message = video.split("/")[video.split("/").length - 1].replace(/\.[^/.]+$/, "");
 	customQueuePopup(message, index);
-=======
-function queueVideoClicked(video, index, timestamp = 0)
-{
-	var message;
-	if (video.includes("www.youtube.com"))
-	{
-		var titleIndex = -1;
-		for (var i = 0; i < youtubeLookupTable.length; i++)
-		{
-			if (youtubeLookupTable[i][0] == video)
-			{
-				titleIndex = i;
-				break;
-			}
-		}
-		if (titleIndex != -1)
-		{
-			message = youtubeLookupTable[titleIndex][1];
-		}
-		else
-		{
-			message = video;
-		}
-	}
-	else
-	{
-		message = video.split("/")[video.split("/").length - 1].replace(/\.[^/.]+$/, "");
-	}
-
-	customQueuePopup(message, index, timestamp);
->>>>>>> staging
 }
 
 function removeQueueVideo(indexToRemove)
@@ -291,30 +259,11 @@ function addYoutubeVideoToQueue()
 	pushQueue(document.getElementById("youtubeInput").value);
 	document.getElementById("youtubeInput").value = "";
 	document.getElementById("youtubeMenu").style.display = "none";
-<<<<<<< HEAD
-=======
-	
-	resetNavButtons();
-	disableBackgroundFade();
-	
->>>>>>> staging
 	toast("Video added to queue");
 }
 
 function customQueuePopup(message, index, timestamp, elementToAppendTo = "body", margTop = "15%", margLeft = "13%", margRight = "13%", styleTop = "100")
 {
-<<<<<<< HEAD
-=======
-	removeCustomQueuePopup();
-	
-	let seconds = parseInt(timestamp);
-	let minutes = seconds / 60;
-	let remainingSeconds = seconds % 60;
-	if (remainingSeconds < 10)
-		remainingSeconds = "0" + remainingSeconds;
-	let hoursMinutes = convertMinutesToHours(minutes);
-	
->>>>>>> staging
 	var confirmDiv = document.createElement("div");
 
 	var messageDiv = document.createElement("div");
