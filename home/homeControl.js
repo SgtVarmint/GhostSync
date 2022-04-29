@@ -21,7 +21,7 @@ function lobbyButtonClick()
 
 	}
 		
-	document.location.assign("components/lobby/lobby.html");
+	redirect("components/lobby/lobby.html");
 }
 
 function authenticationButton()

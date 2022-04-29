@@ -3,7 +3,7 @@ function userUpdate()
 	var timeStamp = isYoutubeVideo() ? youtubePlayer.getCurrentTime() : document.getElementById("video").currentTime;
 	var activity = userActive ? "1" : "0";
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","userUpdate.php",false);
+	xhttp.open("POST","/components/user/userUpdate.php",false);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.onreadystatechange = function()
 	{
