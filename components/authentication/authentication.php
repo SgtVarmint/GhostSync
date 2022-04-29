@@ -1,6 +1,5 @@
 <?php
 	$accessCode = trim($_POST['accessCode']);
-	//figure out a better way to do pathing here
 	$myfile = fopen('access.txt', 'r') or die('Unable to open access key file!');
 	$keyFile = fread($myfile, filesize('access.txt'));
 	fclose($myfile);
