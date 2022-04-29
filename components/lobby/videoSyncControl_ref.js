@@ -322,26 +322,3 @@ function syncVideoAction(file)
 		d.innerHTML += "<br> End of sync method";
 	}
 }
-
-
-function getServerTime()
-{
-	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","getServerTime.php",false);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = function()
-	{
-		if(this.readyState == 4 && this.status == 200)
-		{
-			getServerTimeAction(this);
-		}
-	}
-	xhttp.send();
-}
-
-function getServerTimeAction(file)
-{
-	var temp = file.responseText;
-	var serverTime = temp.slice(0, temp.length - 4) + "." + temp.slice(temp.length - 4, temp.length - 1)
-	document.getElementById("serverTime").value = serverTime;
-}
