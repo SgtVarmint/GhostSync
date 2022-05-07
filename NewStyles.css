@@ -799,8 +799,7 @@ input {
     border-radius: 5px;
     margin-left: 25%;
     margin-top: 10px;
-    width: 50%;
-    
+    width: 50% !important;
 }
 
 .videoInfoButton:hover {
@@ -890,6 +889,8 @@ video::-webkit-media-controls-timeline {
     font-size: 1.5em;
     opacity: 1;
     display: inline;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .controlsDisabled {
