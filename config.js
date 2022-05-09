@@ -38,6 +38,7 @@ var controlsLocked = false;
 var theaterMode = false;
 var videoFileData;
 var videoFileData_loadedVideo;
+var hideButtonRightToggle = false;
 
 //Graphics
 DEFAULT_THUMBNAIL = "/graphics/ThumbnailUnavailable.png";

@@ -14,6 +14,7 @@ window.onload = function(){
 	document.getElementById("seekSlider").oninput = seekSliderSeeked;
 	document.getElementById("lockButton").onclick = lockButtonClicked;
 	document.getElementById("hideButton").onclick = hideButtonClicked;
+	document.getElementById("hideButtonRight").onclick = hideButtonRightClicked;
 	
 	PLAYER_VOLUME = localStorage.getItem("playerVolume");
 	if (PLAYER_VOLUME == null)

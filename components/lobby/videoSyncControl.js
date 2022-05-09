@@ -161,7 +161,7 @@ function syncVideoAction(file)
 			document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
 		}
 		*/
-		document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
+		//document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
 		
 		//Setting variables based on whether current video is on server or through YouTube
 		

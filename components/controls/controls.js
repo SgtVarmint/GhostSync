@@ -7,10 +7,71 @@ function hideButtonClicked()
 	if (theaterMode)
 	{
 		theaterMode = false;
+		if (hideButtonRightToggle)
+		{
+			hideButtonRightClicked();
+		}
+		document.getElementById("userqueue_wrapper").classList.remove("userqueue_closed");
+		document.getElementById("userqueue_wrapper").classList.remove("userqueue_opened");
 	}
 	else
 	{
 		theaterMode = true;
+
+		document.getElementById("userqueue_wrapper").classList.add("userqueue_closed");
+		document.getElementById("userqueue_wrapper").style.display = "none";
+	}
+}
+
+function hideButtonRightClicked()
+{
+
+	function enableBackgroundFade()
+	{
+		document.getElementById("backgroundFade").className = "fade_in";
+		document.getElementById("backgroundFade").style.display = "block";
+	}
+	
+	function disableBackgroundFade()
+	{
+		document.getElementById("backgroundFade").className = "fade_out";
+		setTimeout(function(){ 
+				document.getElementById("backgroundFade").style.display = "none";
+				}, 200);
+	}
+
+	if (hideButtonRightToggle)
+	{
+		document.getElementById("userqueue_wrapper").classList.add("userqueue_closed");
+		document.getElementById("userqueue_wrapper").classList.remove("userqueue_opened");
+
+		document.getElementById("hideButtonRightContainer").classList.add("hideButtonRightContainerClosed");
+		document.getElementById("hideButtonRightContainer").classList.remove("hideButtonRightContainerOpened");
+
+		hideButtonRightToggle = false;
+
+		document.getElementById("hideButtonRight").src = "/graphics/HideButtonLong.png";
+
+		disableBackgroundFade();
+
+		setTimeout(function(){ document.getElementById("userqueue_wrapper").style.display = "none"; }, 200);
+	}
+	else
+	{
+		document.getElementById("userqueue_wrapper").classList.add("userqueue_opened");
+		document.getElementById("userqueue_wrapper").classList.remove("userqueue_closed");
+
+		document.getElementById("hideButtonRightContainer").classList.add("hideButtonRightContainerOpened");
+		document.getElementById("hideButtonRightContainer").classList.remove("hideButtonRightContainerClosed");
+
+		hideButtonRightToggle = true;
+
+		document.getElementById("hideButtonRight").src = "/graphics/HideButtonLongOpen.png";
+
+		bindBackgroundFadeClick("hideButtonRightClicked()");
+		enableBackgroundFade();
+
+		document.getElementById("userqueue_wrapper").style.display = "block";
 	}
 }
 

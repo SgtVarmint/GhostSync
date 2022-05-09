@@ -13,6 +13,11 @@
     font-family: Arial;
 }
 
+body
+{
+    overflow: hidden;
+}
+
 :root {
     --primary: #29293d;
     --secondary: #4f4f4f;
@@ -129,24 +134,48 @@ input {
     }
 }
 
+@keyframes popup-in-left {
+    from {
+        opacity: 0;
+        left: 100%;
+    }
+
+    to {
+        opacity: .98;
+        left: 0;
+    }
+}
+
+@keyframes popup-out-left {
+    from {
+        opacity: .98;
+        left: 0;
+    }
+
+    to {
+        opacity: 0;
+        left: 100%;
+    }
+}
+
 .fade_in {
     animation-name: fade-in;
-    animation-duration: .2s;
+    animation-duration: .3s;
 }
 
 .fade_out {
     animation-name: fade-out;
-    animation-duration: .2s;
+    animation-duration: .3s;
 }
 
 .popupWindow_in {
     animation-name: popup-in;
-    animation-duration: .2s;
+    animation-duration: .3s;
 }
 
 .popupWindow_out {
     animation-name: popup-out;
-    animation-duration: .2s;
+    animation-duration: .3s;
 }
 
 /* 
@@ -164,7 +193,7 @@ input {
 }
 
 #topNav a {
-    width: 17%;
+    width: 23%;
     float: left;
     display: block;
     color: var(--white);
@@ -182,9 +211,18 @@ input {
     border-radius: 20px;
 }
 
-.main_wrapper {
-    height: 100vh;
+#main_wrapper {
     background-color: var(--primary);
+}
+
+.main_desktop
+{
+    height: 100vh;
+}
+
+.main_mobile
+{
+    height: 100%;
 }
 
 /* 
@@ -310,12 +348,42 @@ input {
 #hideButton {
     width: 100%;
     height: 100%;
+    opacity: .8;
+}
+
+#hideButton:hover{
+    cursor: pointer;
     opacity: 1;
 }
 
-#hideButton:hover {
+#hideButtonRightContainer {
+    display: none;
+    position: fixed;
+    top: 55px;
+    z-index: 100;
+    height: 80px;
+    width: 240px;
+}
+
+.hideButtonRightContainerOpened {
+    left: 90%;
+}
+
+.hideButtonRightContainerClosed {
+    left: 95%;
+}
+
+
+#hideButtonRight {
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+}
+
+#hideButtonRight:hover
+{
     cursor: pointer;
-    opacity: .5;
+    opacity: 1;
 }
 
 #backgroundFade {
@@ -332,7 +400,16 @@ input {
     padding: 2.4%;
     margin-left: 20%;
     font-size: 1.5em;
-    height: 4%;
+}
+
+.nowPlaying_desktop
+{
+    height: 90px;
+}
+
+.nowPlaying_mobile
+{
+    height: 90px;
 }
 
 /* 
@@ -675,10 +752,26 @@ input {
 *________________________________________________________________________________________________________|
 */
 #users_wrapper {
-    float: right;
-    width: 34%;
-    height: 60%;
+    float: left;
     overflow: hidden;
+    position: relative;
+}
+
+.users_wrapper_desktop
+{
+    clear: none;
+    width: 100%;
+    height: 60%;
+    margin-top: 0;
+}
+
+.users_wrapper_mobile
+{
+    clear: none;
+    width: 40%;
+    height: 100%;
+    margin-top: 0;
+    /*left: -200px;*/
 }
 
 #users ul {
@@ -735,10 +828,20 @@ input {
 *________________________________________________________________________________________________________|
 */
 #player {
-    position: relative;
+    position: absolute;
     float: left;
+}
+
+.player_desktop
+{
     width: 65%;
     height: 68%;
+}
+
+.player_mobile
+{
+    width: 100%;
+    height: auto%;
 }
 
 #browser {
@@ -852,9 +955,19 @@ input {
 #video {
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
     outline: none;
-    /*height: 70%;*/
+}
+
+.video_desktop
+{
+    width: 100%;
+    height: auto;
+}
+
+.video_mobile
+{
+    width: 100%;
+    height: 700px;
 }
 
 #youtubePlayer {
@@ -936,7 +1049,7 @@ video::-webkit-media-controls-timeline {
 
 #queueArea hr {
     height: 2px;
-    background-color: gray;
+    background-color: var(--white);
     border: none;
 }
 
@@ -945,18 +1058,30 @@ video::-webkit-media-controls-timeline {
     display: block;
     float: right;
     position: relative;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
+    border-top: 1px solid var(--white);
+    border-bottom: 1px solid var(--white);
     border-left: none;
     border-right: none;
     border-radius: 10px;
     text-align: left;
-    width: 34%;
-    height: 20%;
     padding: 5px;
     overflow: hidden;
     margin-left: 0;
     margin-bottom: 0;
+}
+
+.queueArea_desktop
+{
+    width: 100%;
+    left: 0%;
+    height: 20%;
+}
+
+.queueArea_mobile
+{
+    width: 60%;
+    left: 0;
+    height: 100%;
 }
 
 #queue {
@@ -969,7 +1094,7 @@ video::-webkit-media-controls-timeline {
 #queueArea a {
     margin: 5%;
     text-decoration: none;
-    color: gray;
+    color: var(--white);
     font-size: 1em;
     padding: 3px;
     border-radius: 5px;
@@ -1187,4 +1312,53 @@ hr {
 	background-color: white;
 	color: black;
 	z-index: 200;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  userqueue SideThing                                           |
+*________________________________________________________________________________________________________|
+*/
+
+#userqueue_wrapper
+{
+    position: relative;
+    float: right;
+    z-index: 100;
+}
+
+.userqueue_opened
+{
+    /*display: block;*/
+    animation-name: popup-in-left;
+    animation-duration: .3s;
+}
+
+.userqueue_closed
+{
+    /*display: none;*/
+    animation-name: popup-out-left;
+    animation-duration: .3s;
+}
+
+.userqueue_wrapper_desktop
+{
+    width: 35%;
+    height: auto;
+}
+
+.userqueue_wrapper_mobile
+{
+    width: 80%;
+    height: 80%;
+    background-color: var(--gray);
+    opacity: .98;
+    border-top: solid 2px;
+    border-left: solid 2px;
+    border-bottom: solid 2px;
+    border-color: var(--white);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 10px;
 }

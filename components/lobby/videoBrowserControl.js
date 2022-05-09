@@ -334,21 +334,6 @@ function playVideo(video = "pullFromDOM", timestamp = 0, overridePlaystateToPlay
 	videoEnded = true;
 	updateServerTimeStamp();
 	
-	//Detect if video is widescreen
-	var videoPlayer = document.getElementById("video");
-	var aspectRatio = parseFloat(videoPlayer.videoWidth) / parseFloat(videoPlayer.videoHeight);
-	if (aspectRatio > 2.0)
-	{
-		document.getElementById("video").className = fullscreenEnabled ? "widescreenVideo" : "widescreenVideo_fullscreen";
-	}
-	else if (aspectRatio > 1.5)
-	{
-		document.getElementById("video").className = fullscreenEnabled ? "fullVideo_fullscreen" : "fullVideo";
-	}
-	else
-	{
-		document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
-	}
 }
 
 function goBack()

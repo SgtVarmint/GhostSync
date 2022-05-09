@@ -59,7 +59,7 @@
 </head>
 
 <body>
-	<div class="main_wrapper">
+	<div id="main_wrapper" class="main_desktop">
 
 
 		<input type="hidden" id="currentDirectory" value="/"></input>
@@ -74,7 +74,9 @@
 			<img id="hideButton" src="/graphics/HideButton.png">
 		</span>
 
-
+		<span id="hideButtonRightContainer" class="hideButtonRightContainerClosed">
+			<img id="hideButtonRight" src="/graphics/HideButtonLong.png">
+		</span>
 
 		<div id="backgroundFade"></div>
 
@@ -88,9 +90,9 @@
 			<a id="settingsButton" class="navButton" href="javascript:settingsButton();">Settings</a>
 		</div>
 
-		<h3 id="nowPlaying">Nothing Is Playing Yet..</h3>
+		<h3 id="nowPlaying" class="nowPlaying_desktop">Nothing Is Playing Yet..</h3>
 
-		<div id="player">
+		<div id="player" class="player_desktop">
 			<div id="reactionMenuContainer">
 				<div id="reactionMenuTop">
 					<div id="reactionMenuTop_Left">
@@ -106,7 +108,7 @@
 				<div id="reactionMenuAll"></div>
 			</div>
 			<div id="reactionPanel"></div>
-			<video id="video" preload="auto" controls>
+			<video id="video" class="video_desktop" preload="auto" controls>
 				<source id="videoSource">
 			</video>
 			<div id="youtubePlayer" class="youtubeNormal">
@@ -125,26 +127,40 @@
 			<input id="seekSlider" type="range" step=".1" class="controls"></input>
 		</div>
 
-		<div id="users_wrapper">
-			<h3 id="user_title">Users In Lobby</h3>
-			<div id="loader">
+		<div id="userqueue_wrapper" class="userqueue_wrapper_desktop">
+			<div id="users_wrapper" class="users_wrapper_desktop">
+				<h3 id="user_title">Users In Lobby</h3>
 				<div id="loader">
-					<div id='spinner'>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
+					<div id="loader">
+						<div id='spinner'>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div id="userListContainer">
-				<ul id="userList">
+				<div id="userListContainer">
+					<ul id="userList">
 
-				</ul>
+					</ul>
+				</div>
+			</div>
+
+			<div id="queueArea" class="queueArea_desktop">
+				<div id="queueHeader">
+					<h3 id="queue_title">Next Up...</h3>
+					<hr>
+					<a href="javascript:clearButtonClicked();">Clear Queue</a>
+					<hr style="width: 15%; display: inline-block">
+					<a href="javascript:addCurrentVideoToQueue();">Add Current Video</a>
+					<hr>
+				</div>
+				<div id="queue"></div>
 			</div>
 		</div>
 
@@ -164,11 +180,12 @@
 		<div id="settings">
 			<div class="setting_section">
 				<h3>Username&nbsp;<span id="usernameTip" class="toolTip">&#63;</span></h3>
-				<input type="text" id="userNameInput"></input><button id="changeUsernameButton" class="defaultButton">Change
+				<input type="text" id="userNameInput"></input><button id="changeUsernameButton"
+					class="defaultButton">Change
 					Username</button>
 
 			</div>
-			
+
 
 			<hr>
 
@@ -199,17 +216,7 @@
 			</div>
 
 		</div>
-		<div id="queueArea">
-			<div id="queueHeader">
-				<h3 id="queue_title">Next Up...</h3>
-				<hr>
-				<a href="javascript:clearButtonClicked();">Clear Queue</a>
-				<hr style="width: 15%; display: inline-block">
-				<a href="javascript:addCurrentVideoToQueue();">Add Current Video</a>
-				<hr>
-			</div>
-			<div id="queue"></div>
-		</div>
+
 		<div id="debug" style="display:none"></div>
 	</div>
 </body>
