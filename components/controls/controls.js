@@ -11,15 +11,15 @@ function hideButtonClicked()
 		{
 			hideButtonRightClicked();
 		}
-		document.getElementById("userqueue_wrapper").classList.remove("userqueue_closed");
-		document.getElementById("userqueue_wrapper").classList.remove("userqueue_opened");
+		//document.getElementById("userqueue_wrapper").classList.remove("userqueue_closed");
+		//document.getElementById("userqueue_wrapper").classList.remove("userqueue_opened");
 	}
 	else
 	{
 		theaterMode = true;
 
-		document.getElementById("userqueue_wrapper").classList.add("userqueue_closed");
-		document.getElementById("userqueue_wrapper").style.display = "none";
+		//document.getElementById("userqueue_wrapper").classList.add("userqueue_closed");
+		//document.getElementById("userqueue_wrapper").style.display = "none";
 	}
 }
 

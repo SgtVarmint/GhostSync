@@ -71,6 +71,8 @@ input {
     text-decoration: none;
     text-shadow: 0px -1px 0px #2b665e;
     margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .defaultButton:hover {
@@ -549,8 +551,13 @@ input {
 
 #toleranceValue {
     font-size: 1em;
+    color: var(--white);
 }
 
+.label
+{
+    color: var(--white);
+}
 
 /* 
 *________________________________________________________________________________________________________
@@ -784,7 +791,10 @@ input {
 #userListContainer {
     height: 100%;
     overflow: auto;
+}
 
+#userList {
+    list-style: none;
 }
 
 .user {
@@ -797,19 +807,16 @@ input {
     margin-right: auto;
     margin-top: 10px;
     width: 80%;
+    padding: 2%;
 }
 
+.user span {
+    padding-right: 10px;
+    padding-left: 5px;
+}
 
 .activeUser {
-    padding: 10px;
-    font-size: 1.5em;
     color: #8db1ef;
-    background: rgb(0, 0, 0, .1);
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    width: 80%;
 }
 
 #user_title {
@@ -1203,6 +1210,7 @@ hr {
     margin-right: 13%;
     top: 100;
     color: var(--white);
+    z-index: 1000;
 }
 
 /* 

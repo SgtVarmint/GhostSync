@@ -34,10 +34,6 @@ function addCurrentVideoToQueue()
 		toast("The current video is already queued to play next!")
 		return;
 	}
-	else if (queue.length == 0)
-	{
-		return;
-	}
 	queue.unshift(newQueueItem);
 	updateQueue();
 	toast("Current video added to the front of the queue");

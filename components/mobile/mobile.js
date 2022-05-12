@@ -1,22 +1,27 @@
-var desktopModeActive = false;
+var desktopModeActive = true;
 var mobileModeActive = false;
 
 function checkForMobile()
 {
 	document.getElementById("topNav").style.visibility = "visible";
 	var mq = window.matchMedia( "(max-width: 992px)" );
-	if (mq.matches && !mobile || theaterMode) //Mobile
+	
+	if (mq.matches)
 	{
-		if (mq.matches)
-			document.getElementById("hideButtonContainer").style.display = "none";
-		else if (theaterMode)
-			document.getElementById("hideButtonContainer").style.display = "inline";
-		
+		document.getElementById("hideButtonContainer").style.display = "none";
+	}
+	else if (theaterMode)
+	{
+		document.getElementById("hideButtonContainer").style.display = "inline";
+	}
+	
+	if (mq.matches && !mobile || theaterMode && desktopModeActive) //Mobile
+	{
 		mobile = true;
 		
 		//Navbar changes, skip if theaterMode
-		if (!theaterMode)
-		{
+		//if (!theaterMode)
+		//{
 			var newNavBar = "";
 			newNavBar += '<a class="navButton" href="/index.html" id="home">&#8962;</a>';
 			newNavBar += '<a id="videoBrowserButton" class="navButton" href="javascript:videoBrowserButton();">&#x2630;</a>';
@@ -25,11 +30,7 @@ function checkForMobile()
 			document.getElementById("topNav").innerHTML = newNavBar;
 			document.getElementById("topNav").style.visibility = "visible";
 			let navButtons = document.getElementsByClassName("navButton");
-			for (let i = 0; i < navButtons.length; i++)
-			{
-				navButtons[i].style.width = "10%";
-			}
-		}
+		//}
 		
 		//document.getElementById("users_wrapper").style.clear = "left";
 		//document.getElementById("users_wrapper").style.width = "100%";
@@ -61,10 +62,13 @@ function checkForMobile()
 		document.getElementById("userqueue_wrapper").classList.add("userqueue_wrapper_mobile");
 		document.getElementById("userqueue_wrapper").classList.remove("userqueue_wrapper_desktop");
 		
+		document.getElementById("userqueue_wrapper").classList.add("userqueue_closed");
+		document.getElementById("userqueue_wrapper").style.display = "none";
+
 		//Fullscreen button
 		//document.getElementById("fullscreenButton").onclick = function(){ toast("Fullscreen not supported on mobile") };
 	}
-	else if (!mq.matches && mobile)//Desktop
+	else if (!mq.matches && mobile && !theaterMode)//Desktop
 	{
 		mobile = false;
 		
@@ -121,8 +125,11 @@ function checkForMobile()
 		document.getElementById("userqueue_wrapper").classList.remove("userqueue_opened");
 		document.getElementById("userqueue_wrapper").classList.remove("userqueue_closed");
 
+		document.getElementById("userqueue_wrapper").classList.remove("userqueue_closed");
+		document.getElementById("userqueue_wrapper").classList.remove("userqueue_opened");
+	
 		document.getElementById("userqueue_wrapper").style.display = "block";
-		
+
 		//Fullscreen button
 		//document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;
 	}

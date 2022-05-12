@@ -172,7 +172,6 @@
 			<div id="videoBrowserSidePanel"></div>
 		</div>
 		<div id="youtubeMenu">
-			<!--Temporary solution to spacing issue in youtube dropdown.  (CSS is hard)-->
 			<span class="text_title">YouTube Link:</span><input id="youtubeInput" type="text"></input>
 			<button class="defaultButton" id="youtubeAddToQueueButton">Add To Queue</button>
 			<button class="defaultButton" id="youtubePlayButton">Play</button>
@@ -204,8 +203,10 @@
 
 			<div class="setting_section">
 				<h3>Sync Tolerance&nbsp;<span id="toleranceTip" class="toolTip">&#63;</span></h3>
-				<span id="toleranceValue"></span><span class="label"> second(s)</span>
 				<input type="range" id="toleranceSlider"></input>
+				<div>
+					<span id="toleranceValue"></span><span class="label"> second(s)</span>
+				</div>
 			</div>
 
 			<hr>
