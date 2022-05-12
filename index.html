@@ -9,6 +9,13 @@
 		<!--Desktop Styles-->
 		<link rel="stylesheet" ' href="/NewStyles.css"/>
 		<link rel="stylesheet"  href="/components/tooltips/tooltips.css"/>
+		<style>
+			.doesthisbreak{
+				display: inline;
+				margin-left: 50px;
+			}
+
+		</style>
 		<!--Javascript Files-->
 		<script src="/libraryRoot.js"></script>
 		<script src="/home/onload.js"></script>
@@ -24,7 +31,7 @@
 
 	</head>
 	<body>
-		<div class = "main_wrapper">
+		<div id = "main_wrapper">
 			<div id="topNav">
 				<a class="navButton" href="index.html" id="home">GhostSync</a>
 				<span class="divider"></span>
@@ -38,7 +45,7 @@
 			<div id="joinArea">
 				<div id="joinBox">
 					<br>
-					<span>Lobby: <input type="text" id="lobbyInput"></span>
+					<span>Lobby: <div class = "doesthisbreak"> <input type="text" id="lobbyInput"></div></span>
 					<br>
 					<span>Username: <input type="text" id="userInput"></span>
 					<br>

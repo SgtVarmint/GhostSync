@@ -214,7 +214,8 @@ input {
 }
 
 #main_wrapper {
-    background-color: var(--primary);
+    background-color: #29293d;
+    height: 100vh;
 }
 
 .main_desktop
@@ -284,7 +285,7 @@ input {
     margin-left: auto;
     margin-right: auto;
     height: auto;
-    box-shadow: -1px 5px 10px var(--white);
+    box-shadow: -1px 5px 10px rgba(255, 255, 255, 0.479);
 }
 
 #joinArea input,
@@ -304,6 +305,11 @@ input {
 
 #joinArea span {
     font-size: 1.5em;
+}
+
+#lobbyInput{
+margin: 1%;
+
 }
 
 #joinArea button {
