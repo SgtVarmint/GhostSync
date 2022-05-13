@@ -57,7 +57,9 @@ function checkForMobile()
 		document.getElementById("users_wrapper").className = "users_wrapper_mobile";
 		document.getElementById("queueArea").className = "queueArea_mobile";
 		document.getElementById("nowPlaying").className = "nowPlaying_mobile";
-		document.getElementById("video").className = "video_mobile";
+
+		document.getElementById("video").classList.add("video_mobile");
+		document.getElementById("video").classList.remove("video_desktop");
 
 		document.getElementById("userqueue_wrapper").classList.add("userqueue_wrapper_mobile");
 		document.getElementById("userqueue_wrapper").classList.remove("userqueue_wrapper_desktop");
@@ -116,8 +118,9 @@ function checkForMobile()
 		document.getElementById("users_wrapper").className = "users_wrapper_desktop";
 		document.getElementById("queueArea").className = "queueArea_desktop";
 		document.getElementById("nowPlaying").className = "nowPlaying_desktop";
-		document.getElementById("video").className = "video_desktop";
 
+		document.getElementById("video").classList.add("video_desktop");
+		document.getElementById("video").classList.remove("video_mobile");
 
 		document.getElementById("userqueue_wrapper").classList.add("userqueue_wrapper_desktop");
 		document.getElementById("userqueue_wrapper").classList.remove("userqueue_wrapper_mobile");

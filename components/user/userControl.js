@@ -28,7 +28,7 @@ function userUpdateAction(file)
 	var userInfo = file.responseText.split("#");
 	var currentUsers = document.getElementsByClassName("user");
 	var userListNeedsUpdated = false;
-		
+	console.log(userInfo.length + " " + currentUsers.length);
 	if (userInfo.length - 1 == currentUsers.length)
 	{
 		for (var i = 0; i < userInfo.length - 1; i++)
@@ -50,8 +50,11 @@ function userUpdateAction(file)
 				break;
 			}
 		}
+		//This needs updated to be able to better detect when user list needs updated
+		//Without this line below, it will not update user statuses on the UI
+		userListNeedsUpdated = true;
 	}
-	else if (userInfo.length -1 > currentUsers.length)
+	else if (userInfo.length - 1 > currentUsers.length)
 	{
 		userListNeedsUpdated = true;
 		playSound("TA.mp3");
@@ -150,7 +153,7 @@ function playSound(fileName)
 	if (LOBBY_SOUND_SETTING == "on")
 	{
 		var soundFile = new Audio("/sounds/" + fileName)
-		soundFile.volume = .25;
+		soundFile.volume = .08;
 		soundFile.play();
 	}
 }
