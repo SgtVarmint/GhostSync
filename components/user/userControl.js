@@ -28,7 +28,6 @@ function userUpdateAction(file)
 	var userInfo = file.responseText.split("#");
 	var currentUsers = document.getElementsByClassName("user");
 	var userListNeedsUpdated = false;
-	console.log(userInfo.length + " " + currentUsers.length);
 	if (userInfo.length - 1 == currentUsers.length)
 	{
 		for (var i = 0; i < userInfo.length - 1; i++)
