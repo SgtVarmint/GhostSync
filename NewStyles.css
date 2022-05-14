@@ -1194,7 +1194,7 @@ hr {
     font-size: .8em;
 }
 #videoInfoSpan{
-    display:block;
+    /*display:block;*/
 }
 #sidePanelLoader{
     width: 100%;
