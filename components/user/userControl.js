@@ -103,9 +103,17 @@ function userUpdateAction(file)
 			
 			if (duplicateUserCount > 0)
 				duplicateDesignation = "(" + duplicateUserCount + ")"
+
+			let useralias = localStorage.getItem("userAlias_" + info[5]);
+			if (useralias != undefined && useralias != "")
+				useralias = " <span style='color: gray;'>(" + useralias + ")</span>";
+			else
+				useralias = "";
+			
+			li.onclick = userClicked;
 			
 			//This line builds the individual user li innerHTML
-			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + duplicateDesignation// + " - " + hrTimeStamp;
+			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + duplicateDesignation + useralias;// + " - " + hrTimeStamp;
 			if (info[4] != "none" && info[4] != "")
 			{
 				processIncomingReaction(info[0], info[4]);
@@ -155,4 +163,20 @@ function playSound(fileName)
 		soundFile.volume = .08;
 		soundFile.play();
 	}
+}
+
+function userClicked()
+{
+	document.getElementById("selectedUser").value = this.id;
+	ghostConfirm("Give an alias to this user?", "setNewAlias", true);
+}
+
+function setNewAlias(confirm)
+{
+	if (!confirm)
+		return;
+	let newAlias = document.getElementById("ghostConfirmInput").value;
+	let userId = document.getElementById("selectedUser").value;
+
+	localStorage.setItem("userAlias_" + userId, newAlias);
 }

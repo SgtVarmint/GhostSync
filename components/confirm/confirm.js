@@ -1,4 +1,4 @@
-function ghostConfirm(message, methodToRun, elementToAppendTo = "body")
+function ghostConfirm(message, methodToRun, includeTextBox = false, elementToAppendTo = "body")
 {
 	removeGhostConfirm();
 	
@@ -11,16 +11,37 @@ function ghostConfirm(message, methodToRun, elementToAppendTo = "body")
 	var buttonDiv = document.createElement("div");
 	
 	var yesButton = document.createElement("a");
+	yesButton.id = "ghostConfirmYesButton";
 	yesButton.innerHTML = "Yes";
 	yesButton.href = "javascript:" + methodToRun + "(true); removeGhostConfirm();";
 	yesButton.className = "defaultButton";
 	buttonDiv.appendChild(yesButton);
 	
 	var noButton = document.createElement("a");
+	noButton.id = "ghostConfirmNoButton";
 	noButton.innerHTML = "Cancel";
 	noButton.href = "javascript:" + methodToRun + "(false); removeGhostConfirm();";
 	noButton.className = "defaultButton";
 	buttonDiv.appendChild(noButton);
+
+	if (includeTextBox)
+	{
+		var textBoxDiv = document.createElement("div");
+
+		var textBox = document.createElement("input");
+		textBox.id = "ghostConfirmInput";
+		textBox.addEventListener("keyup", function(event)
+		{
+			if (event.keyCode === 13)
+			{
+				event.preventDefault();
+				document.getElementById("ghostConfirmYesButton").click();
+			}
+		});
+		
+		textBoxDiv.appendChild(textBox);
+		confirmDiv.appendChild(textBoxDiv);
+	}
 	
 	confirmDiv.id = "confirmDiv";
 	confirmDiv.appendChild(buttonDiv);

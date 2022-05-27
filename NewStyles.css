@@ -812,6 +812,10 @@ margin: 1%;
     padding: 2%;
 }
 
+.user:hover {
+    cursor: pointer;
+}
+
 .user span {
     padding-right: 10px;
     padding-left: 5px;
@@ -1222,6 +1226,19 @@ hr {
     top: 100;
     color: var(--white);
     z-index: 1000;
+}
+
+#ghostConfirmInput
+{
+    font-size: 1.2em;
+    display: inline-block;
+    clear: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+    position: relative;
 }
 
 /* 
