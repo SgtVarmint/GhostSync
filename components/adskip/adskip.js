@@ -8,6 +8,7 @@ function checkForAndSkipAd()
 			if (currentTime > videoFileData.adBlocks[i][0] &&
 				currentTime < videoFileData.adBlocks[i][1])
 				{
+					console.log("Adskip Triggerred");
 					document.getElementById("video").currentTime = videoFileData.adBlocks[i][1];
 					updateServerTimeStamp(videoFileData.adBlocks[i][1]);
 					toast("Ad Skipped");
