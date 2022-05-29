@@ -470,7 +470,7 @@ margin: 1%;
 
 .youtube_standardscreen
 {
-    height: 680px;
+    height: 100%;
 }
 
 .youtube_fullscreen
@@ -983,7 +983,7 @@ margin: 1%;
 
 .video_standardscreen
 {
-    height: 680px;
+    height: 100%;
 }
 
 .video_fullscreen

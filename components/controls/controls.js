@@ -147,6 +147,7 @@ function skipButtonClicked()
 
 function playButtonClicked(pause = false)
 {
+	console.log("Play Button Click triggerred");
 	if (pause == true)
 	{
 		document.getElementById("video").pause();
