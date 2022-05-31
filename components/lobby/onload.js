@@ -14,6 +14,7 @@ window.onload = function(){
 	document.getElementById("lockButton").onclick = lockButtonClicked;
 	document.getElementById("hideButton").onclick = hideButtonClicked;
 	document.getElementById("hideButtonRight").onclick = hideButtonRightClicked;
+	document.getElementById("subtitleButton").onclick = subtitleButtonClicked;
 	
 	PLAYER_VOLUME = localStorage.getItem("playerVolume");
 	if (PLAYER_VOLUME == null)
@@ -46,6 +47,20 @@ window.onload = function(){
 	{
 		TOLERANCE = .3;
 		localStorage.setItem("tolerance", TOLERANCE);
+	}
+
+	let subtitleLobbySetting = localStorage.getItem("subtitles");
+	if (subtitleLobbySetting == null)
+	{
+		SUBTITLES_ENABLED = false;
+		localStorage.setItem("subtitles", "off")
+	}
+	else
+	{
+		if (subtitleLobbySetting == "on")
+			SUBTITLES_ENABLED = true;
+		else
+			SUBTITLES_ENABLED = false;
 	}
 	
 	LOBBY_REACTIONS_SETTING = localStorage.getItem("lobbyReactionsSetting");

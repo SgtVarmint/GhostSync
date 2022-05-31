@@ -1,8 +1,10 @@
-var SUBTITLES_ENABLED = true;
 function checkForAndDisplaySubtitles()
 {
 	if (SUBTITLES_ENABLED && !isYoutubeVideo())
 	{
+        if (videoFileData == null || videoFileData.subtitleData == null)
+            return;
+
         let subtitleFound = false;
 		let currentTime = document.getElementById("video").currentTime;
 		for (let i = 0; i < videoFileData.subtitleData.length; i++)

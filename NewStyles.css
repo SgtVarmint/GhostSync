@@ -1022,21 +1022,13 @@ video::-webkit-media-controls-timeline {
     border: none;
     outline: none;
     font-size: 1.5em;
-    opacity: 1;
     display: inline;
     padding-left: 10px;
     padding-right: 10px;
 }
 
 .controlsDisabled {
-    height: 5%;
-    background: rgb(0, 0, 0, 0);
-    color: white;
-    border: none;
-    outline: none;
-    font-size: 1.5em;
     opacity: .4;
-    display: inline;
 }
 
 .controls:hover {
@@ -1312,6 +1304,13 @@ hr {
     display: inline;
 }
 
+.subtitleButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 64%;
+}
+
 /* 
 *________________________________________________________________________________________________________
 *                                                                                                      |
@@ -1421,6 +1420,15 @@ hr {
 {
     background-color: black;
     color: white;
-    font-size: 1.4em;
     text-align: justify;
+}
+
+.subtitleText_standardscreen
+{
+    font-size: 1.6em;
+}
+
+.subtitleText_fullscreen
+{
+    font-size: 2.1em;
 }

@@ -89,11 +89,26 @@ function lockButtonClicked()
 	}
 }
 
+function subtitleButtonClicked()
+{
+	if (SUBTITLES_ENABLED)
+	{
+		SUBTITLES_ENABLED = false;
+		document.getElementById("subtitleText").innerHTML = "";
+		localStorage.setItem("subtitles", "off");
+	}
+	else
+	{
+		SUBTITLES_ENABLED = true;
+		localStorage.setItem("subtitles", "on");
+	}
+}
+
 function lockControls()
 {
 	document.getElementById("playButton").disabled = true;
-	document.getElementById("playButton").className = "controlsDisabled";
-	document.getElementById("skipButton").className = "controlsDisabled";
+	document.getElementById("playButton").classList.add("controlsDisabled");
+	document.getElementById("skipButton").classList.add("controlsDisabled");
 	document.getElementById("skipButton").disabled = true;
 	document.getElementById("seekSlider").disabled = true;
 }
@@ -101,8 +116,8 @@ function lockControls()
 function unlockControls()
 {
 	document.getElementById("playButton").disabled = false;
-	document.getElementById("playButton").className = "controls";
-	document.getElementById("skipButton").className = "controls";
+	document.getElementById("playButton").classList.remove("controlsDisabled");
+	document.getElementById("skipButton").classList.remove("controlsDisabled");
 	document.getElementById("skipButton").disabled = false;
 	document.getElementById("seekSlider").disabled = false;
 }
@@ -212,12 +227,16 @@ function fullscreenButtonClicked()
 		document.getElementById("seekSlider").classList.remove("seekSlider_fullscreen");
 		document.getElementById("skipButton").classList.remove("skipButton_fullscreen");
 		document.getElementById("lockButton").classList.remove("lockButton_fullscreen");
+		document.getElementById("subtitleButton").classList.remove("subtitleButton_fullscreen");
 		//
 		document.getElementById("youtubePlayer").classList.add("youtube_standardscreen");
 		document.getElementById("youtubePlayer").classList.remove("youtube_fullscreen");
 
 		document.getElementById("video").classList.add("video_standardscreen");
 		document.getElementById("video").classList.remove("video_fullscreen");
+
+		document.getElementById("subtitleText").classList.add("subtitleText_standardscreen");
+		document.getElementById("subtitleText").classList.remove("subtitleText_fullscreen");
 	}
 	else
 	{
@@ -232,12 +251,16 @@ function fullscreenButtonClicked()
 		document.getElementById("seekSlider").classList.add("seekSlider_fullscreen");
 		document.getElementById("skipButton").classList.add("skipButton_fullscreen");
 		document.getElementById("lockButton").classList.add("lockButton_fullscreen");
+		document.getElementById("subtitleButton").classList.add("subtitleButton_fullscreen");
 		//
 		document.getElementById("youtubePlayer").classList.add("youtube_fullscreen");
 		document.getElementById("youtubePlayer").classList.remove("youtube_standardscreen");
 
 		document.getElementById("video").classList.add("video_fullscreen");
 		document.getElementById("video").classList.remove("video_standardscreen");
+
+		document.getElementById("subtitleText").classList.add("subtitleText_fullscreen");
+		document.getElementById("subtitleText").classList.remove("subtitleText_standardscreen");
 	}
 		
 }
