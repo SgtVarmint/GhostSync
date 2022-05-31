@@ -13,7 +13,8 @@ function syncPull()
 	{
 		videoFileData_loadedVideo = formatVideoPathForServer(document.getElementById("filePath").value);
 		if (!isYoutube)
-			videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
+			if (document.getElementById("filePath").value)
+				videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
 	}
 	
 	syncVideo();
@@ -345,6 +346,7 @@ function syncVideoAction(file)
 		{
 			if (!document.getElementById("video").paused)
 				checkForAndSkipAd();
+				
 			timestamp = document.getElementById("video").currentTime;
 			duration = document.getElementById("video").duration;
 		}

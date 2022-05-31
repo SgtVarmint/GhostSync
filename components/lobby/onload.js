@@ -5,7 +5,6 @@ window.onload = function(){
 	//Only needs to occur one time per session
 	
 	//serveInteractPrompt();
-	
 	getUserIdList();
 	
 	document.getElementById("playButton").onclick = playButtonClicked;
@@ -193,6 +192,7 @@ window.onload = function(){
 	
 	setInterval(syncPull, SYNC_INTERVAL * 1000);
 	setInterval(userUpdate, USER_UPDATE_INTERVAL * 1000);
+	setInterval(checkForAndDisplaySubtitles, 250); //Will check for subtitles 4 times a minute
 	getDirectoryInfo();	
 	checkForMobile();
 }
