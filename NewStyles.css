@@ -1420,10 +1420,11 @@ hr {
 {
     top:75%;
     right:30%;
-    bottom:5%;
+    bottom:10%;
     left:30%;
     position: absolute;
     opacity: .9;
+    pointer-events: none;
 }
 
 #subtitleText
