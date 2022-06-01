@@ -96,11 +96,13 @@ function subtitleButtonClicked()
 		SUBTITLES_ENABLED = false;
 		document.getElementById("subtitleText").innerHTML = "";
 		localStorage.setItem("subtitles", "off");
+		document.getElementById("subtitleButton").classList.add("subtitleButton_disabled");
 	}
 	else
 	{
 		SUBTITLES_ENABLED = true;
 		localStorage.setItem("subtitles", "on");
+		document.getElementById("subtitleButton").classList.remove("subtitleButton_disabled");
 	}
 }
 
@@ -275,6 +277,7 @@ function mouseHovered()
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
 		document.getElementById("lockButton").style.display = "inline";
+		document.getElementById("subtitleButton").style.display = "inline";
 		document.getElementById("seekSlider").style.display = "inline";
 		controlsTimeout = setTimeout(hideControls, FULLSCREEN_CONTROLS_TIMEOUT * 1000);
 	}
@@ -285,6 +288,7 @@ function mouseHovered()
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
 		document.getElementById("lockButton").style.display = "inline";
+		document.getElementById("subtitleButton").style.display = "inline";
 		document.getElementById("seekSlider").style.display = "inline";
 	}
 }
@@ -298,6 +302,7 @@ function hideControls()
 		document.getElementById("fullscreenButton").style.display = "none";
 		document.getElementById("skipButton").style.display = "none";
 		document.getElementById("lockButton").style.display = "none";
+		document.getElementById("subtitleButton").style.display = "none";
 		document.getElementById("seekSlider").style.display = "none";
 	}
 	else
@@ -307,6 +312,7 @@ function hideControls()
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
 		document.getElementById("lockButton").style.display = "inline";
+		document.getElementById("subtitleButton").style.display = "inline";
 		document.getElementById("seekSlider").style.display = "inline";
 	}
 }

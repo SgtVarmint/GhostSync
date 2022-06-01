@@ -54,13 +54,17 @@ window.onload = function(){
 	{
 		SUBTITLES_ENABLED = false;
 		localStorage.setItem("subtitles", "off")
+		document.getElementById("subtitleButton").classList.add("subtitleButton_disabled");
 	}
 	else
 	{
 		if (subtitleLobbySetting == "on")
 			SUBTITLES_ENABLED = true;
 		else
+		{
 			SUBTITLES_ENABLED = false;
+			document.getElementById("subtitleButton").classList.add("subtitleButton_disabled");
+		}
 	}
 	
 	LOBBY_REACTIONS_SETTING = localStorage.getItem("lobbyReactionsSetting");

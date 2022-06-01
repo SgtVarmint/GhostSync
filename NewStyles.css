@@ -1271,6 +1271,11 @@ hr {
     display: none;
 }
 
+#playButton
+{
+    margin-top: 4px;
+}
+
 .fullscreenButton_fullscreen
 {
     position: absolute;
@@ -1309,6 +1314,11 @@ hr {
     position: absolute;
     top: 92%;
     left: 64%;
+}
+
+.subtitleButton_disabled
+{
+    opacity: 0.3;
 }
 
 /* 
