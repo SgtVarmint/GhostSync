@@ -899,6 +899,11 @@ margin: 1%;
     font-size: 1.2em;
 }
 
+#videoBrowserSidePanel div {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 #videoBrowserSidePanel.infoDiv {
     display: block;
     padding: 10px;

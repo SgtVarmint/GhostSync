@@ -16,11 +16,15 @@ function serveVideoInfo(videoPath, timestamp, overridePlaystateToPlay) {
 		stopSidePanelLoader();
 	};
 
-	var videoNameElement = document.createElement("span");
+	var subtitlesAvailableElement = document.createElement("div");
+	if (videoInfo.subtitleData.length > 0)
+		subtitlesAvailableElement.innerHTML = "&#x1f4ac;<br>";
+
+	var videoNameElement = document.createElement("div");
 	videoNameElement.classList.add("wide")
 	videoNameElement.innerHTML = getVideoNameFromPath(videoPath);
 
-	var videoDateElement = document.createElement("span");
+	var videoDateElement = document.createElement("div");
 	videoDateElement.id = "videoDate"
 	videoDateElement.innerHTML = "Released in " + videoInfo.releaseDate;
 
@@ -40,14 +44,14 @@ function serveVideoInfo(videoPath, timestamp, overridePlaystateToPlay) {
 	var descriptionElement = document.createElement("p");
 	descriptionElement.innerHTML = videoInfo.details;
 
-	var videoInfoSpan = document.createElement("span");
+	var videoInfoSpan = document.createElement("div");
 	videoInfoSpan.id = "videoInfoSpan";
 	videoInfoSpan.classList.add("hidden")
 
 	videoInfoSpan.appendChild(thumbnailElement);
+	videoInfoSpan.appendChild(subtitlesAvailableElement);
 	videoInfoSpan.appendChild(videoNameElement);
 	if (videoInfo.releaseDate != "") {
-		videoInfoSpan.appendChild(document.createElement("br"));
 		videoInfoSpan.appendChild(videoDateElement);
 	}
 	videoInfoSpan.appendChild(buttonDiv);
