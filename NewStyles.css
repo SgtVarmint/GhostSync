@@ -5,6 +5,27 @@
 *________________________________________________________________________________________________________|
 */
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+      background: var(--secondary); 
+    /*background: #333333; */
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent); 
+  }
+
 * {
     margin: 0;
     padding: 0;
@@ -955,7 +976,7 @@ margin: 1%;
 
 #browser button {
     padding: 5px;
-    width: 100%;
+    width: 99%;
     font-size: 1.25em;
     margin-bottom: 10px;
 }
