@@ -66,7 +66,6 @@ var videoDuration;
 ////
 
 var consecutiveOutOfSyncs = 0;
-var outOfSyncCount = 0;
 
 //Method stemming from sync video
 function syncVideoAction(file)
@@ -225,15 +224,11 @@ function syncVideoAction(file)
 			//outOfSyncCount++;
 			if (outOfSync && !jimmyNet)
 			{			
-				if (consecutiveOutOfSyncs >= outOfSyncCount - OUT_OF_SYNCS_BUILD_BUFFER)
-				{
-					consecutiveOutOfSyncs++;
-				}
-				
+				consecutiveOutOfSyncs++;
+
 				if (consecutiveOutOfSyncs >= OUT_OF_SYNCS_BEFORE_JIMMY)
 				{
 					consecutiveOutOfSyncs = 0;
-					outOfSyncCount = 0;
 					jimmyNet = true;
 					document.getElementById("filePath").value = serveVideoPath(document.getElementById("filePath").value);
 					document.getElementById("videoSource").src = document.getElementById("filePath").value;
@@ -245,7 +240,6 @@ function syncVideoAction(file)
 			else if (!jimmyNet)
 			{
 				consecutiveOutOfSyncs = 0;
-				outOfSyncCount = 0;
 			}
 			else
 			{

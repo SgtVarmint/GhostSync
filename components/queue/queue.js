@@ -27,6 +27,13 @@ function updateQueue()
 function addCurrentVideoToQueue()
 {
 	let videoPath = formatVideoPathForServer(document.getElementById("filePath").value);
+
+	if (videoPath == "null")
+	{
+		toast("Nothing is currently playing!");
+		return;
+	}
+
 	let timestamp = document.getElementById("video").currentTime;
 	let newQueueItem = videoPath + "^" + timestamp;
 	if (queue.length > 0 && queue[0].includes(videoPath))

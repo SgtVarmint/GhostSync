@@ -181,7 +181,7 @@ function playButtonClicked(pause = false)
 		{
 			youtubePlayer.playVideo();
 			document.getElementById("playState").value = "playing";
-			document.getElementById("playButton").innerHTML = "&#x23f8;";
+			setPlayButtonImage(true);
 			updateServerTimeStamp();
 		}
 		//Playing or any other state
@@ -189,7 +189,7 @@ function playButtonClicked(pause = false)
 		{
 			youtubePlayer.pauseVideo();
 			document.getElementById("playState").value = "paused";
-			document.getElementById("playButton").innerHTML = "&#x25b6;";
+			setPlayButtonImage(false);
 			updateServerTimeStamp();
 		}
 	}
@@ -199,14 +199,14 @@ function playButtonClicked(pause = false)
 		{
 			document.getElementById("video").play();
 			document.getElementById("playState").value = "playing";
-			document.getElementById("playButton").innerHTML = "&#x23f8;";
+			setPlayButtonImage(true);
 			updateServerTimeStamp();
 		}
 		else
 		{
 			document.getElementById("video").pause();
 			document.getElementById("playState").value = "paused";
-			document.getElementById("playButton").innerHTML = "&#x25b6;";
+			setPlayButtonImage(false);
 			pausedTimeStamp = document.getElementById("video").currentTime;
 			updateServerTimeStamp();
 		}
@@ -357,9 +357,13 @@ function setPlayButtonImage(playing)
 	if (playing)
 	{
 		document.getElementById("playButton").innerHTML = "&#x23f8;";
+		document.getElementById("playButton").classList.add("playButton_playing");
+		document.getElementById("playButton").classList.remove("playButton_paused");
 	}
 	else
 	{
 		document.getElementById("playButton").innerHTML = "&#x25b6;";
+		document.getElementById("playButton").classList.add("playButton_paused");
+		document.getElementById("playButton").classList.remove("playButton_playing");
 	}
 }

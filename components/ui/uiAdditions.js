@@ -2,13 +2,16 @@ function serveInteractPrompt()
 {
 	var interactCheck = document.createElement("div");
 	interactCheck.id = "interactCheck";
-	interactCheck.innerHTML = "<br><br><br><br><br><br><br><br><br><span>Click Anywhere</span>";
+	
+	interactCheckInnerDiv = document.createElement("div");
+	interactCheckInnerDiv.innerHTML = "Click Anywhere";
 	
 	interactCheck.onclick = function(){
 		document.getElementById("interactCheck").className = "fade_out";
 		setTimeout(function(){ document.getElementById("interactCheck").parentNode.removeChild(document.getElementById("interactCheck")); }, 175);
 	};
 	
+	interactCheck.appendChild(interactCheckInnerDiv);
 	document.body.appendChild(interactCheck);
 }
 

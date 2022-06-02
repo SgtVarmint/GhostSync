@@ -12,7 +12,7 @@ function ghostConfirm(message, methodToRun, includeTextBox = false, elementToApp
 	
 	var yesButton = document.createElement("a");
 	yesButton.id = "ghostConfirmYesButton";
-	yesButton.innerHTML = "Yes";
+	yesButton.innerHTML = includeTextBox ? "Confirm" : "Yes";
 	yesButton.href = "javascript:" + methodToRun + "(true); removeGhostConfirm();";
 	yesButton.className = "defaultButton";
 	buttonDiv.appendChild(yesButton);

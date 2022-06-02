@@ -80,7 +80,7 @@ function userUpdateAction(file)
 			else
 				li.className = "user";
 			li.id = info[5];
-			li.name = info[0];
+			li.setAttribute("name", info[0]);
 			var temp = parseInt(info[2]);
 			var minutes = temp / 60;
 			var seconds = temp % 60;
@@ -168,7 +168,7 @@ function playSound(fileName)
 function userClicked()
 {
 	document.getElementById("selectedUser").value = this.id;
-	ghostConfirm("Give an alias to this user?", "setNewAlias", true);
+	ghostConfirm("Set new alias for " + this.getAttribute("name") + ":", "setNewAlias", true);
 }
 
 function setNewAlias(confirm)
