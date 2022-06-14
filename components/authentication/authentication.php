@@ -10,7 +10,7 @@
 	function checkAuth($accessCode, $keys){
 		foreach($keys as $key){
 			if($accessCode === $key){
-				return 'gs:YrehJb5njkXW1lm39yiF';
+				return 'gs:YrehJb5njkXW1lm39yiF@';
 			}
 		}
 		return 'denied';
