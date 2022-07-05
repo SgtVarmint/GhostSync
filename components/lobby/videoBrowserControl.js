@@ -389,7 +389,7 @@ function sortSeasons(folders, desc = false)
 	return sortedFolders;
 }
 
-function sortDatedGameplay(contents, desc = false)
+function sortDatedGameplay(contents, asc = false)
 {
 	let sortedContents = new Array();
 	
@@ -403,7 +403,7 @@ function sortDatedGameplay(contents, desc = false)
 	
 	contentDates.sort((a, b) => b.date - a.date)
 	
-	if (desc)
+	if (asc)
 	{
 		for (let i = contents.length - 1; i >= 0; i--)
 		{
@@ -420,6 +420,7 @@ function sortDatedGameplay(contents, desc = false)
 		}
 	}
 	
+	sortedContents.push("");
 	return sortedContents;
 }
 
