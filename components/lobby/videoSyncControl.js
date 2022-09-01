@@ -42,7 +42,7 @@ function updateServerTimeStamp(overrideTimestamp = 0.0)
 	}
 	else
 	{
-		playState = document.getElementById("player").paused ? "paused" : "playing";
+		playState = document.getElementById("video").paused ? "paused" : "playing";
 	}
 	
 	var xhttp = new XMLHttpRequest();
