@@ -219,7 +219,7 @@ function syncVideoAction(file)
 		
 		var serverPaused = info[2] == "paused";
 		
-		if (!serverPaused && !paused)
+		if (!serverPaused && !paused) //Happy Play State
 		{
 			//outOfSyncCount++;
 			if (outOfSync && !jimmyNet)
@@ -303,6 +303,7 @@ function syncVideoAction(file)
 						youtubePlayer.seekTo(newTimeStamp, true);
 						youtubePlayer.pauseVideo();
 					}
+					document.getElementById("playState") = "paused";
 					toast(updateUser + " paused the video..");
 				}
 			}
