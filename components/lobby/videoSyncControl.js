@@ -33,11 +33,22 @@ function updateServerTimeStamp(overrideTimestamp = 0.0)
 	{
 		timeStamp = overrideTimestamp;
 	}
+
+	var playState;
+
+	if (isYoutubeVideo())
+	{
+		playState = youtubePlayer.paused ? "paused" : "playing";
+	}
+	else
+	{
+		playState = document.getElementById("player").paused ? "paused" : "playing";
+	}
 	
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","updateServerTimeStamp.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + timeStamp + "&playState=" + document.getElementById("playState").value + "&filePath=" + formatVideoPathForServer(document.getElementById("filePath").value) + "&userUpdated=" + localStorage.getItem("userName"));
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + timeStamp + "&playState=" + playState + "&filePath=" + formatVideoPathForServer(document.getElementById("filePath").value) + "&userUpdated=" + localStorage.getItem("userName"));
 }
 
 //Ajax portion of sync function
