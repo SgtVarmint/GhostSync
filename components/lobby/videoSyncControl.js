@@ -147,7 +147,6 @@ function syncVideoAction(file)
 				/*if (checkPreload())
 					preloadVideo(document.getElementById("filePath").value);*/
 			}
-			document.getElementById("playState").value = "paused";
 			
 			if (initialVideoLoaded)
 				toast(info[4] + " Chose A New Video");
@@ -314,7 +313,6 @@ function syncVideoAction(file)
 						youtubePlayer.seekTo(newTimeStamp, true);
 						youtubePlayer.pauseVideo();
 					}
-					document.getElementById("playState") = "paused";
 					toast(updateUser + " paused the video..");
 				}
 			}

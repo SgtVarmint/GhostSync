@@ -167,7 +167,6 @@ function playButtonClicked(pause = false)
 	if (pause == true)
 	{
 		document.getElementById("video").pause();
-		document.getElementById("playState").value = "paused";
 		document.getElementById("playButton").innerHTML = "&#x25b6;";
 		videoEnded = true;
 		updateServerTimeStamp();
@@ -180,7 +179,6 @@ function playButtonClicked(pause = false)
 		if (state == 2 || state == 3)
 		{
 			youtubePlayer.playVideo();
-			document.getElementById("playState").value = "playing";
 			setPlayButtonImage(true);
 			updateServerTimeStamp();
 		}
@@ -188,7 +186,6 @@ function playButtonClicked(pause = false)
 		else
 		{
 			youtubePlayer.pauseVideo();
-			document.getElementById("playState").value = "paused";
 			setPlayButtonImage(false);
 			updateServerTimeStamp();
 		}
@@ -198,14 +195,12 @@ function playButtonClicked(pause = false)
 		if (document.getElementById("video").paused)
 		{
 			document.getElementById("video").play();
-			document.getElementById("playState").value = "playing";
 			setPlayButtonImage(true);
 			updateServerTimeStamp();
 		}
 		else
 		{
 			document.getElementById("video").pause();
-			document.getElementById("playState").value = "paused";
 			setPlayButtonImage(false);
 			pausedTimeStamp = document.getElementById("video").currentTime;
 			updateServerTimeStamp();

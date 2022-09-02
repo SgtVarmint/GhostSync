@@ -187,12 +187,10 @@ window.onload = function(){
 		localStorage.setItem("playerVolume", PLAYER_VOLUME);
 	}
 	
-	//document.getElementById("video").onseeked = function(){ document.getElementById("video").pause(); document.getElementById("playState").value = "paused"; };//updateServerTimeStamp(); };
 	document.getElementById("player").onmousemove = mouseHovered;
 	document.getElementById("youtubePlayer").onmousemove = mouseHovered;
 	document.getElementById("youtubePlayButton").onclick = playYoutubeVideo;
 	document.getElementById("youtubeAddToQueueButton").onclick = addYoutubeVideoToQueue;
-	//document.getElementById("video").onclick = function(){ document.getElementById("playButton").click(); };
 	document.getElementById("reactionButton").onclick = reactionButtonClicked;
 	document.getElementById("closeReactionMenuButton").onclick = function(){ document.getElementById("reactionButton").click(); };
 	document.getElementById("reactionMenuFavoritesButton").onclick = showFavoriteEmojis;

@@ -297,7 +297,6 @@ function playVideo(video = "pullFromDOM", timestamp = 0, overridePlaystateToPlay
 		fileLocation = video;
 		
 	document.getElementById("filePath").value = serveVideoPath(fileLocation);
-	document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
 	document.getElementById("videoSource").src = serveVideoPath(fileLocation);
 	///////////////
