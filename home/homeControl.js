@@ -4,8 +4,16 @@ function lobbyButtonClick() {
 
 	//Check if user already has Id
 	let userId = localStorage.getItem("userId");
-	if (userId == null) {
-		let userIdList = getUserIdList();
+	let userIdList = getUserIdList();
+	if (userId != null)
+	{
+		if (!userIdList.includes(newId))
+		{
+			addNewUserIdToList(userId);
+		}
+	}
+	else if (userId == null)
+	{
 		let newId = "";
 		while (true) {
 			//Give user new Id
@@ -21,7 +29,8 @@ function lobbyButtonClick() {
 	redirect("components/lobby/lobby.html");
 }
 
-function authenticationButton() {
+function authenticationButton()
+{
 	document.getElementById("auth").classList.toggle("hidden");
 	document.getElementById("authText").focus();
 

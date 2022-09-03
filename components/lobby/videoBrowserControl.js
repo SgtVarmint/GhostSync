@@ -238,7 +238,7 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		}
 		else
 		{
-			if (contents[i].includes("_"))
+			if (contents[i].charAt(0) == '_')
 				continue;
 			var newDir = document.createElement("a");
 			newDir.innerHTML = contents[i];
