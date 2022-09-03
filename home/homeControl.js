@@ -7,7 +7,7 @@ function lobbyButtonClick() {
 	let userIdList = getUserIdList();
 	if (userId != null)
 	{
-		if (!userIdList.includes(newId))
+		if (!userIdList.includes(userId))
 		{
 			addNewUserIdToList(userId);
 		}
