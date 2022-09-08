@@ -174,12 +174,12 @@ function playButtonClicked(pause = false)
 	}
 	if (isYoutubeVideo())
 	{
-		var state = youtubePlayer.getPlayerState()
-		//Paused or buffering
-		if (state == 2 || state == 3)
+		var state = getYoutubePlayState();
+		if (state == "paused")
 		{
 			youtubePlayer.playVideo();
 			setPlayButtonImage(true);
+			youtubePlayStateToUpdateServer = "playing";
 			updateServerTimeStamp();
 		}
 		//Playing or any other state
@@ -187,6 +187,7 @@ function playButtonClicked(pause = false)
 		{
 			youtubePlayer.pauseVideo();
 			setPlayButtonImage(false);
+			youtubePlayStateToUpdateServer = "paused";
 			updateServerTimeStamp();
 		}
 	}
@@ -335,11 +336,13 @@ function seekSliderSeeked()
 	{
 		var newTimeStamp = (parseFloat(document.getElementById("seekSlider").value) / 100) * parseFloat(youtubePlayer.getDuration());
 		youtubePlayer.seekTo(newTimeStamp, true);
+		youtubePlayStateToUpdateServer = getYoutubePlayState();
 	}
 	else
 	{
 		var newTimeStamp = (parseFloat(document.getElementById("seekSlider").value) / 100) * parseFloat(document.getElementById("video").duration);
 		document.getElementById("video").currentTime = newTimeStamp;
+		youtubePlayStateToUpdateServer = getYoutubePlayState();
 	}
 	updateServerTimeStamp(newTimeStamp);
 	updateTracking();

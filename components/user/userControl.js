@@ -138,8 +138,12 @@ function getUserIdList()
 	let fileText = "";
 	let fileLocation = "/data/userIdList.txt";
 	let xhttp = new XMLHttpRequest();
-	xhttp.onload = function(){
-		fileText = this.responseText;
+	xhttp.onreadystatechange = function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			fileText = this.responseText;
+		}
 	}
 	xhttp.open("GET", "" + fileLocation, false);
 	xhttp.send();

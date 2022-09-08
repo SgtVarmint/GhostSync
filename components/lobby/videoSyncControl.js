@@ -2,7 +2,6 @@ function syncPull()
 {	
 	let isYoutube = isYoutubeVideo();
 	//Figure out in what files these functions are defined. Please.
-	pullTrackingInfo(); // defined in progression.js
 	pullQueue();
 	checkForMobile();
 	var timestamp;
@@ -38,7 +37,7 @@ function updateServerTimeStamp(overrideTimestamp = 0.0)
 
 	if (isYoutubeVideo())
 	{
-		playState = youtubePlayer.paused ? "paused" : "playing";
+		playState = youtubePlayStateToUpdateServer;
 	}
 	else
 	{

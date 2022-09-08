@@ -157,3 +157,18 @@ function getYoutubeVideoTitle(url)
 	xhttp.send("url=" + url);
 	return title;
 }
+
+function getYoutubePlayState()
+{
+	var state = youtubePlayer.getPlayerState()
+	//Paused or buffering
+	if (state == 2 || state == 3)
+	{
+		return "paused";
+	}
+	//Playing or any other state
+	else
+	{
+		return "playing";
+	}
+}

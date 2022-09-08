@@ -212,4 +212,5 @@ window.onload = function(){
 	setInterval(checkForAndDisplaySubtitles, 250); //Will check for subtitles 4 times a minute
 	getDirectoryInfo();	
 	checkForMobile();
+	pullTrackingInfo();
 }
