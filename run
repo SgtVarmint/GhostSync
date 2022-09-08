@@ -9,3 +9,4 @@ ln -s /home/jon/mount/VideoDrive/Videos /var/www/html/Videos
 chown -Rf www-data /var/www/html/lobbies
 chown -Rf www-data /var/www/html/Videos
 chown -Rf www-data /var/www/html/data
+chmod 777 /var/www/html/data/userIdList.txt
