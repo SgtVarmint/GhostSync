@@ -28,42 +28,122 @@ function userUpdateAction(file)
 	var userInfo = file.responseText.split("#");
 	var currentUsers = document.getElementsByClassName("user");
 	var userListNeedsUpdated = false;
-	if (userInfo.length - 1 == currentUsers.length)
+	for (let i = 0; i < userInfo.length - 1; i++)
 	{
-		for (var i = 0; i < userInfo.length - 1; i++)
+		let info = userInfo[i].split("^");
+		let currentUserFound = false;
+		for (let j = 0; j < currentUsers.length; j++)
 		{
-			let info = userInfo[i].split("^");
-			let currentUserFound = false;
-			for (let j = 0; j < currentUsers.length; j++)
+			if (info[5] == currentUsers[j].id)
 			{
-				if (info[5] == currentUsers[j].id)
+				currentUserFound = true;
+
+				//Checks if user has its last active status saved and adds if not
+				let currentUserLastActiveStatusFound = false;
+				for (let k = 0; k < usersLastActiveStatus.length; k++)
 				{
-					currentUserFound = true;
+					if (usersLastActiveStatus[k] != null && 
+						usersLastActiveStatus[k][0] == info[5])
+					{
+						if (usersLastActiveStatus[k][1] != info[3])
+						{
+							usersLastActiveStatus[k][1] = info[3];
+							userListNeedsUpdated = true;
+						}
+						currentUserLastActiveStatusFound = true;
+						break;
+					}
+				}
+
+				if (!currentUserLastActiveStatusFound)
+				{
+					usersLastActiveStatus.push([info[5], info[3]]);
+					userListNeedsUpdated = true;
+				}
+
+				break;
+			}
+		}
+
+		if (info[3] == "1") //Active
+		{
+			for (let l = 0; l < inactiveUsers.length; l++)
+			{
+				if (inactiveUsers[l] == info[5])
+				{
+					//Remove user from inactive list
+					inactiveUsers.splice(l, 1);
 					break;
 				}
 			}
-			
-			if (!currentUserFound)
+		}
+		
+		if (!currentUserFound)
+		{
+			for (let k = 0; k < usersLastActiveStatus.length; k++)
 			{
+				if (usersLastActiveStatus[k] != null &&
+					usersLastActiveStatus[k][0] == info[5] &&
+					usersLastActiveStatus[k][1] == "0" &&
+					info[3] == "0") //Inactive
+				{
+					let userAlreadyInactive = false;
+					for (let l = 0; l < inactiveUsers.length; l++)
+					{
+						if (inactiveUsers[l] == info[5])
+						{
+							userAlreadyInactive = true;
+						}
+					}
+					if (!userAlreadyInactive)
+					{
+						inactiveUsers.push(info[5]);
+					}
+				}
+				else if (info[3] == "1") //Active
+				{
+					for (let l = 0; l < inactiveUsers.length; l++)
+					{
+						if (inactiveUsers[l] == info[5])
+						{
+							//Remove user from inactive list
+							inactiveUsers.splice(l, 1);
+							break;
+						}
+					}
+				}
+			}
+			userListNeedsUpdated = true;
+		}
+	}
+
+	for (let i = 0; i < inactiveUsers.length; i++)
+	{
+		for (let j = 0; j < userInfo.length; j++)
+		{
+			let info = userInfo[j].split("^");
+			if (inactiveUsers[i] == info[5])
+			{
+				//Removes the user from showing in the user list on UI
+				userInfo.splice(j, 1);
 				userListNeedsUpdated = true;
 				break;
 			}
 		}
-		//This needs updated to be able to better detect when user list needs updated
-		//Without this line below, it will not update user statuses on the UI
-		userListNeedsUpdated = true;
 	}
-	else if (userInfo.length - 1 > currentUsers.length)
+
+	//Play sounds depending on if an active user joined or left and ensures an update occurs
+	if (userInfo.length - 1 > currentUsers.length)
 	{
 		userListNeedsUpdated = true;
 		playSound("TA.mp3");
 	}
-	else
+	else if (userInfo.length - 1 < currentUsers.length)
 	{
 		userListNeedsUpdated = true;
 		playSound("BB.mp3");
 	}
-	
+
 	if (userListNeedsUpdated)
 	{
 		document.getElementById("userList").innerHTML = "";

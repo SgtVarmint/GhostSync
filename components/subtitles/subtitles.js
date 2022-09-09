@@ -7,10 +7,11 @@ function checkForAndDisplaySubtitles()
 
         let subtitleFound = false;
 		let currentTime = document.getElementById("video").currentTime;
+		let timingOffset = 0.5;
 		for (let i = 0; i < videoFileData.subtitleData.length; i++)
 		{
-			if (currentTime > videoFileData.subtitleData[i][0] &&
-				currentTime < videoFileData.subtitleData[i][1])
+			if (currentTime + timingOffset > videoFileData.subtitleData[i][0] &&
+				currentTime + timingOffset < videoFileData.subtitleData[i][1])
 				{
                     subtitleFound = true;
 					document.getElementById("subtitleText").innerHTML = videoFileData.subtitleData[i][2];

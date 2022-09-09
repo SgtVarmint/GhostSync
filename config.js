@@ -38,6 +38,8 @@ var theaterMode = false;
 var videoFileData;
 var videoFileData_loadedVideo;
 var hideButtonRightToggle = false;
+var usersLastActiveStatus = new Array();
+var inactiveUsers = new Array();
 
 //Graphics
 DEFAULT_THUMBNAIL = "/graphics/ThumbnailUnavailable.png";
