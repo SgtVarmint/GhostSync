@@ -77,6 +77,11 @@ function userUpdateAction(file)
 				}
 			}
 		}
+
+		if (info[4] != "none")
+		{
+			userListNeedsUpdated = true;
+		}
 		
 		if (!currentUserFound)
 		{

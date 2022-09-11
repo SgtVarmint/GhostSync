@@ -5,7 +5,6 @@ window.onload = function(){
 	//Only needs to occur one time per session
 	
 	serveInteractPrompt();
-	getUserIdList();
 	
 	document.getElementById("playButton").onclick = playButtonClicked;
 	document.getElementById("fullscreenButton").onclick = fullscreenButtonClicked;
