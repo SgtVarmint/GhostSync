@@ -1294,7 +1294,7 @@ hr {
     top: 92%;
     /*margin-top: 5px;*/
     left: 45%;
-    display: none;
+    opacity: 0;
 }
 
 .playButton_playing
