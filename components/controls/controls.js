@@ -269,7 +269,7 @@ function mouseHovered()
 	{
 		window.clearTimeout(controlsTimeout);
 		document.getElementById("reactionButton").style.display = "inline";
-		document.getElementById("playButton").style.display = "inline";
+		document.getElementById("playButton").style.opacity = 1;
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
 		document.getElementById("lockButton").style.display = "inline";
@@ -280,7 +280,7 @@ function mouseHovered()
 	else
 	{
 		document.getElementById("reactionButton").style.display = "inline";
-		document.getElementById("playButton").style.display = "inline";
+		document.getElementById("playButton").style.opacity = 1;
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
 		document.getElementById("lockButton").style.display = "inline";
@@ -294,7 +294,7 @@ function hideControls()
 	if (fullscreenEnabled)
 	{
 		document.getElementById("reactionButton").style.display = "none";
-		document.getElementById("playButton").style.display = "none";
+		document.getElementById("playButton").style.opacity = 0;
 		document.getElementById("fullscreenButton").style.display = "none";
 		document.getElementById("skipButton").style.display = "none";
 		document.getElementById("lockButton").style.display = "none";
@@ -304,7 +304,7 @@ function hideControls()
 	else
 	{
 		document.getElementById("reactionButton").style.display = "inline";
-		document.getElementById("playButton").style.display = "inline";
+		document.getElementById("playButton").style.opacity = 1;
 		document.getElementById("fullscreenButton").style.display = "inline";
 		document.getElementById("skipButton").style.display = "inline";
 		document.getElementById("lockButton").style.display = "inline";
@@ -316,7 +316,7 @@ function hideControls()
 function showControlsNotFullscreen()
 {
 	document.getElementById("reactionButton").style.display = "inline";
-	document.getElementById("playButton").style.display = "inline";
+	document.getElementById("playButton").style.opacity = 1;
 	document.getElementById("fullscreenButton").style.display = "inline";
 	document.getElementById("skipButton").style.display = "inline";
 	document.getElementById("lockButton").style.display = "inline";
