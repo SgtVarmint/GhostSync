@@ -156,6 +156,8 @@ window.onload = function(){
 			activeMode(); //activity.js
 		}
 	});
+
+	document.addEventListener("keydown", documentKeyPress);
 	
 	LOBBY_SOUND_SETTING = localStorage.getItem("lobbySounds");
 	if (LOBBY_SOUND_SETTING == null)

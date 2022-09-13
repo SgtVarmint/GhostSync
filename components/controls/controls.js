@@ -323,12 +323,12 @@ function showControlsNotFullscreen()
 	document.getElementById("seekSlider").style.display = "inline";
 }
 
-document.onkeypress = function(evt) {
+/*document.onkeypress = function(evt) {
     evt = evt || window.event;
     if (evt.keyCode == 27) {
         showControlsNotFullscreen();
     }
-};
+};*/
 
 function seekSliderSeeked()
 {

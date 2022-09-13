@@ -230,6 +230,10 @@ function syncVideoAction(file)
 		
 		if (!serverPaused && !paused) //Happy Play State
 		{
+			/*
+			Temporarily disabling JimmyNet from kicking on automatically
+			due to someone else scrubbing and causing other users to enter
+			JimmyNet mode without them needing it
 			//outOfSyncCount++;
 			if (outOfSync && !jimmyNet)
 			{			
@@ -254,6 +258,7 @@ function syncVideoAction(file)
 			{
 				//All is working smoothly
 			}
+			*/
 		}
 				
 		d.innerHTML += "Current Time: " + currentTime + "<br>";
