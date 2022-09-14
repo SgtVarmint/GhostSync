@@ -44,57 +44,104 @@ function getSubtitleData(array)
 	//index[x][2] is the subtitle text
 	var returnArray = new Array();
 
-	let englishFound = false;
-
-	for (var i = 0; i < array.length; i++)
+	if (array[0].includes("WEBVTT")) //Standard WebVTT file format
 	{
-		if (array[i].includes("comment="))
+		for (var i = 0; i < array.length; i++)
 		{
-			break;
-		}
-
-		if (array[i].includes("Language: eng"))
-		{
-			englishFound = true;
-		}
-
-		if (array[i].includes("-->") && englishFound)
-		{
-			let subtitleArray = new Array();
-
-			let timestampArray = array[i].split(" ");
-			//timestampArray[0] is start time string
-			//timestampArray[2] is end time string
-
-			subtitleArray.push(parseTimestampToMs(timestampArray[0]));
-			subtitleArray.push(parseTimestampToMs(timestampArray[2]));
-
-			let subtitleText = "";
-
-			let counter = i;
-			while (!array[++counter].includes("-->") && !array[counter + 1].includes("SubsTrack") && !array[counter + 1].includes("Thumbnailurl="))
+			if (array[i].includes("-->"))
 			{
-				//Strip the metadata line of all \r
+				let subtitleArray = new Array();
 
-				let lineText = array[counter].replace("\r", "");
-				lineText = lineText.replace("\n", "");
-				lineText = lineText.replace("\\", "");
-				if (lineText != "")
+				let timestampArray = array[i].split(" ");
+				//timestampArray[0] is start time string
+				//timestampArray[2] is end time string
+
+				subtitleArray.push(parseTimestampToMs(timestampArray[0]));
+				subtitleArray.push(parseTimestampToMs(timestampArray[2]));
+
+				let subtitleText = "";
+
+				let counter = i;
+				while (array[counter+1] != undefined && !array[++counter].includes("-->"))
 				{
-					let newLine = true;
-					if (subtitleText == "")
-						newLine = false;
+					//Strip the metadata line of all \r
 
-					if (newLine)
-						subtitleText += "\n";
-					subtitleText += lineText;
+					let lineText = array[counter].replace("\r", "");
+					lineText = lineText.replace("\n", "");
+					lineText = lineText.replace("\\", "");
+					if (lineText != "")
+					{
+						let newLine = true;
+						if (subtitleText == "")
+							newLine = false;
+
+						if (newLine)
+							subtitleText += "\n";
+						subtitleText += lineText;
+					}
+					if (counter >= array.length - 1)
+						endSearch = true;
 				}
-				if (counter >= array.length - 1)
-					endSearch = true;
+				subtitleArray.push(subtitleText);
+				
+				returnArray.push(subtitleArray);
 			}
-			subtitleArray.push(subtitleText);
-			
-			returnArray.push(subtitleArray);
+		}
+	}
+	else //Non-standard (recorded from PlayOn)
+	{
+		let englishFound = false;
+
+		for (var i = 0; i < array.length; i++)
+		{
+			if (array[i].includes("comment="))
+			{
+				break;
+			}
+
+			if (array[i].includes("Language: eng"))
+			{
+				englishFound = true;
+			}
+
+			if (array[i].includes("-->") && englishFound)
+			{
+				let subtitleArray = new Array();
+
+				let timestampArray = array[i].split(" ");
+				//timestampArray[0] is start time string
+				//timestampArray[2] is end time string
+
+				subtitleArray.push(parseTimestampToMs(timestampArray[0]));
+				subtitleArray.push(parseTimestampToMs(timestampArray[2]));
+
+				let subtitleText = "";
+
+				let counter = i;
+				while (!array[++counter].includes("-->") && !array[counter + 1].includes("SubsTrack") && !array[counter + 1].includes("Thumbnailurl="))
+				{
+					//Strip the metadata line of all \r
+
+					let lineText = array[counter].replace("\r", "");
+					lineText = lineText.replace("\n", "");
+					lineText = lineText.replace("\\", "");
+					if (lineText != "")
+					{
+						let newLine = true;
+						if (subtitleText == "")
+							newLine = false;
+
+						if (newLine)
+							subtitleText += "\n";
+						subtitleText += lineText;
+					}
+					if (counter >= array.length - 1)
+						endSearch = true;
+				}
+				subtitleArray.push(subtitleText);
+				
+				returnArray.push(subtitleArray);
+			}
 		}
 	}
 
