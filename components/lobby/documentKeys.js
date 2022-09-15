@@ -42,6 +42,10 @@ function documentKeyPress(event)
     }
     else if (event.keyCode == 38)//Up Arrow
     {
+        fullscreenButtonClicked();
+    }
+    else if (event.keyCode == 191)//Forward Slash
+    {
         skipButtonClicked();
     }
 }
