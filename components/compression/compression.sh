@@ -39,14 +39,21 @@ do
 
 	if [ ! -f $outputFile ]
 	then
-		ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
-		if (( $r == 1 ))
+		bitrate=`ffprobe -v quiet -select_streams v:0 -show_entries stream=bit_rate -of default=noprint_wrappers=1 $i | sed 's/.*=//'`
+		if [[ $bitrate -gt 999999 ]]
 		then
-			count=$(expr $count + 1)
+			ffmpeg -n -i $i -preset ultrafast -b:v 1000k $outputFile
+			if (( $r == 1 ))
+			then
+				count=$(expr $count + 1)
+			else
+				echo Failed - $outputFile
+                        	echo Failed - $outputFile >> /home/jon/logs/compression.log
+				failedCount=$(expr $failedCount + 1)
+			fi
 		else
-			echo Failed - $outputFile
-                        echo Failed - $outputFile >> /home/jon/logs/compression.log
-			failedCount=$(expr $failedCount + 1)
+			ln -s $i $outputFile
+			count=$(expr $count + 1)
 		fi
 	fi
 done
