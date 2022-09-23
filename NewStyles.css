@@ -913,6 +913,7 @@ margin: 1%;
     /*border: 1px solid black;*/
     width: 36%;
     color: white;
+    overflow: hidden;
 }
 
 #videoBrowserSidePanel p {
@@ -1501,4 +1502,16 @@ hr {
 {
     padding-top: 400px;
     pointer-events: none;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Default Thumbnail Generation                                                       |
+*________________________________________________________________________________________________________|
+*/
+
+#videoDefaultThumbnailContainer
+{
+    display: none;
 }

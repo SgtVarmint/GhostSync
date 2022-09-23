@@ -1,17 +1,24 @@
 //tHiS mEtHoD cReAtEs AnD aPpEnDs ThE vIdEo MeTaDaTa DeTaIlS tO tHe SiDe PaNeL wItHiN vIdEo BrOwSeR
-function serveVideoInfo(videoPath, timestamp, overridePlaystateToPlay) {
+async function serveVideoInfo(videoPath, timestamp, overridePlaystateToPlay) {
 	var sidePanelDiv = document.getElementById("videoBrowserSidePanel");
 	sidePanelDiv.innerHTML = "";
 	startSidePanelLoader();
 
 	var videoInfo = getVideoInfo(videoPath);
 
+	let thumbnailUrl = "";
+	if (videoInfo.thumbnailUrl != DEFAULT_THUMBNAIL)
+	{
+		thumbnailUrl = videoInfo.thumbnailUrl;
+	}
+	else
+	{
+		thumbnailUrl = await generateDefaultThumbnailFromVideo(videoPath);
+	}
+
 	var thumbnailElement = document.createElement("img");
 	thumbnailElement.id = "thumbnail";
-	thumbnailElement.src = videoInfo.thumbnailUrl;
-	thumbnailElement.onerror = function () {
-		thumbnailElement.src = DEFAULT_THUMBNAIL;
-	};
+	thumbnailElement.src = thumbnailUrl;
 	thumbnailElement.onload = function () {
 		stopSidePanelLoader();
 	};
@@ -103,4 +110,44 @@ function stopSidePanelLoader() {
 	sidePanelLoader.parentNode.removeChild(sidePanelLoader);
 
 	document.getElementById("videoInfoSpan").classList.remove("hidden");
+}
+
+async function generateDefaultThumbnailFromVideo(videoPath)
+{
+	//This method currently uses timeouts to allow the client time to load
+	//the video and then seek to a timestamp before trying to grab the thumbnail image
+	//This means there is always a .5 second delay for the thumbail to generate
+	//In the future, it would be nice to have this asynchronous, where it will load
+	//the side panel with title info (etc.), and then fill the thumbnail in once it's ready
+	//The author of this method is too smol brain to figure this out at the time of writing
+	
+	let thumbnailVideo = document.getElementById("videoDefaultThumbnailSource");
+	let videoElement = document.getElementById("videoDefaultThumbnailVideo");
+    let canvasElement = document.getElementById("videoDefaultThumbnailCanvas");
+	let canvasContext = canvasElement.getContext("2d");
+
+	try //Try generating thumbnail from video
+	{
+		thumbnailVideo.src = videoPath;
+		videoElement.load();
+
+		await new Promise(r => setTimeout(r, 250));
+
+		let halfTime = videoElement.duration / 3;
+		videoElement.currentTime = halfTime;
+
+		await new Promise(r => setTimeout(r, 250));
+
+		canvasElement.width = videoElement.videoWidth;
+		canvasElement.height = videoElement.videoHeight;
+
+		canvasContext.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
+		defaultThumbnailFromVideo = canvasElement.toDataURL();
+
+		return defaultThumbnailFromVideo;
+	}
+	catch(exception) //Took too long - just return the default thumbnail
+	{
+		return DEFAULT_THUMBNAIL;
+	}
 }

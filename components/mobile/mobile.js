@@ -66,9 +66,6 @@ function checkForMobile()
 		
 		document.getElementById("userqueue_wrapper").classList.add("userqueue_closed");
 		document.getElementById("userqueue_wrapper").style.display = "none";
-
-		//Fullscreen button
-		//document.getElementById("fullscreenButton").onclick = function(){ toast("Fullscreen not supported on mobile") };
 	}
 	else if (!mq.matches && mobile && !theaterMode)//Desktop
 	{

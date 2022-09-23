@@ -43,8 +43,18 @@ function getSubtitleData(array)
 	//index[x][1] is end time of subtitle
 	//index[x][2] is the subtitle text
 	var returnArray = new Array();
+	processAsVTT = false;
 
-	if (array[0].includes("WEBVTT")) //Standard WebVTT file format
+	for (var i = 0; i < array.length; i++)
+	{
+		if (array[i].includes("WEBVTT"))
+		{
+			processAsVTT = true;
+			break;
+		}
+	}
+
+	if (processAsVTT) //Standard WebVTT file format
 	{
 		for (var i = 0; i < array.length; i++)
 		{
