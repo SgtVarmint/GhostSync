@@ -7,7 +7,8 @@ function getVideoInfo(videoPath)
 			details: "",
 			thumbnailUrl: "",
 			releaseDate: "",
-			adBlocks: new Array()
+			adBlocks: new Array(),
+			subtitleData: new Array()
 		};
 	
 	var detailsArray = metadata.split("\n");
