@@ -43,6 +43,7 @@ var inactiveUsers = new Array();
 
 //Graphics
 DEFAULT_THUMBNAIL = "/graphics/ThumbnailUnavailable.png";
+DEFAULT_THUMBNAIL_GRAYED = "/graphics/ThumbnailUnavailableGrayed.png";
 
 //Text
 DEFAULT_BROWSER_MESSAGE = "\"Hey, it's me, GhostStink.  Find a video to play off to the left\"";
