@@ -269,7 +269,6 @@ function playVideo(video = "pullFromDOM", timestamp = 0, overridePlaystateToPlay
 		fileLocation = video;
 		
 	document.getElementById("filePath").value = serveVideoPath(fileLocation);
-	document.getElementById("playState").value = !overridePlaystateToPlay ? "paused" : "playing";
 		
 	document.getElementById("videoSource").src = serveVideoPath(fileLocation);
 	///////////////
@@ -306,21 +305,6 @@ function playVideo(video = "pullFromDOM", timestamp = 0, overridePlaystateToPlay
 	videoEnded = true;
 	updateServerTimeStamp();
 	
-	//Detect if video is widescreen
-	var videoPlayer = document.getElementById("video");
-	var aspectRatio = parseFloat(videoPlayer.videoWidth) / parseFloat(videoPlayer.videoHeight);
-	if (aspectRatio > 2.0)
-	{
-		document.getElementById("video").className = fullscreenEnabled ? "widescreenVideo" : "widescreenVideo_fullscreen";
-	}
-	else if (aspectRatio > 1.5)
-	{
-		document.getElementById("video").className = fullscreenEnabled ? "fullVideo_fullscreen" : "fullVideo";
-	}
-	else
-	{
-		document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
-	}
 }
 
 function goBack()
@@ -376,12 +360,11 @@ function sortSeasons(folders, desc = false)
 	return sortedFolders;
 }
 
-function sortDatedGameplay(contents, desc = false)
+function sortDatedGameplay(contents, asc = false)
 {
 	let sortedContents = new Array();
 	
 	let contentDates = new Array();
-	//let indexOrderArray = new Array();
 	
 	for (let i = 0; i < contents.length - 1; i++)
 	{
@@ -391,7 +374,7 @@ function sortDatedGameplay(contents, desc = false)
 	
 	contentDates.sort((a, b) => b.date - a.date)
 	
-	if (desc)
+	if (asc)
 	{
 		for (let i = contents.length - 1; i >= 0; i--)
 		{
@@ -408,6 +391,7 @@ function sortDatedGameplay(contents, desc = false)
 		}
 	}
 	
+	sortedContents.push("");
 	return sortedContents;
 }
 

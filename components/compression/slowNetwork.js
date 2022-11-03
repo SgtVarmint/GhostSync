@@ -1,5 +1,7 @@
 function serveVideoPath(videoPath)
 {
+	if (videoPath == "null")
+		return videoPath;
 	if (videoPath.includes("Videos/Gameplay/"))
 		return videoPath;
 	if (jimmyNet || JIMMYNET_SETTING_TOGGLED)

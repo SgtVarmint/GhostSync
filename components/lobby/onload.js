@@ -4,8 +4,7 @@ window.onload = function(){
 	//Initial page reload for auth to take affect
 	//Only needs to occur one time per session
 	
-	//serveInteractPrompt();
-	
+	serveInteractPrompt();
 	getUserIdList();
 	
 	document.getElementById("playButton").onclick = playButtonClicked;
@@ -14,6 +13,8 @@ window.onload = function(){
 	document.getElementById("seekSlider").oninput = seekSliderSeeked;
 	document.getElementById("lockButton").onclick = lockButtonClicked;
 	document.getElementById("hideButton").onclick = hideButtonClicked;
+	document.getElementById("hideButtonRight").onclick = hideButtonRightClicked;
+	document.getElementById("subtitleButton").onclick = subtitleButtonClicked;
 	
 	PLAYER_VOLUME = localStorage.getItem("playerVolume");
 	if (PLAYER_VOLUME == null)
@@ -46,6 +47,24 @@ window.onload = function(){
 	{
 		TOLERANCE = .3;
 		localStorage.setItem("tolerance", TOLERANCE);
+	}
+
+	let subtitleLobbySetting = localStorage.getItem("subtitles");
+	if (subtitleLobbySetting == null)
+	{
+		SUBTITLES_ENABLED = false;
+		localStorage.setItem("subtitles", "off")
+		document.getElementById("subtitleButton").classList.add("subtitleButton_disabled");
+	}
+	else
+	{
+		if (subtitleLobbySetting == "on")
+			SUBTITLES_ENABLED = true;
+		else
+		{
+			SUBTITLES_ENABLED = false;
+			document.getElementById("subtitleButton").classList.add("subtitleButton_disabled");
+		}
 	}
 	
 	LOBBY_REACTIONS_SETTING = localStorage.getItem("lobbyReactionsSetting");
@@ -103,7 +122,11 @@ window.onload = function(){
 		localStorage.setItem("preload", PRELOAD);
 	};
 	*/
+	
 
+	/*
+	*	keycode is depricated 
+	*/
 	document.getElementById("userNameInput").addEventListener("keyup", function(event)
 	{
 		if (event.keyCode === 13)
@@ -164,12 +187,10 @@ window.onload = function(){
 		localStorage.setItem("playerVolume", PLAYER_VOLUME);
 	}
 	
-	//document.getElementById("video").onseeked = function(){ document.getElementById("video").pause(); document.getElementById("playState").value = "paused"; };//updateServerTimeStamp(); };
 	document.getElementById("player").onmousemove = mouseHovered;
 	document.getElementById("youtubePlayer").onmousemove = mouseHovered;
 	document.getElementById("youtubePlayButton").onclick = playYoutubeVideo;
 	document.getElementById("youtubeAddToQueueButton").onclick = addYoutubeVideoToQueue;
-	//document.getElementById("video").onclick = function(){ document.getElementById("playButton").click(); };
 	document.getElementById("reactionButton").onclick = reactionButtonClicked;
 	document.getElementById("closeReactionMenuButton").onclick = function(){ document.getElementById("reactionButton").click(); };
 	document.getElementById("reactionMenuFavoritesButton").onclick = showFavoriteEmojis;
@@ -188,6 +209,7 @@ window.onload = function(){
 	
 	setInterval(syncPull, SYNC_INTERVAL * 1000);
 	setInterval(userUpdate, USER_UPDATE_INTERVAL * 1000);
+	setInterval(checkForAndDisplaySubtitles, 250); //Will check for subtitles 4 times a minute
 	getDirectoryInfo();	
 	checkForMobile();
 }

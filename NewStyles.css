@@ -1,0 +1,1504 @@
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                        |
+*                                    Base Styles                                                         |
+*________________________________________________________________________________________________________|
+*/
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+      background: var(--secondary); 
+    /*background: #333333; */
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent); 
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    letter-spacing: 0.1rem;
+    font-family: Arial;
+}
+
+body
+{
+    overflow: hidden;
+}
+
+:root {
+    --primary: #29293d;
+    --secondary: #4f4f4f;
+    --accent: #666679;
+    --gray: rgba(80, 79, 79, 0.87);
+    --white: #f2f2f2
+}
+
+h3 {
+    color: var(--white);
+    font-size: 1em;
+}
+
+.text_title {
+    color: var(--white)
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    border: black solid 1.5px;
+}
+
+.divider {
+    float: left;
+    width: 5px;
+    display: block;
+    width: 5px;
+    height: 100%;
+    text-align: center;
+    font-size: 2em;
+    background-color: var(--gray);
+    border-radius: 5px;
+}
+
+/*------  BUTTONS ------- */
+.defaultButton {
+    box-shadow: inset 0px 1px 3px 0px #91b8b3;
+    background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+    background-color: #768d87;
+    border-radius: 5px;
+    border: 2px solid #566963;
+    display: inline-block;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 11px 23px;
+    text-decoration: none;
+    text-shadow: 0px -1px 0px #2b665e;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.defaultButton:hover {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+    background-color: #6c7c7c;
+}
+
+.defaultButton:active {
+    position: relative;
+    top: 1px;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                    KeyFrames                                                     |
+*________________________________________________________________________________________________________|
+*/
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: .4;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: .4;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes popup-in {
+    from {
+        opacity: 0;
+        top: 0px;
+    }
+
+    to {
+        opacity: 1;
+        top: 15%;
+    }
+}
+
+@keyframes popup-out {
+    from {
+        opacity: 1;
+        top: 15%;
+    }
+
+    to {
+        opacity: 0;
+        top: 0px;
+    }
+}
+
+@keyframes popup-in-left {
+    from {
+        opacity: 0;
+        left: 100%;
+    }
+
+    to {
+        opacity: .98;
+        left: 0;
+    }
+}
+
+@keyframes popup-out-left {
+    from {
+        opacity: .98;
+        left: 0;
+    }
+
+    to {
+        opacity: 0;
+        left: 100%;
+    }
+}
+
+.fade_in {
+    animation-name: fade-in;
+    animation-duration: .3s;
+}
+
+.fade_out {
+    animation-name: fade-out;
+    animation-duration: .3s;
+}
+
+.popupWindow_in {
+    animation-name: popup-in;
+    animation-duration: .3s;
+}
+
+.popupWindow_out {
+    animation-name: popup-out;
+    animation-duration: .3s;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                    Main Page Nav/Wrapper                                                      |
+*________________________________________________________________________________________________________|
+*/
+#topNav {
+    position: relative;
+    background-color: var(--gray);
+    overflow: hidden;
+    height: 50px;
+    z-index: 1000;
+}
+
+#topNav a {
+    width: 23%;
+    float: left;
+    display: block;
+    color: var(--white);
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 25px;
+    transition: .25s;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.navButton:hover {
+    background-color: var(--accent);
+    border-radius: 20px;
+}
+
+#main_wrapper {
+    background-color: #29293d;
+    height: 100vh;
+}
+
+.main_desktop
+{
+    height: 100vh;
+}
+
+.main_mobile
+{
+    height: 100%;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                    Main Page Authentication                                                    |
+*________________________________________________________________________________________________________|
+*/
+#auth {
+    color: var(--white);
+    position: fixed;
+    background: rgba(79, 79, 79, 0.7);
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 5px;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    overflow: visible;
+    height: auto;
+    margin-top: 50px;
+}
+
+#auth input {
+    font-size: 1.5em;
+    width: 70%;
+    padding: 5px;
+}
+
+#auth button {
+    font-size: 1.5em;
+}
+
+#auth>span {
+    font-size: 1.5em;
+}
+
+#authTip {
+    font-size: .4em;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                    Main Page Join Area                                                       |
+*________________________________________________________________________________________________________|
+*/
+#joinArea {
+    color: var(--white);
+    margin-top: 10%;
+    background-color: var(--gray);
+    border-radius: 5px;
+
+    padding: 5px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    box-shadow: -1px 5px 10px rgba(255, 255, 255, 0.479);
+}
+
+#joinArea input,
+#joinArea span,
+#joinArea button {
+    display: inline;
+    font-size: 1em;
+    width: auto;
+    margin-left: 5%;
+    padding: 10px;
+}
+
+#joinArea input {
+    font-size: 1em;
+    padding: 10px;
+}
+
+#joinArea span {
+    font-size: 1.5em;
+}
+
+#lobbyInput{
+margin: 1%;
+
+}
+
+#joinArea button {
+    font-size: 1.5em;
+    margin: 10px;
+}
+
+
+
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                    Main Page Info build                                                      |
+*________________________________________________________________________________________________________|
+*/
+#buildInfo {
+    color: var(--white);
+    position: fixed;
+    bottom: 0;
+    width: 95%;
+    text-align: right;
+    padding: 5px;
+    margin-right: 5%;
+    font-size: 1em;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                    Lobby                                                    |
+*________________________________________________________________________________________________________|
+*/
+
+#hideButtonContainer {
+    position: absolute;
+    left: 0;
+    top: 55px;
+    z-index: 10;
+    height: 80px;
+    width: 30px;
+}
+
+#hideButton {
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+}
+
+#hideButton:hover{
+    cursor: pointer;
+    opacity: 1;
+}
+
+#hideButtonRightContainer {
+    display: none;
+    position: fixed;
+    top: 55px;
+    z-index: 100;
+    height: 80px;
+    width: 240px;
+}
+
+.hideButtonRightContainerOpened {
+    left: 90%;
+}
+
+.hideButtonRightContainerClosed {
+    left: 95%;
+}
+
+
+#hideButtonRight {
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+}
+
+#hideButtonRight:hover
+{
+    cursor: pointer;
+    opacity: 1;
+}
+
+#backgroundFade {
+    opacity: .4;
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    z-index: 99;
+}
+
+#nowPlaying {
+    padding: 2.4%;
+    margin-left: 20%;
+    font-size: 1.5em;
+}
+
+.nowPlaying_desktop
+{
+    height: 90px;
+}
+
+.nowPlaying_mobile
+{
+    height: 90px;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                   youtube                                                    |
+*________________________________________________________________________________________________________|
+*/
+#youtubeMenu {
+    display: none;
+    position: fixed;
+    background: rgba(79, 79, 79, 0.85);
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 4% 2% 1% 1%;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    overflow: auto;
+    height: auto;
+    margin-top: 0px;
+    z-index: 100;
+}
+
+#youtubeMenu span,
+#youtubeMenu input,
+#youtubeMenu button {
+    font-size: 2em;
+    display: inline-block;
+    clear: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    position: relative;
+    transform: translateY(-50%);
+}
+
+#youtubeMenu input {
+    /*width: 40%;
+    margin: 10px;*/
+    font-size: 1.5em;
+}
+
+#youtubeMenu button {
+    /*width: 10%;
+    margin: 10px;*/
+    font-size: 1.5em;
+}
+
+.youtube_standardscreen
+{
+    height: 680px;
+}
+
+.youtube_fullscreen
+{
+    height: 99%;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                   Settings                                                  |
+*________________________________________________________________________________________________________|
+*/
+.setting_section {
+    margin: 2%;
+}
+
+#settings h3 {
+    font-size: 1.5em;
+}
+
+#changeUsernameButton {
+    margin: 0 2%;
+}
+
+#settings {
+    display: none;
+    position: fixed;
+    background: rgba(79, 79, 79, 0.85);
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 5px;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    overflow: auto;
+    height: 70%;
+    margin-top: 0px;
+    z-index: 100;
+}
+
+#settings a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 5px;
+}
+
+#settings input {
+    font-size: 2em;
+}
+
+#settings button {
+    padding: 5px;
+    font-size: 1.25em;
+    margin-bottom: 10px;
+}
+
+#toleranceSlider {
+    width: 50%;
+    transform: scale(1.5);
+}
+
+#lobbySoundsToggle,
+#youtubeDisabledToggle,
+#preloadToggle,
+#jimmyToggle,
+#reactionsToggle {
+    margin: 15px;
+    transform: scale(2.5);
+}
+
+#toleranceValue {
+    font-size: 1em;
+    color: var(--white);
+}
+
+.label
+{
+    color: var(--white);
+}
+
+.youtubeMenuElement
+{
+    float: left;
+    width: 100%;
+    padding: 10px;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  reactions                                                |
+*________________________________________________________________________________________________________|
+*/
+.reaction_wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.emojiElement {
+    text-decoration: none;
+    font-size: 2em;
+}
+
+@keyframes emoji-wiggle {
+    0% {
+        margin-top: 0px;
+    }
+
+    25% {
+        margin-top: 5px;
+    }
+
+    50% {
+        margin-top: 0px;
+    }
+
+    75% {
+        margin-top: 5px;
+    }
+
+    100% {
+        margin-top: 0px;
+    }
+}
+
+.emojiText {
+    position: absolute;
+    display: inline-block;
+    animation-name: emoji-wiggle;
+    animation-duration: 3s;
+}
+
+#reactionPanel {
+    display: block;
+    position: absolute;
+    text-align: center;
+    overflow: none;
+    z-index: 100;
+    left: 60%;
+    top: 15%;
+    padding: 0;
+    overflow: hidden;
+    width: 400px;
+    height: 500px;
+    font-size: 2em;
+    pointer-events: none;
+}
+
+.reactionElement {
+    padding: 10px;
+    /*font-size: 3em;*/
+    background: rgb(0, 0, 0, .5);
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 80%;
+    color: white;
+    animation-name: reaction-in;
+    animation-duration: .2s;
+}
+
+@keyframes reaction-in {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+
+#addFavoriteButton {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#removeFavoriteButton {
+    padding-left: 9px;
+    padding-right: 9px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#reactionMenuContainer {
+    display: none;
+    position: absolute;
+    background: rgba(79, 79, 79, 0.85);
+    border-radius: 5px;
+    border: 1px solid white;
+    text-align: center;
+    overflow: auto;
+    z-index: 100;
+    left: 40%;
+    top: 60%;
+    padding: 0;
+    overflow: hidden;
+    width: 280px;
+    height: 160px;
+
+}
+
+#reactionMenuTop {
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+    text-align: right;
+}
+
+#reactionMenuTop span {
+    font-weight: bolder;
+    margin-left: 5px;
+
+}
+
+#closeReactionMenuButton {
+    width: 25px;
+    font-weight: bolder;
+    font-size: .8em;
+    color: white;
+    background-color: gray;
+    margin-right: 5px;
+    border-radius: 5px;
+    margin-top: 6%;
+
+}
+
+#reactionMenuTop_Left {
+    float: left;
+    text-align: center;
+    width: 80%;
+    height: 15%;
+}
+
+#reactionMenuTop_Left button {
+    margin: auto;
+    width: 48%;
+    font-weight: bold;
+    font-size: 1em;
+    color: white;
+    background-color: gray;
+    outline: none;
+}
+
+#reactionMenuFavoritesButton {
+    background-color: #1e1e1e;
+}
+
+#reactionMenuTop_Right {
+    float: left;
+    text-align: right;
+    width: 20%;
+    height: 15%;
+}
+
+#reactionMenuFavorites {
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 78%;
+    overflow: auto;
+}
+
+#reactionMenuAll {
+    display: none;
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 78%;
+    overflow: auto;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Users                                               |
+*________________________________________________________________________________________________________|
+*/
+#users_wrapper {
+    float: left;
+    overflow: hidden;
+    position: relative;
+}
+
+.users_wrapper_desktop
+{
+    clear: none;
+    width: 100%;
+    height: 60%;
+    margin-top: 0;
+}
+
+.users_wrapper_mobile
+{
+    clear: none;
+    width: 40%;
+    height: 100%;
+    margin-top: 0;
+    /*left: -200px;*/
+}
+
+#users ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: #d3d3d3;
+}
+
+#userListContainer {
+    height: 100%;
+    overflow: auto;
+}
+
+#userList {
+    list-style: none;
+}
+
+.user {
+    padding: 10px;
+    font-size: 1.5em;
+    color: white;
+    background: rgb(0, 0, 0, .1);
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 80%;
+    padding: 2%;
+}
+
+.user:hover {
+    cursor: pointer;
+}
+
+.user span {
+    padding-right: 10px;
+    padding-left: 5px;
+}
+
+.activeUser {
+    color: #8db1ef;
+}
+
+#user_title {
+    font-size: 1.25em;
+    margin-left: 25%;
+}
+
+.activeUser span {
+    color: #8db1ef;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Video Player                                              |
+*________________________________________________________________________________________________________|
+*/
+#player {
+    position: absolute;
+    float: left;
+}
+
+.player_desktop
+{
+    width: 65%;
+    height: 68%;
+}
+
+.player_mobile
+{
+    width: 100%;
+    height: 68%;
+}
+
+#browser {
+    display: none;
+    position: fixed;
+    background: rgba(79, 79, 79, 0.99);
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 5px;
+    text-align: left;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    overflow: none;
+    height: 80%;
+    margin-top: 0px;
+    z-index: 100;
+}
+
+#videoBrowser {
+    float: left;
+    overflow: auto;
+    height: 90%;
+    padding: 5px;
+    width: 60%;
+    border-right: solid white 3px;
+    border-radius: 5px;
+}
+
+#videoBrowserSidePanel {
+    float: left;
+    overflow: auto;
+    height: 90%;
+    padding: 5px;
+    /*border: 1px solid black;*/
+    width: 36%;
+    color: white;
+}
+
+#videoBrowserSidePanel p {
+    padding: 10px;
+    font-size: 1.2em;
+}
+
+#videoBrowserSidePanel div {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#videoBrowserSidePanel.infoDiv {
+    display: block;
+    padding: 10px;
+    padding-bottom: 4px;
+    padding-top: 2px;
+    font-size: .7em;
+}
+
+.videoInfoButton {
+    color: white;
+    background-color: #326785;
+    transition: .25s;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin-left: 25%;
+    margin-top: 10px;
+    width: 50% !important;
+}
+
+.videoInfoButton:hover {
+    background-color: gray;
+}
+
+
+.videoBrowserVideo {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 3px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: .25s;
+}
+
+.videoBrowserDir {
+    text-decoration: none;
+    color: #89d3ff;
+    /* color: #0090e3; --old color*/
+    font-size: 1.5em;
+    padding: 3px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: .25s;
+}
+
+#browser a:hover {
+    background-color: gray;
+}
+
+#browser button {
+    padding: 5px;
+    width: 99%;
+    font-size: 1.25em;
+    margin-bottom: 10px;
+}
+
+#videoBrowser {
+    float: left;
+    overflow: auto;
+    height: 90%;
+    padding: 5px;
+    width: 60%;
+    border-right: solid white 3px;
+    border-radius: 5px;
+}
+
+#video {
+    margin-left: auto;
+    margin-right: auto;
+    outline: none;
+}
+
+.video_desktop
+{
+    width: 100%;
+}
+
+.video_mobile
+{
+    width: 100%;
+}
+
+.video_standardscreen
+{
+    height: 100%;
+}
+
+.video_fullscreen
+{
+    height: 100%;
+}
+
+#youtubePlayer {
+    display: none;
+    width: 100%;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Controls                                             |
+*________________________________________________________________________________________________________|
+*/
+
+video::-webkit-media-controls-play-button {
+    display: none;
+}
+
+video::-webkit-media-controls-fullscreen-button {
+    display: none;
+}
+
+video::-webkit-media-controls-timeline {
+    display: none;
+}
+
+.controls {
+    height: 5%;
+    background: rgb(0, 0, 0, 0);
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+    display: inline;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.controlsDisabled {
+    opacity: .4;
+}
+
+.controls:hover {
+    color: green;
+}
+
+#seekSlider {
+    display: "none";
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    /*transform: scale(1);*/
+}
+
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Queue                                            |
+*________________________________________________________________________________________________________|
+*/
+#queue_title {
+    margin: 1%;
+}
+
+#queueArea span {
+    color: white;
+    font-size: 1.2em;
+    padding: 5px;
+    z-index: -1;
+}
+
+#queueArea hr {
+    height: 2px;
+    background-color: var(--white);
+    border: none;
+}
+
+#queueArea {
+
+    display: block;
+    float: right;
+    position: relative;
+    border-top: 1px solid var(--white);
+    border-bottom: 1px solid var(--white);
+    border-left: none;
+    border-right: none;
+    border-radius: 10px;
+    text-align: left;
+    padding: 5px;
+    overflow: hidden;
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+.queueArea_desktop
+{
+    width: 100%;
+    left: 0%;
+    height: 20%;
+}
+
+.queueArea_mobile
+{
+    width: 60%;
+    left: 0;
+    height: 100%;
+}
+
+#queue {
+    position: relative;
+    display: block;
+    overflow: auto;
+    height: 60%;
+}
+
+#queueArea a {
+    margin: 5%;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 1em;
+    padding: 3px;
+    border-radius: 5px;
+    transition: .25s;
+}
+
+.addToQueue {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    background-color: #326785;
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid white;
+    border-radius: 5px;
+    transition: .25s;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#queueArea a:hover {
+    background-color: gray;
+    color: white;
+}
+
+hr {
+    margin: 1%;
+}
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Preload Progress                                          |
+*________________________________________________________________________________________________________|
+*/
+#preloadProgress
+{
+	font-style: bolder;
+}
+
+#preloadProgress.hidden
+{
+	visibility: hidden;
+}
+
+#preloadProgress.error
+{
+	visibility: visible;
+	color: red;
+}
+#preloadProgress.inProgress
+{
+	visibility: visible;
+	color: orange;
+}
+
+#preloadProgress.done
+{
+	visibility: visible;
+	color: green;
+}
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  server video info JS                                          |
+*________________________________________________________________________________________________________|
+*/
+#thumbnail{
+    width: 100%;
+}
+.wide{
+    width: 100%;
+}
+#videoDate{
+    width: 100%; 
+    font-size: .8em;
+}
+#videoInfoSpan{
+    /*display:block;*/
+}
+#sidePanelLoader{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: var(--gray);
+    color: var(--white);
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  ghostConfirm Popups                                          |
+*________________________________________________________________________________________________________|
+*/
+
+#confirmDiv
+{
+    width: 74%;
+    position: fixed;
+    background-color: var(--gray);
+    border: 2px solid var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 15%;
+    margin-left: 13%;
+    margin-right: 13%;
+    top: 100;
+    color: var(--white);
+    z-index: 1000;
+}
+
+#ghostConfirmInput
+{
+    font-size: 1.2em;
+    display: inline-block;
+    clear: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+    position: relative;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Fullscreen                                           |
+*________________________________________________________________________________________________________|
+*/
+
+.reactionButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 40%;
+    display: none;
+}
+
+.reactionMenuContainer_fullscreen
+{
+    top: 55%
+}
+
+.reactionPanel_fullscreen
+{
+    top: 15%;
+    left: 70%;
+    height: 800px;
+    width: 550px;
+    font-size: 3em;
+}
+
+.playButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    /*margin-top: 5px;*/
+    left: 45%;
+    display: none;
+}
+
+.playButton_playing
+{
+    margin-top: 0px;
+}
+
+.playButton_paused
+{
+    margin-top: 4px;
+}
+
+.fullscreenButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 50%;
+    display: none;
+}
+
+.seekSlider_fullscreen
+{
+    position: absolute;
+    top: 97%;
+    left: 0%;
+    display: none;
+    opacity: 0.4;
+}
+
+.skipButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 54%;
+    display: none;
+}
+
+.lockButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 59%;
+    display: inline;
+}
+
+.subtitleButton_fullscreen
+{
+    position: absolute;
+    top: 92%;
+    left: 64%;
+}
+
+.subtitleButton_disabled
+{
+    opacity: 0.3;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Tooltips                                           |
+*________________________________________________________________________________________________________|
+*/
+
+.toolTip
+{
+	display: inline-block;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	border: solid white 1px;
+	background-color: black;
+	font-size: .5em;
+	z-index: 200;
+    padding-left: 1px;
+}
+
+.toolTip:hover
+{
+    cursor: pointer;
+}
+
+#activeToolTip
+{
+	display: div;
+	position: absolute;
+	border: solid black 2px;
+	border-radius: 5px;
+	padding: 8px;
+	font-size: 1.5em;
+	background-color: white;
+	color: black;
+	z-index: 200;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  userqueue SideThing                                           |
+*________________________________________________________________________________________________________|
+*/
+
+#userqueue_wrapper
+{
+    position: relative;
+    float: right;
+}
+
+.userqueue_opened
+{
+    /*display: block;*/
+    animation-name: popup-in-left;
+    animation-duration: .3s;
+}
+
+.userqueue_closed
+{
+    /*display: none;*/
+    animation-name: popup-out-left;
+    animation-duration: .3s;
+}
+
+.userqueue_wrapper_desktop
+{
+    width: 35%;
+    height: auto;
+    z-index: 1;
+}
+
+.userqueue_wrapper_mobile
+{
+    width: 80%;
+    height: 80%;
+    background-color: var(--gray);
+    opacity: .98;
+    border-top: solid 2px;
+    border-left: solid 2px;
+    border-bottom: solid 2px;
+    border-color: var(--white);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 10px;
+    z-index: 100;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Subtitles                                                            |
+*________________________________________________________________________________________________________|
+*/
+
+#subtitle_wrapper
+{
+    top:75%;
+    right:25%;
+    bottom:10%;
+    left:25%;
+    position: absolute;
+    opacity: .9;
+    pointer-events: none;
+}
+
+#subtitleText
+{
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    text-align: center;
+}
+
+.subtitleText_standardscreen
+{
+    font-size: 2em;
+}
+
+.subtitleText_fullscreen
+{
+    font-size: 3em;
+}
+
+/* 
+*________________________________________________________________________________________________________
+*                                                                                                      |
+*                                  Interact Check                                                        |
+*________________________________________________________________________________________________________|
+*/
+
+#interactCheck
+{
+	background-color:  rgba(79, 79, 79, .98);
+	position: relative;
+	z-index: 10000;
+	width: 100%;
+	height: 150%;
+	top: -100%;
+	color: white;
+	font-size: 4em;
+	text-align: center;
+    cursor: pointer;
+	/*line-height: 150%;*/
+}
+
+#interactCheck div
+{
+    padding-top: 400px;
+    pointer-events: none;
+}

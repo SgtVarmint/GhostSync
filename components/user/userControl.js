@@ -28,7 +28,6 @@ function userUpdateAction(file)
 	var userInfo = file.responseText.split("#");
 	var currentUsers = document.getElementsByClassName("user");
 	var userListNeedsUpdated = false;
-		
 	if (userInfo.length - 1 == currentUsers.length)
 	{
 		for (var i = 0; i < userInfo.length - 1; i++)
@@ -50,8 +49,11 @@ function userUpdateAction(file)
 				break;
 			}
 		}
+		//This needs updated to be able to better detect when user list needs updated
+		//Without this line below, it will not update user statuses on the UI
+		userListNeedsUpdated = true;
 	}
-	else if (userInfo.length -1 > currentUsers.length)
+	else if (userInfo.length - 1 > currentUsers.length)
 	{
 		userListNeedsUpdated = true;
 		playSound("TA.mp3");
@@ -78,7 +80,7 @@ function userUpdateAction(file)
 			else
 				li.className = "user";
 			li.id = info[5];
-			li.name = info[0];
+			li.setAttribute("name", info[0]);
 			var temp = parseInt(info[2]);
 			var minutes = temp / 60;
 			var seconds = temp % 60;
@@ -101,9 +103,17 @@ function userUpdateAction(file)
 			
 			if (duplicateUserCount > 0)
 				duplicateDesignation = "(" + duplicateUserCount + ")"
+
+			let useralias = localStorage.getItem("userAlias_" + info[5]);
+			if (useralias != undefined && useralias != "")
+				useralias = " <span style='color: gray;'>(" + useralias + ")</span>";
+			else
+				useralias = "";
+			
+			li.onclick = userClicked;
 			
 			//This line builds the individual user li innerHTML
-			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + duplicateDesignation// + " - " + hrTimeStamp;
+			li.innerHTML = "<span style='font-style: bolder; color: " + statusColor + "'>&#8226;</span> " + userName + duplicateDesignation + useralias;// + " - " + hrTimeStamp;
 			if (info[4] != "none" && info[4] != "")
 			{
 				processIncomingReaction(info[0], info[4]);
@@ -150,7 +160,23 @@ function playSound(fileName)
 	if (LOBBY_SOUND_SETTING == "on")
 	{
 		var soundFile = new Audio("/sounds/" + fileName)
-		soundFile.volume = .25;
+		soundFile.volume = .08;
 		soundFile.play();
 	}
+}
+
+function userClicked()
+{
+	document.getElementById("selectedUser").value = this.id;
+	ghostConfirm("Set new alias for " + this.getAttribute("name") + ":", "setNewAlias", true);
+}
+
+function setNewAlias(confirm)
+{
+	if (!confirm)
+		return;
+	let newAlias = document.getElementById("ghostConfirmInput").value;
+	let userId = document.getElementById("selectedUser").value;
+
+	localStorage.setItem("userAlias_" + userId, newAlias);
 }

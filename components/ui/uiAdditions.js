@@ -2,41 +2,44 @@ function serveInteractPrompt()
 {
 	var interactCheck = document.createElement("div");
 	interactCheck.id = "interactCheck";
-	interactCheck.innerHTML = "<br><br><br><br><br><br><br><br><br><span>Click Anywhere</span>";
+	
+	interactCheckInnerDiv = document.createElement("div");
+	interactCheckInnerDiv.innerHTML = "Click Anywhere";
 	
 	interactCheck.onclick = function(){
 		document.getElementById("interactCheck").className = "fade_out";
 		setTimeout(function(){ document.getElementById("interactCheck").parentNode.removeChild(document.getElementById("interactCheck")); }, 175);
 	};
 	
+	interactCheck.appendChild(interactCheckInnerDiv);
 	document.body.appendChild(interactCheck);
 }
 
-function resetNavButtons()
-{
-	if (!mobile || theaterMode)
-	{
-		document.getElementById("videoBrowserButton").innerHTML = "Video Browser";
+ function resetNavButtons()
+ {
+ 	if (!mobile)
+ 	{
+ 		document.getElementById("videoBrowserButton").innerHTML = "Video Browser";
 		document.getElementById("videoBrowserButton").style.color = "white";
 		
-		document.getElementById("youtubeButton").innerHTML = "Youtube";
+ 		document.getElementById("youtubeButton").innerHTML = "Youtube";
+ 		document.getElementById("youtubeButton").style.color = "white";
+		
+ 		document.getElementById("settingsButton").innerHTML = "Settings";
+ 		document.getElementById("settingsButton").style.color = "white";
+ 	}
+ 	else
+ 	{
+ 		document.getElementById("videoBrowserButton").innerHTML = "&#x2630;";
+ 		document.getElementById("videoBrowserButton").style.color = "white";
+		
+ 		document.getElementById("youtubeButton").innerHTML = "&#x25b6;";
 		document.getElementById("youtubeButton").style.color = "white";
 		
-		document.getElementById("settingsButton").innerHTML = "Settings";
-		document.getElementById("settingsButton").style.color = "white";
-	}
-	else
-	{
-		document.getElementById("videoBrowserButton").innerHTML = "&#x2630;";
-		document.getElementById("videoBrowserButton").style.color = "white";
-		
-		document.getElementById("youtubeButton").innerHTML = "&#x25b6;";
-		document.getElementById("youtubeButton").style.color = "white";
-		
-		document.getElementById("settingsButton").innerHTML = "&#9881;";
-		document.getElementById("settingsButton").style.color = "white";
-	}
-}
+ 		document.getElementById("settingsButton").innerHTML = "&#9881;";
+ 		document.getElementById("settingsButton").style.color = "white";
+ 	}
+ }
 
 function enablePointerEventsInMenus()
 {

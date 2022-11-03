@@ -13,7 +13,8 @@ function syncPull()
 	{
 		videoFileData_loadedVideo = formatVideoPathForServer(document.getElementById("filePath").value);
 		if (!isYoutube)
-			videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
+			if (document.getElementById("filePath").value)
+				videoFileData = getVideoInfo(formatVideoPathForServer(document.getElementById("filePath").value));
 	}
 	
 	syncVideo();
@@ -32,11 +33,22 @@ function updateServerTimeStamp(overrideTimestamp = 0.0)
 	{
 		timeStamp = overrideTimestamp;
 	}
+
+	var playState;
+
+	if (isYoutubeVideo())
+	{
+		playState = youtubePlayer.paused ? "paused" : "playing";
+	}
+	else
+	{
+		playState = document.getElementById("video").paused ? "paused" : "playing";
+	}
 	
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST","updateServerTimeStamp.php",true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + timeStamp + "&playState=" + document.getElementById("playState").value + "&filePath=" + formatVideoPathForServer(document.getElementById("filePath").value) + "&userUpdated=" + localStorage.getItem("userName"));
+	xhttp.send("lobbyName=" + document.getElementById("lobbyName").value + "&timeStamp=" + timeStamp + "&playState=" + playState + "&filePath=" + formatVideoPathForServer(document.getElementById("filePath").value) + "&userUpdated=" + localStorage.getItem("userName"));
 }
 
 //Ajax portion of sync function
@@ -65,7 +77,6 @@ var videoDuration;
 ////
 
 var consecutiveOutOfSyncs = 0;
-var outOfSyncCount = 0;
 
 //Method stemming from sync video
 function syncVideoAction(file)
@@ -136,7 +147,6 @@ function syncVideoAction(file)
 				/*if (checkPreload())
 					preloadVideo(document.getElementById("filePath").value);*/
 			}
-			document.getElementById("playState").value = "paused";
 			
 			if (initialVideoLoaded)
 				toast(info[4] + " Chose A New Video");
@@ -161,7 +171,7 @@ function syncVideoAction(file)
 			document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
 		}
 		*/
-		document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
+		//document.getElementById("video").className = fullscreenEnabled ? "standardVideo_fullscreen" : "standardVideo";
 		
 		//Setting variables based on whether current video is on server or through YouTube
 		
@@ -219,20 +229,16 @@ function syncVideoAction(file)
 		
 		var serverPaused = info[2] == "paused";
 		
-		if (!serverPaused && !paused)
+		if (!serverPaused && !paused) //Happy Play State
 		{
 			//outOfSyncCount++;
 			if (outOfSync && !jimmyNet)
 			{			
-				if (consecutiveOutOfSyncs >= outOfSyncCount - OUT_OF_SYNCS_BUILD_BUFFER)
-				{
-					consecutiveOutOfSyncs++;
-				}
-				
+				consecutiveOutOfSyncs++;
+
 				if (consecutiveOutOfSyncs >= OUT_OF_SYNCS_BEFORE_JIMMY)
 				{
 					consecutiveOutOfSyncs = 0;
-					outOfSyncCount = 0;
 					jimmyNet = true;
 					document.getElementById("filePath").value = serveVideoPath(document.getElementById("filePath").value);
 					document.getElementById("videoSource").src = document.getElementById("filePath").value;
@@ -244,7 +250,6 @@ function syncVideoAction(file)
 			else if (!jimmyNet)
 			{
 				consecutiveOutOfSyncs = 0;
-				outOfSyncCount = 0;
 			}
 			else
 			{
@@ -345,6 +350,7 @@ function syncVideoAction(file)
 		{
 			if (!document.getElementById("video").paused)
 				checkForAndSkipAd();
+				
 			timestamp = document.getElementById("video").currentTime;
 			duration = document.getElementById("video").duration;
 		}

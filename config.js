@@ -6,8 +6,7 @@ FULLSCREEN_CONTROLS_TIMEOUT = 3;
 LOBBY_SOUNDS_SETTING = "on";
 REACTION_STAY_TIME = 3;
 LOBBY_REACTIONS_SETTING = "on";
-OUT_OF_SYNCS_BEFORE_JIMMY = 4
-OUT_OF_SYNCS_BUILD_BUFFER = 2;
+OUT_OF_SYNCS_BEFORE_JIMMY = 4;
 PLAYER_VOLUME = 1;
 JIMMYNET_SETTING_TOGGLED = false;
 
@@ -38,6 +37,7 @@ var controlsLocked = false;
 var theaterMode = false;
 var videoFileData;
 var videoFileData_loadedVideo;
+var hideButtonRightToggle = false;
 
 //Graphics
 DEFAULT_THUMBNAIL = "/graphics/ThumbnailUnavailable.png";
