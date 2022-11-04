@@ -64,7 +64,7 @@ function userUpdateAction(file)
 				break;
 			}
 		}
-
+///////////The inactiveUsers list needs to also have usernames attached so that it can continue to show the inactive users even if they are no longer showing on server file
 		if (info[3] == "1") //Active
 		{
 			for (let l = 0; l < inactiveUsers.length; l++)
@@ -121,19 +121,26 @@ function userUpdateAction(file)
 			userListNeedsUpdated = true;
 		}
 	}
-
 	for (let i = 0; i < inactiveUsers.length; i++)
 	{
+		let inactiveUserFound = false;
 		for (let j = 0; j < userInfo.length; j++)
 		{
 			let info = userInfo[j].split("^");
 			if (inactiveUsers[i] == info[5])
 			{
 				//Removes the user from showing in the user list on UI
-				userInfo.splice(j, 1);
+				userInfo[j] = userInfo[j].replace("^0^", "^-1^");
 				userListNeedsUpdated = true;
+
+				inactiveUserFound = true;
 				break;
 			}
+		}
+
+		if (!inactiveUserFound)
+		{
+
 		}
 	}
 
@@ -175,7 +182,14 @@ function userUpdateAction(file)
 			let userName = info[0];
 			
 			var hrTimeStamp = convertMinutesToHours(parseInt(minutes)) + "<span style='font-size: .7em'>:" + seconds + "</span>";
-			var statusColor = info[3] == "1" ? "green" : "orange";
+			var statusColor = "";
+
+			if (info[3] == "1")
+				statusColor = "green";
+			else if (info[3] == "0")
+				statusColor = "orange";
+			else
+				statusColor = "red";
 			
 			let duplicateUserCount = 0;
 			let duplicateDesignation = "";

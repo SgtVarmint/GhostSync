@@ -1,0 +1,57 @@
+.pieChart
+{
+    float: left;
+    border: 2px solid black;
+    margin: 5px;
+}
+
+body
+{
+    background-color: #96ffa9;
+}
+
+#user
+{
+    text-align: center;
+    background-color: #f77174;
+    padding: 10px;
+    font-family: arial;
+    font-size: 1.4em;
+    border: 2px solid black;
+}
+
+#user input
+{
+    transform: scale(1.5);
+}
+
+#user button
+{
+    margin-left: 50px;
+    font-size: 1.1em;
+}
+
+#packageNumber
+{
+    margin-left: 25px;
+    width: 50px;
+}
+
+#user div
+{
+    margin: 8px;
+}
+
+#recipientDiv #recipient
+{
+    padding-left: 50px;
+    padding-right: 50px;
+    background: rgba(0,0,0,1);
+}
+
+#recipientDiv:hover #recipient
+{
+    padding-left: 50px;
+    padding-right: 50px;
+    background: rgba(0,0,0,.5);
+}
