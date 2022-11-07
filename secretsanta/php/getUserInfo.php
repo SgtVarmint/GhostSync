@@ -2,8 +2,9 @@
 
 $userId = $_POST["userId"];
 
-$file = file_get_contents("../data/" . $userId . ".txt");
+$jsonString = file_get_contents("../data/userLookup.json");
+$data = json_decode($jsonString, true);
 
-echo $file;
+echo base64_encode(json_encode($data[$userId]));
 
 ?>
