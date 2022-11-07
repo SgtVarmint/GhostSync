@@ -1,3 +1,12 @@
+/**
+ * userData["name"]:            String  Name of user
+ * userData["recipient"]:       String  Who the user is buying gifts for
+ * userData["giftsOrdered"]:    Boolean Has the user ordered their gifts?
+ * userData["giftsShipped"]:    Boolean Have the gifts been shipped out?
+ * userData["giftsDelivered"]:  Boolean Have the gifts been delivered?
+ * userData["giftsRecieved"]:   Boolean Has the user recieved their gifts?
+ */
+
 //DONE
 function serveUserPrompt()
 {
@@ -51,21 +60,12 @@ function userLogin(userId)
     xhttp.send("userId="+userId);
 }
 
-//TODO
+//DONE
 function serveUserInfo(userId, userData)
 {
     let currentUsername = userData["name"];
     let userDiv = document.getElementById("user");
-    userDiv.innerHTML = "";
-
-    //userInfo = userData.split("^");
-    //userInfo[0] = Who did this user get? (a name)
-    //userInfo[1] = How many packages should the recipient expect? (number)
-    //userInfo[2] = Has this user ordered the gift(s)? (boolean)
-    //userInfo[3] = Did the item(s) ship yet? (boolean)
-    //userInfo[4] = Delivery confirmed yet? (boolean)
-    //userInfo[5] = Did this user recieve their gift(s) yet? (boolean)
-
+    userDiv.innerHTML = ""; 
     if (!userData["recipient"] || userData["recipient"] === "") //First time, must ask initial questions
     {
         let text = document.createElement("p");
@@ -173,48 +173,26 @@ function serveUserInfo(userId, userData)
         //Get individual info
         //let recipientId = getUserId(userInfo[0]);
 
-        statArray = pullUserStats();
-
-        let numberOfPackages = "0";
-        let giftOrdered = false;
-        let giftShipped = false;
-        let giftDelivered = false;
-    
-        let thisUserId = document.getElementById("currentUser").value;
-
-        for (let i = 0; i < statArray.length; i++)
-        {
-            let userInfo2 = statArray[i].split("^");
-            //userInfo[0] = Who did this user get? (a name)
-            //userInfo[1] = How many packages should the recipient expect? (number)
-            //userInfo[2] = Has this user ordered the gift(s)? (boolean)
-            //userInfo[3] = Did the item(s) ship yet? (boolean)
-            //userInfo[4] = Delivery confirmed yet? (boolean)
-            //userInfo[5] = Did this user recieve their gift(s) yet? (boolean)
-            let tempUserId = getUserId(userInfo2[0]);
-            if (tempUserId == thisUserId)
-            {
-                numberOfPackages = userInfo2[1];
-                giftOrdered = userInfo2[2] == "1" ? true : false;
-                giftShipped = userInfo2[3] == "1" ? true : false;
-                giftDelivered = userInfo2[4] == "1" ? true : false;
-                break;
-            }
-        }
-
+        statArray = pullUserStats(userId);
+        let numPackages = statArray["numPackages"];
+        let giftsOrdered = statArray["giftsOrdered"];
+        let giftsShipped = statArray["giftsShipped"];
+        let giftsDelivered = statArray["giftsDelivered"];
+        let recipientConfirmedRecieve = statArray["giftsRecieved"];
+        
         let text7 = document.createElement("span");
 
-        if (giftDelivered)
+        if (giftsDelivered)
         {
-            text7.innerHTML = "According to your Secret Santa, you should have already received " + numberOfPackages + " gift(s)!";
+            text7.innerHTML = "According to your Secret Santa, you should have already received " + numPackages + " gift(s)!";
         }
-        else if (giftShipped)
+        else if (giftsShipped)
         {
-            text7.innerHTML = "According to your Secret Santa, your " + numberOfPackages + " gift(s) has/have been shipped and is/are on the way to you!"
+            text7.innerHTML = "According to your Secret Santa, your " + numPackages + " gift(s) has/have been shipped and is/are on the way to you!"
         }
-        else if (giftOrdered)
+        else if (giftsOrdered)
         {
-            text7.innerHTML = "According to your Secret Santa, they have ordered your gift(s)!  You can expect " + numberOfPackages + " gift(s) to be on your way soon!"
+            text7.innerHTML = "According to your Secret Santa, they have ordered your gift(s)!  You can expect " + numPackages + " gift(s) to be on your way soon!"
         }
         else
         {
@@ -224,26 +202,6 @@ function serveUserInfo(userId, userData)
         userDiv.appendChild(text7);
         userDiv.appendChild(document.createElement("br"));
         userDiv.appendChild(document.createElement("hr"));
-
-        let recipientConfirmedRecieve = false;
-
-        for (let i = 0; i < statArray.length; i++)
-        {
-            let userInfo2 = statArray[i].split("^");
-            //userInfo[0] = Who did this user get? (a name)
-            //userInfo[1] = How many packages should the recipient expect? (number)
-            //userInfo[2] = Has this user ordered the gift(s)? (boolean)
-            //userInfo[3] = Did the item(s) ship yet? (boolean)
-            //userInfo[4] = Delivery confirmed yet? (boolean)
-            //userInfo[5] = Did this user recieve their gift(s) yet? (boolean)
-            //userInfo[6] = This user's ID
-            let tempUserId = userInfo2[6];
-            if (tempUserId == getUserId(userInfo[0]))
-            {
-                recipientConfirmedRecieve = userInfo2[5] == "1" ? true : false;
-                break;
-            }
-        }
 
         let text8 = document.createElement("span");
         text8.innerHTML = recipientConfirmedRecieve ?
@@ -260,16 +218,7 @@ function recipientSet()
     let recipient = document.getElementById("recipientInput").value;
 
     //Check if user exists first
-    let userId = "";
-
-    var xhttp = new XMLHttpRequest();
-	xhttp.onload = function(){
-		userId = this.responseText;
-        userId = JSON.parse(atob(userId));
-	}
-	xhttp.open("POST", "/secretsanta/php/getUserId.php", false);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("name="+recipient);
+    let userId = getUserId(recipient);
 
     if (!userId)
     {
@@ -308,7 +257,7 @@ function userUpdate()
     let giftsRecieved = document.getElementById("giftsRecieved").checked;
 
     var updateArray = {};
-    updateArray["recipient"] = recipient;
+    updateArray["recipient"] = getUserId(recipient);
     updateArray["numPackages"] = numPackages;
     updateArray["giftsOrdered"] = giftsOrdered;
     updateArray["giftsShipped"] = giftsShipped;
@@ -340,61 +289,16 @@ function userUpdate()
     xhttp.send("userId=" + currentUser + "&userData=" + btoa(updateJSON));
 }
 
-//TODO
-function getUsername(userId)
-{
-    let username = "";
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onload = function(){
-        userData = this.responseText;
-        return atob(username);
-    }
-    let userList = "";
-
-	xhttp.open("GET", "/secretsanta/data/userLookup.txt", false);
-    xhttp.send();
-
-    let userArray = userList.split("\n");
-    for (let i = 0; i < userArray.length; i++)
-    {
-        let userInfo = userArray[i].split("^");
-        //userInfo[0] = userId
-        //userInfo[1] = username
-        if (userInfo[0] == userId)
-        {
-            let tempName = userInfo[1].trimEnd();
-            return tempName;
-        }
-    }
-    return "<UnknownUser>";
-}
-
-//TODO
-function getUserInfo(userId){
-    let userData = [];
-    var xhttp = new XMLHttpRequest();
-    xhttp.onload = function(){
-        var data = this.responseText;
-        userData = JSON.parse(atob(data));
-    }
-    xhttp.open("POST", "/secretsanta/php/getUserInfo.php", false);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("userId="+userId);
-}
-
-//TODO
-//I think I cant return the value like this because even though userId is populated here, the return is empty :(
+//DONE
 function getUserId(username)
 {
-    let userId = "";
-
+    var encodedUserId;
     var xhttp = new XMLHttpRequest();
 	xhttp.onload = function(){
-		userId = this.responseText;
-        userId = atob(userId);
+		encodedUserId = this.responseText;
 	}
 	xhttp.open("POST", "/secretsanta/php/getUserId.php", false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("name="+username);
+    return atob(encodedUserId);
 }

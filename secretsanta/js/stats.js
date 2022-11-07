@@ -1,34 +1,16 @@
+//DONE
 function serveStats()
 {
     let stats = document.getElementById("stats");
     stats.innerHTML = "";
 
-    statArray = pullUserStats();
+    statArray = getGiftsStatus();
 
-    let orderedCount = 0;
-    let shippedCount = 0;
-    let deliveredCount = 0;
-    let recievedCount = 0;
-
-    for (let i = 0; i < statArray.length; i++)
-    {
-        let userInfo = statArray[i].split("^");
-        //userInfo[0] = Who did this user get? (a name)
-        //userInfo[1] = How many packages should the recipient expect? (number)
-        //userInfo[2] = Has this user ordered the gift(s)? (boolean)
-        //userInfo[3] = Did the item(s) ship yet? (boolean)
-        //userInfo[4] = Delivery confirmed yet? (boolean)
-        //userInfo[5] = Did this user recieve their gift(s) yet? (boolean)
-
-        if (userInfo[2] == "1")
-            orderedCount++;
-        if (userInfo[3] == "1")
-            shippedCount++;
-        if (userInfo[4] == "1")
-            deliveredCount++;
-        if (userInfo[5] == "1")
-            recievedCount++;
-    }
+    let orderedCount = statArray["giftsOrdered"];
+    let shippedCount = statArray["giftsShipped"];
+    let deliveredCount = statArray["giftsDelivered"];
+    let recievedCount = statArray["giftsRecieved"];
+    let total = statArray["total"];
 
     //stats.innerHTML = orderedCount + " - " + shippedCount + " - " + deliveredCount + " - " + recievedCount;
 
@@ -49,8 +31,6 @@ function serveStats()
     stats.appendChild(chart3);
     stats.appendChild(chart4);
 
-    let total = statArray.length;
-
     drawChart1(orderedCount, total - orderedCount);
     drawChart2(shippedCount, total - shippedCount);
     drawChart3(deliveredCount, total - deliveredCount);
@@ -64,48 +44,30 @@ function serveStats()
     document.querySelector("#chart_div4 > div").className = "pieChart";
 }
 
-function pullUserStats()
-{
-    let userStatList = new Array();
-
-    let userList = "";
-    let userIdArray = new Array();
-
+function getGiftsStatus(){
+    var status = [];
     var xhttp = new XMLHttpRequest();
-	xhttp.onload = function(){
-		userList = this.responseText;
-	}
-	xhttp.open("GET", "/secretsanta/data/userLookup.txt", false);
+    xhttp.onload = function(){
+        status = this.responseText;
+        status = JSON.parse(atob(status));
+    }
+
+    xhttp.open("GET", "/secretsanta/php/getGiftsStatus.php", false);
     xhttp.send();
+    return status;
+}
 
-    let userArray = userList.split("\n");
-    for (let i = 0; i < userArray.length; i++)
-    {
-        let userInfo = userArray[i].split("^");
-        //userInfo[0] = userId
-        //userInfo[1] = username
-        userIdArray.push(userInfo[0]);
+//DONE
+function pullUserStats(userId){
+    var userList;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){
+        userList = this.responseText;
+        userList = JSON.parse(atob(userList));
     }
+    xhttp.open("POST", "/secretsanta/php/getUserInfo.php", false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("userId="+userId+"&giver=true");
 
-
-    for (let i = 0; i < userIdArray.length; i++)
-    {
-        var xhttp2 = new XMLHttpRequest();
-        xhttp2.onload = function(){
-            response = this.responseText;
-            if (response.charAt(0) == "<") //File not found
-            {
-                console.log("Missing user file for stat gathering");
-            }
-            else //File found
-            {
-                let newResponse = response + "^" + userIdArray[i];
-                userStatList.push(newResponse)
-            }
-        }
-        xhttp2.open("GET", "/secretsanta/data/" + userIdArray[i] + ".txt", false);
-        xhttp2.send();
-    }
-
-    return userStatList;
+    return userList;
 }
