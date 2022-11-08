@@ -16,7 +16,7 @@ foreach($data as $key=>$value){
     if($tempUser["giftsOrdered"]){ $returnArray["giftsOrdered"]++; }
     if($tempUser["giftsShipped"]){ $returnArray["giftsShipped"]++; }
     if($tempUser["giftsDelivered"]){ $returnArray["giftsDelivered"]++; }
-    if($tempUser["giftsReciever"]){ $returnArray["giftsRecieved"]++; }
+    if($tempUser["giftsRecieved"]){ $returnArray["giftsRecieved"]++; }
 
     $returnArray["total"]++;
 }
