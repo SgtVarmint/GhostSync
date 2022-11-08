@@ -218,9 +218,9 @@ function recipientSet()
     let recipient = document.getElementById("recipientInput").value;
 
     //Check if user exists first
-    let userId = getUserId(recipient);
+    let recipientId = getUserId(recipient);
 
-    if (!userId)
+    if (!recipientId)
     {
         alert("User not found!  Make sure you spell their name correctly and capitalize the first letter");
         return;
@@ -228,6 +228,7 @@ function recipientSet()
 
     let updateArray = {};
     updateArray["recipient"] = recipient;
+    updateArray["recipientId"] = recipientId;
     updateArray["numPackages"] = 0;
     updateArray["giftsOrdered"] = 0;
     updateArray["giftsShipped"] = 0;
@@ -257,7 +258,7 @@ function userUpdate()
     let giftsRecieved = document.getElementById("giftsRecieved").checked;
 
     var updateArray = {};
-    updateArray["recipient"] = getUserId(recipient);
+    updateArray["recipient"] = recipient;
     updateArray["numPackages"] = numPackages;
     updateArray["giftsOrdered"] = giftsOrdered;
     updateArray["giftsShipped"] = giftsShipped;
