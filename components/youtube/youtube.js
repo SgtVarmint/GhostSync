@@ -105,6 +105,8 @@ function playYoutubeVideo(urlOverride = "", overridePlaystateToPlay = false)
 		document.getElementById("youtubePlayer").style.display = "block";
 		document.getElementById("video").style.display = "none";
 		document.getElementById("playButton").innerHTML = "&#x23f8;";
+
+		youtubePlayStateToUpdateServer = "playing";
 		
 		resetNavButtons();
 		
