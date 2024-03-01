@@ -17,7 +17,7 @@ echo `date` \- Started
 for r in 1 2
 do
 
-for i in `find "$rootFolder$normalTVFolder" -name "*.mp4"`
+for i in `find "$rootFolder$normalTVFolder" -name "*.mp4" -o -name "*.mkv"`
 do
 	currentShow=`echo $i | sed 's/.*Videos\/TV\///' | sed 's/\/.*//'`
 	currentSeason=`echo $i | sed 's/.*Season\ //' | sed 's/\/.*//'`
@@ -51,7 +51,7 @@ do
 	fi
 done
 
-for i in `find "$rootFolder$normalMoviesFolder" -name "*.mp4"`
+for i in `find "$rootFolder$normalMoviesFolder" -name "*.mp4" -o -name "*.mkv"`
 do
 	outputFile=`echo $i | sed s:"$normalMoviesFolder":"$lowResMoviesFolder":`
 
@@ -70,7 +70,7 @@ do
         fi
 done
 
-for i in `find "$rootFolder$normalUploadsFolder" -name "*.mp4"`
+for i in `find "$rootFolder$normalUploadsFolder" -name "*.mp4" -o -name "*.mkv"`
 do
 	outputFile=`echo $i | sed s:"$normalUploadsFolder":"$lowResUploadsFolder":`
 

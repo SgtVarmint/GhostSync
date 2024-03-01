@@ -13,7 +13,7 @@ IFS=$'\n'
 
 echo Started \- `date` >> /home/jon/logs/createMetadataFiles.log
 
-for i in `find "$rootFolder$normalTVFolder" -name "*.mp4"`
+for i in `find "$rootFolder$normalTVFolder" -name "*.mp4" -o -name "*.mkv"`
 do
 	currentShow=`echo $i | sed 's/.*Videos\/TV\///' | sed 's/\/.*//'`
 	currentSeason=`echo $i | sed 's/.*Season\ //' | sed 's/\/.*//'`
@@ -37,7 +37,7 @@ do
 	ffmpeg -n -i $i -f ffmetadata $outputFile
 done
 
-for i in `find "$rootFolder$normalMoviesFolder" -name "*.mp4"`
+for i in `find "$rootFolder$normalMoviesFolder" -name "*.mp4" -o -name "*.mkv"`
 do
 	outputFile=`echo $i | sed s:"$normalMoviesFolder":"$metadataMoviesFolder":`
 	
