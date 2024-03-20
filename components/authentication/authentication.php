@@ -1,31 +1,52 @@
 <?php
 
-$accessCode = $_POST["accessCode"];
-$accessCode = trim($accessCode);
-
-$myfile = fopen("/var/www/html/components/authentication/access.txt", "r") or die("Unable to open file!");
-$keyFile = fread($myfile, filesize("/var/www/html/components/authentication/access.txt"));
-fclose($myfile);
-
-$granted = false;
-
-$keys = explode("\n", $keyFile);
-
-foreach ($keys as $key)
+class Authentication 
 {
-	if ($accessCode == trim($key))
+	protected bool $granted = false;
+	protected string $accessCode = '';
+
+	public function __construct() 
 	{
-		$granted = true;
+		$this->accessCode = trim($_POST['accessCode']);
+	}
+
+	public function openFile(string $fileName): string|false 
+	{
+		$file = fopen($fileName, 'r') or die('unable to open file: ' . $fileName);
+		$keyFile = fread($file, filesize($fileName));
+		fclose($file);
+
+		return $keyFile;
+	}
+
+	public function responseValue(string $keyFile): string 
+	{
+		$keys = explode("\n", $keyFile);
+		if ($this->validKey($keys))
+		{
+			return "gs:YrehJb5njkXW1lm39yiF@";
+		}
+
+		return "denied";
+	}
+
+	protected function validKey(array $keys): bool
+	{
+		foreach ($keys as $key)
+		{
+			if ($this->accessCode === trim($key))
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
 
-if ($granted)
-{
-	echo "gs:YrehJb5njkXW1lm39yiF@";
-}
-else
-{
-	echo "denied";
-}
+$auth = new Authentication();
+$keyFile = $auth->openFile("/var/www/html/components/authentication/access.txt");
+
+echo $auth->responseValue($keyFile);
 
 ?>
