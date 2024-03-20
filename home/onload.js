@@ -8,7 +8,7 @@ window.onload = function(){
 	
 	document.getElementById("lobbyInput").addEventListener("keyup", function(event)
 	{
-		if (event.keyCode === 13)
+		if (event.code === 13)
 		{
 			event.preventDefault();
 			document.getElementById("userInput").focus();
@@ -17,7 +17,7 @@ window.onload = function(){
 	// KeyboardEvent.key is the newer version of keycode
 	document.getElementById("userInput").addEventListener("keyup", function(event)
 	{
-		if (event.keyCode === 13)
+		if (event.code === 13)
 		{
 			event.preventDefault();
 			document.getElementById("lobbyButton").click();
@@ -26,7 +26,7 @@ window.onload = function(){
 	
 	document.getElementById("authText").addEventListener("keyup", function(event)
 	{
-		if (event.keyCode === 13)
+		if (event.code === 13)
 		{
 			event.preventDefault();
 			document.getElementById("authButton").click();
