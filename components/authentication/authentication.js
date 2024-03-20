@@ -36,13 +36,12 @@ function homeAuth()
 			if (this.responseText == "denied")
 			{
 				document.getElementById("lobbyButton").onclick = function(){ toastMessage("You are not authenticated for access to this site", 2, "body", "5%", "13%", "13%", "0"); };
-				console.log("User does not have access to site");
 			}
 			else
 			{
 				document.getElementById("lobbyButton").disabled = false;
 				localStorage.setItem("auth", this.responseText);
-				console.log("Sucessfully Authenticated");
+				toastMessage("Successfully Authenticated", 2, "body", "5%", "13%", "13%", "0");
 			}
 		}
 	}
