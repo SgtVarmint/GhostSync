@@ -150,11 +150,11 @@ window.onload = function(){
 	{
 		if (document.hidden)
 		{
-			awayMode(); //activity.js
+			userActive = false;
 		}
 		else
 		{
-			activeMode(); //activity.js
+			userActive = true;
 		}
 	});
 	
