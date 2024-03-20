@@ -24,5 +24,4 @@ function lobbyButtonClick() {
 function authenticationButton() {
 	document.getElementById("auth").classList.toggle("hidden");
 	document.getElementById("authText").focus();
-
 }
