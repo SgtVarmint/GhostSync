@@ -96,16 +96,113 @@ function updateVideoBrowser(file, uploadsFolder = false)
 	var videoBrowser = document.getElementById("videoBrowser");
 	videoBrowser.innerHTML = "";
 	
-	var progressColor0 = "white";
-	var progressColor1 = "#7dafff";
-	var progressColor2 = "#7dafff";
-	var progressColor3 = "#7dafff";
-	var progressColor4 = "#b8b8b8";
-	
 	//If this folder is the uploads folder, add button to allow uploads
-	if (uploadsFolder)
+	if (document.getElementById("currentDirectory").value.toLowerCase() === "/uploads/")
 	{
+		addUploadButtons();
+	}
+	
+	//Check if this folder contains Season folders and sort them
+	if (contents.length >= 10 && (contents[0].includes("Season ") || contents[1].includes("Season ")))
+	{
+		contents = sortSeasons(contents);
+	}
+	
+	//Check if this folder contains dated gameplay files and sort them
+	for (let i = 0; i < contents.length - 1; i++)
+	{
+		if (contents[i].search(/[0-9]\-[0-9]/) != -1)
+		{
+			contents = sortDatedGameplay(contents);
+		}
+	}
+
+	for (var i = 0; i < contents.length - 1; i++)
+	{
+		var isAlreadyInQueue = false;
+		for (var j = 0; j < queue.length; j++)
+		{
+			if (queue[j].split("/")[queue[j].split("/").length - 1].includes(contents[i]))
+			{
+				isAlreadyInQueue = true;
+				break;
+			}
+		}
+
 		var newSection = document.createElement("div");
+
+		if (contents[i].includes("."))
+		{	
+			if (contents[i].includes("_AuthTouch"))
+			{
+				return;
+			}
+				
+			var newVideo = document.createElement("a");
+			newVideo.innerHTML = contents[i].replace(/\.[^/.]+$/, "");
+			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
+			newVideo.ondblclick = function(){ playVideo(); };
+			newVideo.className = "videoBrowserVideo";
+			
+			var addToQueue = document.createElement("a");
+			addToQueue.innerHTML = "+";
+			var tempFileLocation = rootDir() + document.getElementById("currentDirectory").value + contents[i];
+
+			if (!isAlreadyInQueue)
+			{
+				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"; this.onclick = function(){ toast("This video is already in the queue"); return false; }; };
+			}
+			else
+			{
+				addToQueue.style.backgroundColor = "#1e3949";
+				addToQueue.onclick = function(){ toast("This video is already in the queue"); return false; };
+			}
+
+			addToQueue.className = "addToQueue";
+			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
+			
+			//This section handles updating the tracking info for each video
+			var fullPath = rootDir() + document.getElementById("currentDirectory").value + contents[i];
+			fullPath = fullPath.replace(/\ /g, "%20");
+			for (var j = 0; j < trackingInfo.length; j++)
+			{
+				var temp = trackingInfo[j][0].replace(/\ /g, "%20");
+				if (fullPath.trim() == temp)
+				{
+					setProgressColor(newVideo);
+					
+					newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+					addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '^' + trackingInfo[j][1] + '");';
+					
+					newVideo.ondblclick = function(){ playVideo(); };
+				}
+			}
+			
+			newSection.appendChild(addToQueue);
+			newSection.appendChild(newVideo);
+		}
+		else
+		{
+			if (contents[i].includes("_"))
+			{
+				continue;
+			}
+
+			var newDir = document.createElement("a");
+			newDir.innerHTML = contents[i];
+			newDir.href = 'javascript:videoBrowserDirClick("' + contents[i] + '");';
+			newDir.className = "videoBrowserDir";
+			newSection.appendChild(newDir);
+		}
+		videoBrowser.appendChild(newSection);
+		videoBrowser.scrollIntoView();
+		//videoBrowser.appendChild(document.createElement("br"));
+	}
+}
+
+function addUploadButtons() 
+{
+	var newSection = document.createElement("div");
 		//This label will be tied to the file input element
 		var newButton = document.createElement("button");
 		//This input will be hidden
@@ -138,118 +235,36 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		newSection.appendChild(newInput);
 		
 		videoBrowser.appendChild(newSection);
-	}
-	
-	//Check if this folder contains Season folders and sort them
-	if (contents.length >= 10 && (contents[0].includes("Season ") || contents[1].includes("Season ")))
-	{
-		contents = sortSeasons(contents);
-	}
-	
-	//Check if this folder contains dated gameplay files and sort them
-	let doSort = false;
-	for (let i = 0; i < contents.length - 1; i++)
-	{
-		if (contents[i].search(/[0-9]\-[0-9]/) != -1)
-			doSort = true;
-	}
-	if (doSort)
-		contents = sortDatedGameplay(contents);
+}
 
-	for (var i = 0; i < contents.length - 1; i++)
+function setProgressColor(newVideo) 
+{
+	var progressColor0 = "white";
+	var progressColor1 = "#7dafff";
+	var progressColor2 = "#7dafff";
+	var progressColor3 = "#7dafff";
+	var progressColor4 = "#b8b8b8";
+
+	if (trackingInfo[j][2] == "0")
 	{
-		var isAlreadyInQueue = false;
-		for (var j = 0; j < queue.length; j++)
-		{
-			if (queue[j].split("/")[queue[j].split("/").length - 1].includes(contents[i]))
-			{
-				isAlreadyInQueue = true;
-				break;
-			}
-		}
-		var newSection = document.createElement("div");
-		if (contents[i].includes("."))
-		{	
-			if (contents[i].includes("_AuthTouch"))
-				return;
-			var newVideo = document.createElement("a");
-			newVideo.innerHTML = contents[i].replace(/\.[^/.]+$/, "");
-			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
-			newVideo.ondblclick = function(){ playVideo(); };
-			newVideo.className = "videoBrowserVideo";
-			
-			var addToQueue = document.createElement("a");
-			addToQueue.innerHTML = "+";
-			var tempFileLocation = rootDir() + document.getElementById("currentDirectory").value + contents[i];
-			if (!isAlreadyInQueue)
-			{
-				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"; this.onclick = function(){ toast("This video is already in the queue"); return false; }; };
-			}
-			else
-			{
-				addToQueue.style.backgroundColor = "#1e3949";
-				addToQueue.onclick = function(){ toast("This video is already in the queue"); return false; };
-			}
-			addToQueue.className = "addToQueue";
-			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
-			
-			//This section handles updating the tracking info for each video
-			var fullPath = rootDir() + document.getElementById("currentDirectory").value + contents[i];
-			fullPath = fullPath.replace(/\ /g, "%20");
-			for (var j = 0; j < trackingInfo.length; j++)
-			{
-				var temp = trackingInfo[j][0].replace(/\ /g, "%20");
-				if (fullPath.trim() == temp)
-				{
-					if (trackingInfo[j][2] == "0")
-					{
-						newVideo.style.color = progressColor0;
-						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					}
-					else if (trackingInfo[j][2] == "1")
-					{
-						newVideo.style.color = progressColor1;
-						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					}
-					else if (trackingInfo[j][2] == "2")
-					{
-						newVideo.style.color = progressColor2;
-						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					}
-					else if (trackingInfo[j][2] == "3")
-					{
-						newVideo.style.color = progressColor3;
-						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					}
-					else if (trackingInfo[j][2] == "4")
-					{
-						newVideo.style.color = progressColor4;
-					}
-					
-					newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '^' + trackingInfo[j][1] + '");';
-					
-					newVideo.ondblclick = function(){ playVideo(); };
-				}
-			}
-			
-			newSection.appendChild(addToQueue);
-			newSection.appendChild(newVideo);
-		}
-		else
-		{
-			if (contents[i].includes("_"))
-				continue;
-			var newDir = document.createElement("a");
-			newDir.innerHTML = contents[i];
-			newDir.href = 'javascript:videoBrowserDirClick("' + contents[i] + '");';
-			newDir.className = "videoBrowserDir";
-			newSection.appendChild(newDir);
-		}
-		videoBrowser.appendChild(newSection);
-		videoBrowser.scrollIntoView();
-		//videoBrowser.appendChild(document.createElement("br"));
+		newVideo.style.color = progressColor0;
 	}
+	else if (trackingInfo[j][2] == "1")
+	{
+		newVideo.style.color = progressColor1;
+	}
+	else if (trackingInfo[j][2] == "2")
+	{
+		newVideo.style.color = progressColor2;
+	}
+	else if (trackingInfo[j][2] == "3")
+	{
+		newVideo.style.color = progressColor3;
+	}
+	else if (trackingInfo[j][2] == "4")
+	{
+		newVideo.style.color = progressColor4;
+	}	
 }
 
 function videoBrowserDirClick(inputDir)

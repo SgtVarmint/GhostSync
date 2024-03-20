@@ -1,9 +1,15 @@
 <?php
 
-$command = "ls -1 '/var/www/html/" . $_POST["rootDir"] . $_POST["subDir"] . "' | tr '\n' '|'";
-//$command = "ls -1 " . $_POST["rootDir"] . " | tr '\n' '|'";
+$availableFiles = '';
+$filePath = '/var/www/html/' . $_POST['rootDir'] . $_POST['subDir'];
+$files = scandir($filePath);
 
-$data = shell_exec($command);
-echo $data;
+foreach($files as $file) {
+    if ($file !== "." && $file !== "..") {
+        $availableFiles .= $file . '|';
+    }
+}
+
+echo $availableFiles;
 
 ?>
