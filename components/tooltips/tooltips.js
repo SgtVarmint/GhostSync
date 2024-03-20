@@ -29,7 +29,7 @@ function getToolTipMessage(id)
 			return "This value shouldn't need adjusted unless your connection has a very high latency.  Increasing this value can fix sync-bufferring issues when high latency is the culprit";
 			break;
 		case "authTip":
-			return "An authentication key is required to access this site.  If you think you should have access to this site but do not, contact Ghostmij17#4572 through Discord";
+			return "An authentication key is required to access this site.  If you think you should have access to this site but do not, contact Mikau (@ghostmij17) through Discord";
 			break;
 		case "disableYoutubeTip":
 			return "YouTube may cause issues with some browsers and settings.  If YouTube isn't working and/or the videos being played from server are not syncing properly, disabling YouTube may fix the issue";
