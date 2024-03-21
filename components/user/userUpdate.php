@@ -26,8 +26,6 @@ $newFileContents = "";
 
 $userFound = false;
 
-$duplicates = -1;
-
 foreach ($userInfo as $user)
 {
 	$info = explode("^", $user);
