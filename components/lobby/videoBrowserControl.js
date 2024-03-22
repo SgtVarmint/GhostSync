@@ -1,31 +1,3 @@
-function fetchMetadata()
-{
-	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST","fetchMetadata.php",true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.onreadystatechange = function()
-	{
-		if(this.readyState == 4 && this.status == 200)
-		{
-			parseMetadata(this);
-		}
-	}
-	xhttp.send("rootDir=" + rootDir());
-}
-
-function parseMetadata(file)
-{
-	var output = "";
-	var dirInfo = file.responseText.split(":");
-	for (var i = 0; i < dirInfo.length; i++)
-	{
-		var item = document.createElement("a");
-		item.innerHTML = dirInfo[i];
-		item.style.display = "block";
-		document.getElementById("videoBrowser").appendChild(item);
-	}
-}
-
 function videoBrowserButton()
 {
 	bindBackgroundFadeClick("videoBrowserButton()");
@@ -87,57 +59,21 @@ function getDirectoryInfo(uploadsFolder = false)
 			updateVideoBrowser(this, uploadsFolder);
 		}
 	}
-	xhttp.send("rootDir=" + rootDir() + "&subDir=" + document.getElementById("currentDirectory").value);
+
+	let workingDir = rootDir() + document.getElementById("currentDirectory").value;
+	xhttp.send("workingDirectory=" + workingDir);
 }
 
 function updateVideoBrowser(file, uploadsFolder = false)
 {
-	var contents = file.responseText.split("|");
+	var contents = JSON.parse(file.responseText);
 	var videoBrowser = document.getElementById("videoBrowser");
 	videoBrowser.innerHTML = "";
-	
-	var progressColor0 = "white";
-	var progressColor1 = "#7dafff";
-	var progressColor2 = "#7dafff";
-	var progressColor3 = "#7dafff";
-	var progressColor4 = "#b8b8b8";
 	
 	//If this folder is the uploads folder, add button to allow uploads
 	if (uploadsFolder)
 	{
-		var newSection = document.createElement("div");
-		//This label will be tied to the file input element
-		var newButton = document.createElement("button");
-		//This input will be hidden
-		var newInput = document.createElement("input");
-		
-		newButton.onclick = function(){ document.getElementById("fileInput").click() };
-		newButton.innerHTML = "Upload Video(s)";
-		
-		newInput.id = "fileInput";
-		newInput.onchange = function(e){
-		e.preventDefault();
-		document.getElementById("browser").style.display = "none";
-		resetNavButtons();
-		if (this.files.length > 0)
-			uploadFile();
-		else
-			toast("Upload cancelled");
-		}
-		
-		newInput.type = "file";
-		newInput.name = "file";
-		newInput.multiple = true;
-		newInput.style.display = "none";
-		
-		newSection.className = "fileUploadSection";
-		newButton.className = "defaultButton";
-		newInput.className = "fileUploadSection";
-		
-		newSection.appendChild(newButton);
-		newSection.appendChild(newInput);
-		
-		videoBrowser.appendChild(newSection);
+		buildUploadButton();
 	}
 	
 	//Check if this folder contains Season folders and sort them
@@ -147,31 +83,26 @@ function updateVideoBrowser(file, uploadsFolder = false)
 	}
 	
 	//Check if this folder contains dated gameplay files and sort them
-	let doSort = false;
 	for (let i = 0; i < contents.length - 1; i++)
 	{
 		if (contents[i].search(/[0-9]\-[0-9]/) != -1)
-			doSort = true;
+		{
+			contents = sortDatedGameplay(contents);
+		}
 	}
-	if (doSort)
-		contents = sortDatedGameplay(contents);
-
+		
 	for (var i = 0; i < contents.length - 1; i++)
 	{
-		var isAlreadyInQueue = false;
-		for (var j = 0; j < queue.length; j++)
-		{
-			if (queue[j].split("/")[queue[j].split("/").length - 1].includes(contents[i]))
-			{
-				isAlreadyInQueue = true;
-				break;
-			}
-		}
+		let isAlreadyInQueue = videoInQueue();
+		
 		var newSection = document.createElement("div");
 		if (contents[i].includes("."))
 		{	
 			if (contents[i].includes("_AuthTouch"))
+			{
 				return;
+			}
+
 			var newVideo = document.createElement("a");
 			newVideo.innerHTML = contents[i].replace(/\.[^/.]+$/, "");
 			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '");';
@@ -181,57 +112,36 @@ function updateVideoBrowser(file, uploadsFolder = false)
 			var addToQueue = document.createElement("a");
 			addToQueue.innerHTML = "+";
 			var tempFileLocation = rootDir() + document.getElementById("currentDirectory").value + contents[i];
+
 			if (!isAlreadyInQueue)
 			{
-				addToQueue.onclick = function(){ this.style.backgroundColor = "#1e3949"; this.onclick = function(){ toast("This video is already in the queue"); return false; }; };
+				addToQueue.onclick = function()
+				{ 
+					this.style.backgroundColor = "#1e3949"; 
+					this.onclick = function(){ 
+						toast("This video is already in the queue"); 
+						return false; 
+					}; 
+				};
 			}
 			else
 			{
 				addToQueue.style.backgroundColor = "#1e3949";
-				addToQueue.onclick = function(){ toast("This video is already in the queue"); return false; };
+				addToQueue.onclick = function()
+				{ 
+					toast("This video is already in the queue"); 
+					return false; 
+				};
 			}
+
 			addToQueue.className = "addToQueue";
 			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '");';
 			
 			//This section handles updating the tracking info for each video
 			var fullPath = rootDir() + document.getElementById("currentDirectory").value + contents[i];
 			fullPath = fullPath.replace(/\ /g, "%20");
-			for (var j = 0; j < trackingInfo.length; j++)
-			{
-				var temp = trackingInfo[j][0].replace(/\ /g, "%20");
-				if (fullPath.trim() == temp)
-				{
-					if (trackingInfo[j][2] == "0")
-					{
-						newVideo.style.color = progressColor0;
-						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					}
-					else if (trackingInfo[j][2] == "1")
-					{
-						newVideo.style.color = progressColor1;
-						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					}
-					else if (trackingInfo[j][2] == "2")
-					{
-						newVideo.style.color = progressColor2;
-						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					}
-					else if (trackingInfo[j][2] == "3")
-					{
-						newVideo.style.color = progressColor3;
-						//newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					}
-					else if (trackingInfo[j][2] == "4")
-					{
-						newVideo.style.color = progressColor4;
-					}
-					
-					newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
-					addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '^' + trackingInfo[j][1] + '");';
-					
-					newVideo.ondblclick = function(){ playVideo(); };
-				}
-			}
+
+			handleProgressionInfo();
 			
 			newSection.appendChild(addToQueue);
 			newSection.appendChild(newVideo);
@@ -249,6 +159,193 @@ function updateVideoBrowser(file, uploadsFolder = false)
 		videoBrowser.appendChild(newSection);
 		videoBrowser.scrollIntoView();
 		//videoBrowser.appendChild(document.createElement("br"));
+	}
+}
+
+function buildUploadButton()
+{
+	let newSection = document.createElement("div");
+	//This label will be tied to the file input element
+	let uploadButton = document.createElement("button");
+	//This input will be hidden
+	let hiddenFileInput = document.createElement("input");
+	
+	uploadButton.onclick = function()
+	{ 
+		document.getElementById("fileInput").click() 
+	};
+	uploadButton.innerHTML = "Upload Video(s)";
+	
+	hiddenFileInput.id = "fileInput";
+	hiddenFileInput.onchange = function(e)
+	{
+		e.preventDefault();
+		document.getElementById("browser").style.display = "none";
+		
+		resetNavButtons();
+		
+		if (this.files.length > 0)
+		{
+			uploadFile();
+		}
+		else
+		{
+			toast("Upload cancelled");
+		}
+	}
+	
+	hiddenFileInput.type = "file";
+	hiddenFileInput.name = "file";
+	hiddenFileInput.multiple = true;
+	hiddenFileInput.style.display = "none";
+	
+	newSection.className = "fileUploadSection";
+	uploadButton.className = "defaultButton";
+	hiddenFileInput.className = "fileUploadSection";
+	
+	newSection.appendChild(uploadButton);
+	newSection.appendChild(hiddenFileInput);
+	
+	videoBrowser.appendChild(newSection);
+}
+
+function sortSeasons(folders, desc = false)
+{
+	let sortedFolders = new Array();
+	//sortedFolders = folders;
+	if (desc)
+	{
+		for (let i = folders.length - 1; i >= 0; i--)
+		{
+			for (let j = 0; j < folders.length - 1; j++)
+			{
+				if (folders[j] == "Season " + i)
+				{
+					sortedFolders.push(folders[j]);
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (let i = 0; i < folders.length; i++)
+		{
+			for (let j = 0; j < folders.length - 1; j++)
+			{
+				if (folders[j] == "Season " + i)
+				{
+					sortedFolders.push(folders[j]);
+					break;
+				}
+			}
+		}
+	}
+	sortedFolders.push(""); //Push empty last index to match what server gets
+	return sortedFolders;
+}
+
+function sortDatedGameplay(contents, asc = false)
+{
+	let sortedContents = new Array();
+	
+	let contentDates = new Array();
+	
+	for (let i = 0; i < contents.length - 1; i++)
+	{
+		let dateString = contents[i].split(" ")[0];
+		contentDates.push({date: getDateFromGameplayString(dateString), index: i});
+	}
+	
+	contentDates.sort((a, b) => b.date - a.date)
+	
+	if (asc)
+	{
+		for (let i = contents.length - 1; i >= 0; i--)
+		{
+			let newIndex = contentDates[i].index;
+			sortedContents.push(contents[newIndex]);
+		}
+	}
+	else
+	{
+		for (let i = 0; i < contents.length - 1; i++)
+		{
+			let newIndex = contentDates[i].index;
+			sortedContents.push(contents[newIndex]);
+		}
+	}
+	
+	sortedContents.push("");
+	return sortedContents;
+}
+
+function getDateFromGameplayString(dateString)
+{
+	//dateInfo[0] = month
+	//dateInfo[1] = day
+	//dateInfo[2] = year (last two digits)	
+	let dateInfo = dateString.split("-");
+	
+	let year = parseInt("20" + dateInfo[2]);
+	let month = parseInt(dateInfo[0]);
+	let day = parseInt(dateInfo[1]);
+	
+	return new Date(year, month, day);
+}
+
+function videoInQueue(video)
+{
+	for (var j = 0; j < queue.length; j++)
+	{
+		if (queue[j].split("/")[queue[j].split("/").length - 1].includes(video))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function handleProgressionInfo()
+{
+	var progressColor0 = "white";
+	var progressColor1 = "#7dafff";
+	var progressColor2 = "#7dafff";
+	var progressColor3 = "#7dafff";
+	var progressColor4 = "#b8b8b8";
+	
+	for (var j = 0; j < trackingInfo.length; j++)
+	{
+		var temp = trackingInfo[j][0].replace(/\ /g, "%20");
+		if (fullPath.trim() == temp)
+		{
+			if (trackingInfo[j][2] == "0")
+			{
+				newVideo.style.color = progressColor0;
+			}
+			else if (trackingInfo[j][2] == "1")
+			{
+				newVideo.style.color = progressColor1;
+			}
+			else if (trackingInfo[j][2] == "2")
+			{
+				newVideo.style.color = progressColor2;
+			}
+			else if (trackingInfo[j][2] == "3")
+			{
+				newVideo.style.color = progressColor3;
+			}
+			else if (trackingInfo[j][2] == "4")
+			{
+				newVideo.style.color = progressColor4;
+			}
+			
+			newVideo.href = 'javascript:videoBrowserVideoClick("' + contents[i] + '", ' + trackingInfo[j][1] + ');';
+			addToQueue.href = 'javascript:addToQueueClicked("' + tempFileLocation + '^' + trackingInfo[j][1] + '");';
+			
+			newVideo.ondblclick = function(){ playVideo(); };
+		}
 	}
 }
 
@@ -350,89 +447,4 @@ function goBack()
 	document.getElementById("currentDirectory").value = newDir;
 	getDirectoryInfo();
 	serveMissingVideoInfo();
-}
-
-function sortSeasons(folders, desc = false)
-{
-	let sortedFolders = new Array();
-	//sortedFolders = folders;
-	if (desc)
-	{
-		for (let i = folders.length - 1; i >= 0; i--)
-		{
-			for (let j = 0; j < folders.length - 1; j++)
-			{
-				if (folders[j] == "Season " + i)
-				{
-					sortedFolders.push(folders[j]);
-					break;
-				}
-			}
-		}
-	}
-	else
-	{
-		for (let i = 0; i < folders.length; i++)
-		{
-			for (let j = 0; j < folders.length - 1; j++)
-			{
-				if (folders[j] == "Season " + i)
-				{
-					sortedFolders.push(folders[j]);
-					break;
-				}
-			}
-		}
-	}
-	sortedFolders.push(""); //Push empty last index to match what server gets
-	return sortedFolders;
-}
-
-function sortDatedGameplay(contents, asc = false)
-{
-	let sortedContents = new Array();
-	
-	let contentDates = new Array();
-	
-	for (let i = 0; i < contents.length - 1; i++)
-	{
-		let dateString = contents[i].split(" ")[0];
-		contentDates.push({date: getDateFromGameplayString(dateString), index: i});
-	}
-	
-	contentDates.sort((a, b) => b.date - a.date)
-	
-	if (asc)
-	{
-		for (let i = contents.length - 1; i >= 0; i--)
-		{
-			let newIndex = contentDates[i].index;
-			sortedContents.push(contents[newIndex]);
-		}
-	}
-	else
-	{
-		for (let i = 0; i < contents.length - 1; i++)
-		{
-			let newIndex = contentDates[i].index;
-			sortedContents.push(contents[newIndex]);
-		}
-	}
-	
-	sortedContents.push("");
-	return sortedContents;
-}
-
-function getDateFromGameplayString(dateString)
-{
-	//dateInfo[0] = month
-	//dateInfo[1] = day
-	//dateInfo[2] = year (last two digits)	
-	let dateInfo = dateString.split("-");
-	
-	let year = parseInt("20" + dateInfo[2]);
-	let month = parseInt(dateInfo[0]);
-	let day = parseInt(dateInfo[1]);
-	
-	return new Date(year, month, day);
 }

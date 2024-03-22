@@ -3,5 +3,5 @@
 
 function rootDir()
 {
-	return "/Videos";
+	return "Videos";
 }
